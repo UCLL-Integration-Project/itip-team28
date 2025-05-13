@@ -6,37 +6,37 @@
 #define RST_PIN 5
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
-String cardUID;
+String CardUID;
 
-String get_byte_array(byte *buffer, byte bufferSize)
+String GetByteArray(byte *Buffer, byte BufferSize)
 {
-  String data;
+  String Data;
 
-  for (byte i = 0; i < bufferSize; i++)
+  for (byte i = 0; i < BufferSize; i++)
   {
-    data += String(buffer[i], HEX);
+    Data += String(Buffer[i], HEX);
   }
 
-  return data;
+  return Data;
 }
-String getMacAddress()
+String GetMacAddress()
 {
-  uint8_t mac[6];
-  WiFi.macAddress(mac);
-  String macAddress = "";
+  uint8_t Mac[6];
+  WiFi.MacAddress(Mac);
+  String MacAddress = "";
   for (int i = 0; i < 6; i++)
   {
-    if (mac[i] < 0x10)
+    if (Mac[i] < 0x10)
     {
-      macAddress += "0";
+      MacAddress += "0";
     }
-    macAddress += String(mac[i], HEX);
+    MacAddress += String(Mac[i], HEX);
     if (i < 5)
     {
-      macAddress += ":";
+      MacAddress += ":";
     }
   }
-  return macAddress;
+  return MacAddress;
 }
 
 void setup()
@@ -58,16 +58,16 @@ void loop()
   if (!mfrc522.PICC_ReadCardSerial())
     return;
 
-  String newCardUID = get_byte_array(mfrc522.uid.uidByte, mfrc522.uid.size);
+  String NewCardUID = GetByteArray(mfrc522.uid.uidByte, mfrc522.uid.size);
 
-  if (newCardUID != cardUID)
+  if (NewCardUID != CardUID)
   { // If new card is found ...
-    cardUID = newCardUID;
-    String macAddress = getMacAddress();
+    CardUID = NewCardUID;
+    String MacAddress = GetMacAddress();
 
     Serial.print("New card detected with UID: ");
-    Serial.println(cardUID);
-    Serial.print("ESP32 MAC Address: ");
-    Serial.println(macAddress);
+    Serial.println(CardUID);
+    Serial.print("ESP32 Mac Address: ");
+    Serial.println(MacAddress);
   }
 }
