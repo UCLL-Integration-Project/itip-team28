@@ -2,12 +2,17 @@ import requests
 from datetime import datetime, timedelta
 import random
 import time
+from dotenv import load_dotenv
+import os
 
 URL = "http://localhost:8000/newData"
-INFLUXDB_URL = "http://localhost:8086"
-INFLUXDB_TOKEN = "7iexqSDrbDkt8_9D3fPnxK1dXJIKgScq1NZSzhMRrAGSe4fgrJW8qkBsQBhOwIlL7RqAHyJXbSNBG7BXhCoZ8A=="
-INFLUXDB_ORG = "itip28"
-INFLUXDB_BUCKET = "influxdb"
+
+load_dotenv()
+
+INFLUXDB_URL = os.getenv("INFLUXDB_URL")
+INFLUXDB_TOKEN = os.getenv("INFLUXDB_TOKEN")
+INFLUXDB_ORG = os.getenv("INFLUXDB_ORG")
+INFLUXDB_BUCKET = os.getenv("INFLUXDB_BUCKET")
 
 car_ids = ["C123", "C456", "C789"]
 reader_ids = ["R1", "R2", "R3"]
