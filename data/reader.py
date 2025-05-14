@@ -1,27 +1,22 @@
-from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
-import time
-import os
+from influxdb_client import InfluxDBClient
 
-class Reader(FileSystemEventHandler):
-    def __init__(self, filepath):
-        self.filepath = filepath
+INFLUXDB_URL = "http://localhost:8086"
+INFLUXDB_TOKEN = "7iexqSDrbDkt8_9D3fPnxK1dXJIKgScq1NZSzhMRrAGSe4fgrJW8qkBsQBhOwIlL7RqAHyJXbSNBG7BXhCoZ8A=="
+INFLUXDB_ORG = "itip28"
+INFLUXDB_BUCKET = "influxdb"
 
-    def on_modified(self, event):
-        if event.src_path == self.filepath:
-            print(f"{self.filepath} was modified!")
+client = InfluxDBClient(url=INFLUXDB_URL, token=INFLUXDB_TOKEN, org=INFLUXDB_ORG)
 
-file_to_watch = "/path/to/your/file.txt"
-event_handler = Reader(file_to_watch)
-observer = Observer()
+query_api = client.query_api()
 
-observer.schedule(event_handler, path=os.path.dirname(file_to_watch), recursive=False)
-observer.start()
+query = f'''
+from(bucket: "{INFLUXDB_BUCKET}")
+  |> range(start: -1h)
+  |> filter(fn: (r) => r._measurement == "halt")
+'''
 
-try:
-    while True:
-        time.sleep(1)
-except KeyboardInterrupt:
-    observer.stop()
+tables = query_api.query(query)
 
-observer.join()
+for table in tables:
+    for record in table.records:
+        print(f"Time: {record.get_time()}, Data: {record.values}")
