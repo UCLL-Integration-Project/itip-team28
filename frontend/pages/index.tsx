@@ -1,7 +1,9 @@
-import ScansOverview from '@/components/ScansOverview';
-import { fetchScans } from '@/services/carsApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
+import styles from '@styles/home.module.css';
+import ScansOverview from '@/components/ScansOverview';
+import Header from '@/components/header';
+import { fetchScans } from '@/services/carsApi';
 
 const Home: React.FC = () => {
     const [scans, setScans] = useState<any[]>([]);
@@ -32,6 +34,7 @@ const Home: React.FC = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="assets/logo.png" />
             </Head>
+            <Header />
 
             <main className="flex flex-col items-center justify-center min-h-screen">
                 <section>
