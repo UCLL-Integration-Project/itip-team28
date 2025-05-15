@@ -61,7 +61,8 @@ const RegisterForm: React.FC = () => {
         const response = await UserService.register({
             username,
             email,
-            password
+            password,
+            role: "user"
         });
 
         const result = await response.json();
@@ -76,7 +77,7 @@ const RegisterForm: React.FC = () => {
         }
     };
 
-return (
+    return (
         <div className="space-y-6">
             <h2 className="text-2xl font-semibold text-center text-gray-800">Register</h2>
 
