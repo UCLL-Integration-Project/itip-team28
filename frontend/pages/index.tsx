@@ -1,25 +1,27 @@
-import CarsOverview from '@/components/CarsOverview';
-import { fetchCars } from '@/services/carsApi';
+import ScansOverview from '@/components/ScansOverview';
+import { fetchScans } from '@/services/carsApi';
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 
 const Home: React.FC = () => {
-    const [cars, setCars] = useState<any[]>([]);
+    const [scans, setScans] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    fetch("http://localhost:3000/scans")
+
     useEffect(() => {
-        const loadCars = async () => {
+        const loadScans = async () => {
             try {
-                const data = await fetchCars();
-                setCars(data);
+                const data = await fetchScans();
+                setScans(data);
             } catch (err) {
-                setError('Failed to load cars');
+                setError('Failed to load scan');
             } finally {
                 setLoading(false);
             }
         };
-        loadCars();
+        loadScans();
     }, []);
 
     return (
@@ -35,7 +37,7 @@ const Home: React.FC = () => {
                 <section>
                     {loading && <div>Loading...</div>}
                     {error && <div className="text-red-500">{error}</div>}
-                    {!loading && !error && <CarsOverview cars={cars} />}
+                    {!loading && !error && <ScansOverview scans={scans} />}
                 </section>
             </main>
         </>

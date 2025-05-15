@@ -1,4 +1,6 @@
-export type Car = {
+import { ClientPageRoot } from "next/dist/client/components/client-page";
+
+export type Scan = {
   id: string;
   name: string;
   TagId: string;
@@ -6,26 +8,21 @@ export type Car = {
   status: "active" | "inactive";
 };
 
-export const fetchCars = async (): Promise<Car[]> => {
-  await new Promise((res) => setTimeout(res, 1000)); // Simulate delay
-
-  const shouldFail = false; // Toggle to test error boundary
-  if (shouldFail) throw new Error("Failed to load cars.");
-
-  return [
-    {
-      id: "car_001",
-      name: "Tesla Model S",
-      TagId: "TSL-001",
-      timestamp: "2025-05-14T12:00:00Z",
-      status: "active",
+export const fetchScans = async (): Promise<Scan[]> => {
+  const response = await fetch("http://localhost:3000/scans", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
     },
-    {
-      id: "car_002",
-      name: "Ford Mustang",
-      TagId: "FRD-002",
-      timestamp: "2025-05-13T09:30:00Z",
-      status: "inactive",
-    },
-  ];
+  });
+
+  console.log("Response:", response);
+  console.log("Response status:", response.status);
+
+  if (!response.ok) {
+    throw new Error(`Failed to load Scans: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data as Scan[];
 };
