@@ -26,3 +26,4 @@ export const fetchScans = async (): Promise<Scan[]> => {
   const data = await response.json();
   return data as Scan[];
 };
+
