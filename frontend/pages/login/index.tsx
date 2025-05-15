@@ -9,7 +9,7 @@ const Login: React.FC = () => {
                 <title>Login</title>
             </Head>
             <Header />
-            <main className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+            <main className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
                 <section className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
                     <UserLoginForm />
                 </section>

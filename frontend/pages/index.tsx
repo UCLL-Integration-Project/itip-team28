@@ -1,3 +1,4 @@
+import styles from '@styles/home.module.css';
 import Head from 'next/head';
 
 const Home: React.FC = () => {

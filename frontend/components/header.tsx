@@ -23,30 +23,30 @@ const Header: React.FC = () => {
     const isManager = loggedInUser && (loggedInUser.role === "MANAGER");
 
     return (
-        <header>
-            <nav>
-                <ul>
+        <header className="bg-gray-800 text-white py-4 shadow-md">
+            <nav className="container mx-auto flex justify-between items-center px-6">
+                <ul className="flex gap-6">
                     {loggedInUser && (
                         <li>
-                            <Link href="/">
+                            <Link href="/" className="hover:text-indigo-400 transition-colors duration-200">
                                 Home
                             </Link>
                         </li>
                     )}
                     {isManager && (
                         <li>
-                            <Link href="/navigation">
+                            <Link href="/navigation" className="hover:text-indigo-400 transition-colors duration-200">
                                 Navigation
                             </Link>
                         </li>
                     )}
                     <li>
                         {!loggedInUser ? (
-                            <Link href="/login">
+                            <Link href="/login" className="hover:text-indigo-400 transition-colors duration-200">
                                 Login
                             </Link>
                         ) : (
-                            <a href="/login" onClick={handleClick}>
+                            <a href="/login" onClick={handleClick} className="hover:text-red-400 transition-colors duration-200">
                                 Logout
                             </a>
                         )}

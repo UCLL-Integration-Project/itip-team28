@@ -1,5 +1,6 @@
 import UserService from "@/services/UserService";
 import { StatusMessage } from "@/types";
+import React from "react";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
@@ -81,42 +82,49 @@ const UserLoginForm: React.FC = () => {
             </div>
         {statusMessages && (
             <div>
-                <ul>
+                <ul className="space-y-2">
                     {statusMessages.map(({message,type}, index) => (
-                        <li key={index}>
+                        <li
+                            key={index}
+                            className={`text-sm ${
+                                type === 'success' ? 'text-green-600' : 'text-red-600'
+                            }`}
+                            >
                             {message}
                         </li>
                     ))}
                 </ul>
             </div>
         )}
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-                <label htmlFor="username">Username</label>
+                <label htmlFor="username" className="block mb-1 font-medium text-gray-700">Username</label>
                 <input
                     type="text"
                     id="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
-                {usernameError && <p>{usernameError}</p>}
+                {usernameError && <p className="text-sm text-red-600 mt-1">{usernameError}</p>}
             </div>
             <div>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password" className="block mb-1 font-medium text-gray-700">Password</label>
                 <input
                     type="password"
                     id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
-                {passwordError && <p>{passwordError}</p>}
+                {passwordError && <p className="text-sm text-red-600 mt-1">{passwordError}</p>}
             </div>
             <div>
-                <button type="submit">Login</button>
+                <button type="submit" className="w-full bg-gray-800 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition">Login</button>
             </div>
         </form>
         <div>
-            <p>Don't have an account? <a href="/register">Register</a></p>
+            <p className="text-sm text-center text-gray-600">Don't have an account? <a href="/register" className="text-indigo-600 hover:underline">Register</a></p>
         </div>
     </div>
     );
