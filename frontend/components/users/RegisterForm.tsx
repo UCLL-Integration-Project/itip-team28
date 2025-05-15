@@ -103,7 +103,7 @@ return (
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {usernameError && <p className="text-red-600 text-sm">{usernameError}</p>}
                 </div>
@@ -117,7 +117,7 @@ return (
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
                 </div>
@@ -131,7 +131,7 @@ return (
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {passwordError && <p className="text-red-600 text-sm">{passwordError}</p>}
                 </div>
@@ -145,7 +145,7 @@ return (
                         type="password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="mt-1 w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {confirmPasswordError && <p className="text-red-600 text-sm">{confirmPasswordError}</p>}
                 </div>
