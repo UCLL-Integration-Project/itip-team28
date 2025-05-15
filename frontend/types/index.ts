@@ -9,7 +9,7 @@ export type User = {
 export type Scan = {
     id: string;
     name: string;
-    TagId: string;
+    ReaderId: string;
     timestamp: string;
     status: "active" | "inactive";
 };
