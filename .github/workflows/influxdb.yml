@@ -2,9 +2,8 @@ name: Build and Push InfluxDB Docker Image
 
 on:
   push:
-    branches: [ "main", "dev", "docker-test" ]
-    paths:
-      - "Dockerfile.influxdb"
+    branches: [ "main", "dev", "docker" ]
+    
 
 env:
   REGISTRY: ghcr.io

@@ -2,10 +2,8 @@ name: Build and Push FastAPI Docker Image
 
 on:
   push:
-    branches: [ "main", "dev", "docker-test" ]
-    paths:
-      - "data/**"
-      - "Dockerfile.backend"
+    branches: [ "main", "dev", "docker" ]
+   
 
 env:
   REGISTRY: ghcr.io
