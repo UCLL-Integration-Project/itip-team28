@@ -3,7 +3,7 @@ import React from "react";
 type Car = {
     id: string;
     timestamp: string;
-    tagId: string;
+    TagId: string;
 };
 
 type CarsOverviewProps = {
@@ -26,7 +26,7 @@ const CarsOverview: React.FC<CarsOverviewProps> = ({ cars }) => (
                     <tr key={car.id}>
                         <td style={{ border: "1px solid #ccc", padding: "16px" }}>{car.id}</td>
                         <td style={{ border: "1px solid #ccc", padding: "16px" }}>{car.timestamp}</td>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{car.tagId}</td>
+                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{car.TagId}</td>
                     </tr>
                 ))}
             </tbody>
