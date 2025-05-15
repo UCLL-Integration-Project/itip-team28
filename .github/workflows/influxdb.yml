@@ -2,7 +2,7 @@ name: Build and Push InfluxDB Docker Image
 
 on:
   push:
-    branches: [ "main", "dev", "docker-test" ]
+    branches: [ "main", "dev", "docker" ]
     paths:
       - "Dockerfile.influxdb"
 
