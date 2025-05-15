@@ -3,9 +3,7 @@ name: Build and Push FastAPI Docker Image
 on:
   push:
     branches: [ "main", "dev", "docker" ]
-    paths:
-      - "data/**"
-      - "Dockerfile.backend"
+   
 
 env:
   REGISTRY: ghcr.io
