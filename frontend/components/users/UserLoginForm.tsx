@@ -63,9 +63,18 @@ const UserLoginForm: React.FC = () => {
                 router.push("/");
             }, 2000);
         } else if (response.status === 401) {
-            const {errorMessage} = await response.json();
-            setStatusMessages([{ message: errorMessage, type: "error" }]);
-        } else {
+    let errorMessage = "Unauthorized";
+
+    try {
+        const text = await response.text();
+        const json = JSON.parse(text);
+        errorMessage = json.errorMessage || errorMessage;
+    } catch {
+        
+    }
+
+    setStatusMessages([{ message: errorMessage, type: "error" }]);
+} else {
             setStatusMessages([
                 {
                     message: "An error occurred. Please try again later.",
