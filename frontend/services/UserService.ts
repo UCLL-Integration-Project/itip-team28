@@ -1,7 +1,7 @@
 import { User } from "@/types";
 
 const loginUser = (user: User) => {
-    const url = process.env.NEXT_PUBLIC_API_URL + "users/login";
+    const url = process.env.NEXT_PUBLIC_API_URL + "/users/login";
     console.log("fetching: ", url);
     return fetch(url, {
         method: "POST",
