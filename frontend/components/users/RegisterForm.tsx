@@ -58,22 +58,32 @@ const RegisterForm: React.FC = () => {
             return;
         }
 
-        const response = await UserService.register({
-            username,
-            email,
-            password,
-            role: "user"
-        });
+        try {
+            const response = await UserService.register({
+                username,
+                email,
+                password,
+                role: "user", 
+            });
 
-        const result = await response.json();
+            const result = await response.json();
 
-        if (response.status === 200) {
-            setStatusMessages([{ message: "Registration successful", type: "success" }]);
-            setTimeout(() => {
-                router.push("/login");
-            }, 2000);
-        } else {
-            setStatusMessages([{ message: result.errorMessage, type: "error" }]);
+            if (response.status === 200) {
+                setStatusMessages([{ message: "Registration successful", type: "success" }]);
+                setTimeout(() => {
+                    router.push("/login");
+                }, 2000);
+            } else if (response.status === 400) {
+                setStatusMessages([{ message: result.message || "Registration failed", type: "error" }]);
+            } else {
+                setStatusMessages([
+                    { message: "An unexpected error occurred. Please try again later.", type: "error" },
+                ]);
+            }
+        } catch (error: any) {
+            setStatusMessages([
+                { message: error.message || "Network error. Please try again.", type: "error" },
+            ]);
         }
     };
 
