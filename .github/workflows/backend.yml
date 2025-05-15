@@ -2,7 +2,7 @@ name: Build and Push FastAPI Docker Image
 
 on:
   push:
-    branches: [ "main","docker" ]
+    branches: [ "main", "dev", "docker-test" ]
     paths:
       - "data/**"
       - "Dockerfile.backend"
