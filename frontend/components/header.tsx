@@ -14,8 +14,7 @@ const Header: React.FC = () => {
         }
     }, []);
 
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
+    const handleClick = () => {
         sessionStorage.removeItem('LoggedInUser');
         setLoggedInUser(null);
     };
@@ -41,15 +40,13 @@ const Header: React.FC = () => {
                         </li>
                     )}
                     <li>
-                        {!LoggedInUser ? (
-                            <Link href="/login" className="hover:text-indigo-400 transition-colors duration-200">
-                                Login
-                            </Link>
-                        ) : (
-                            <a href="/login" onClick={handleClick} className="hover:text-red-400 transition-colors duration-200">
-                                Logout
-                            </a>
-                        )}
+                        {!LoggedInUser && (<Link href="/login" className="hover:text-indigo-400 transition-colors duration-200">
+                            Login
+                        </Link>)}
+
+                        {LoggedInUser && (<Link href="/login" onClick={handleClick} className="hover:text-red-400 transition-colors duration-200">
+                            Logout
+                        </Link>)}
                     </li>
                 </ul>
             </nav>

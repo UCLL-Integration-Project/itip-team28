@@ -6,6 +6,14 @@ export type User = {
     role?: string;
 };
 
+export type Scan = {
+    id: string;
+    name: string;
+    TagId: string;
+    timestamp: string;
+    status: "active" | "inactive";
+};
+
 export type StatusMessage = {
     message: string;
     type: "error" | "success";

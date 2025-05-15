@@ -3,27 +3,37 @@ import React, { useEffect, useState } from 'react';
 import styles from '@styles/home.module.css';
 import ScansOverview from '@/components/ScansOverview';
 import Header from '@/components/header';
-import { fetchScans } from '@/services/carsApi';
+import ScanService from '@/services/ScanService';
+import { Scan } from '@/types';
 
 const Home: React.FC = () => {
-    const [scans, setScans] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [scans, setScans] = useState<Scan[]>([]);
     const [error, setError] = useState<string | null>(null);
 
-    fetch("http://localhost:3000/scans")
+    const getAllScans = async () => {
+        setError('');
+        const responses = await Promise.all([
+            ScanService.getScans()
+        ]);
+
+        const [ScanResponse] = responses;
+
+        if (!ScanResponse.ok) {
+            if (ScanResponse.status === 401) {
+                setError(
+                    'You are not authorized to view this page. Please login first.'
+                );
+            } else {
+                setError(ScanResponse.statusText);
+            }
+        } else {
+            const scans = await ScanResponse.json();
+            setScans(scans);
+        }
+    };
 
     useEffect(() => {
-        const loadScans = async () => {
-            try {
-                const data = await fetchScans();
-                setScans(data);
-            } catch (err) {
-                setError('Failed to load scan');
-            } finally {
-                setLoading(false);
-            }
-        };
-        loadScans();
+        getAllScans();
     }, []);
 
     return (
@@ -38,9 +48,8 @@ const Home: React.FC = () => {
 
             <main className="flex flex-col items-center justify-center min-h-screen">
                 <section>
-                    {loading && <div>Loading...</div>}
                     {error && <div className="text-red-500">{error}</div>}
-                    {!loading && !error && <ScansOverview scans={scans} />}
+                    {!error && <ScansOverview scans={scans} />}
                 </section>
             </main>
         </>
