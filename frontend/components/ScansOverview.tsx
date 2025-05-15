@@ -3,7 +3,7 @@ import React from "react";
 type Scan = {
     id: string;
     timestamp: string;
-    TagId: string;
+    ReaderId: string;
 };
 
 type ScansOverviewProps = {
@@ -26,7 +26,7 @@ const ScansOverview: React.FC<ScansOverviewProps> = ({ scans }) => (
                     <tr key={scan.id}>
                         <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.id}</td>
                         <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.timestamp}</td>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.TagId}</td>
+                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.ReaderId}</td>
                     </tr>
                 ))}
             </tbody>
