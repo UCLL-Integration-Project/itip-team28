@@ -1,16 +1,16 @@
 import React from "react";
 
-type Car = {
+type Scan = {
     id: string;
     timestamp: string;
-    TagId: string;
+    ReaderId: string;
 };
 
-type CarsOverviewProps = {
-    cars: Car[];
+type ScansOverviewProps = {
+    scans: Scan[];
 };
 
-const CarsOverview: React.FC<CarsOverviewProps> = ({ cars }) => (
+const ScansOverview: React.FC<ScansOverviewProps> = ({ scans }) => (
     <div style={{ padding: "2rem" }}>
         <h2 className=" text-3xl mb-4 font-semibold">Overview</h2>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -22,11 +22,11 @@ const CarsOverview: React.FC<CarsOverviewProps> = ({ cars }) => (
                 </tr>
             </thead>
             <tbody>
-                {cars.map((car) => (
-                    <tr key={car.id}>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{car.id}</td>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{car.timestamp}</td>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{car.TagId}</td>
+                {scans.map((scan) => (
+                    <tr key={scan.id}>
+                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.id}</td>
+                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.timestamp}</td>
+                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.ReaderId}</td>
                     </tr>
                 ))}
             </tbody>
@@ -34,4 +34,4 @@ const CarsOverview: React.FC<CarsOverviewProps> = ({ cars }) => (
     </div>
 );
 
-export default CarsOverview;
+export default ScansOverview;
