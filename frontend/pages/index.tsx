@@ -1,27 +1,39 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
 import styles from '@styles/home.module.css';
-import CarsOverview from '@/components/CarsOverview';
-import { fetchCars } from '@/services/carsApi';
+import ScansOverview from '@/components/ScansOverview';
 import Header from '@/components/header';
+import ScanService from '@/services/ScanService';
+import { Scan } from '@/types';
 
 const Home: React.FC = () => {
-    const [cars, setCars] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
+    const [scans, setScans] = useState<Scan[]>([]);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const loadCars = async () => {
-            try {
-                const data = await fetchCars();
-                setCars(data);
-            } catch (err) {
-                setError('Failed to load cars');
-            } finally {
-                setLoading(false);
+    const getAllScans = async () => {
+        setError('');
+        const responses = await Promise.all([
+            ScanService.getScans()
+        ]);
+
+        const [ScanResponse] = responses;
+
+        if (!ScanResponse.ok) {
+            if (ScanResponse.status === 401) {
+                setError(
+                    'You are not authorized to view this page. Please login first.'
+                );
+            } else {
+                setError(ScanResponse.statusText);
             }
-        };
-        loadCars();
+        } else {
+            const scans = await ScanResponse.json();
+            setScans(scans);
+        }
+    };
+
+    useEffect(() => {
+        getAllScans();
     }, []);
 
     return (
@@ -36,9 +48,8 @@ const Home: React.FC = () => {
 
             <main className="flex flex-col items-center justify-center min-h-screen">
                 <section>
-                    {loading && <div>Loading...</div>}
                     {error && <div className="text-red-500">{error}</div>}
-                    {!loading && !error && <CarsOverview cars={cars} />}
+                    {!error && <ScansOverview scans={scans} />}
                 </section>
             </main>
         </>

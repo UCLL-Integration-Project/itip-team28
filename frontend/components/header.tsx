@@ -3,37 +3,36 @@ import Link from 'next/link';
 import { useEffect, useState } from "react";
 
 const Header: React.FC = () => {
-    const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
+    const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
 
     useEffect(() => {
-        const loggedInUserString = sessionStorage.getItem('loggedInUser');
-        if (loggedInUserString !== null) {
-            setLoggedInUser(JSON.parse(loggedInUserString));
+        const LoggedInUserString = sessionStorage.getItem('LoggedInUser');
+        if (LoggedInUserString !== null) {
+            setLoggedInUser(JSON.parse(LoggedInUserString));
         } else {
             setLoggedInUser(null);
         }
-    }, []); 
+    }, []);
 
-    const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        e.preventDefault();
-        sessionStorage.removeItem('loggedInUser');
+    const handleClick = () => {
+        sessionStorage.removeItem('LoggedInUser');
         setLoggedInUser(null);
-    }; 
+    };
 
-    const isManager = loggedInUser && (loggedInUser.role === "MANAGER");
+    const IsManager = LoggedInUser && (LoggedInUser.role === "MANAGER");
 
     return (
         <header className="bg-gray-800 text-white py-4 shadow-md">
             <nav className="container mx-auto flex justify-between items-center px-6">
                 <ul className="flex gap-6">
-                    {loggedInUser && (
+                    {LoggedInUser && (
                         <li>
                             <Link href="/" className="hover:text-indigo-400 transition-colors duration-200">
                                 Home
                             </Link>
                         </li>
                     )}
-                    {isManager && (
+                    {IsManager && (
                         <li>
                             <Link href="/navigation" className="hover:text-indigo-400 transition-colors duration-200">
                                 Navigation
@@ -41,19 +40,17 @@ const Header: React.FC = () => {
                         </li>
                     )}
                     <li>
-                        {!loggedInUser ? (
-                            <Link href="/login" className="hover:text-indigo-400 transition-colors duration-200">
-                                Login
-                            </Link>
-                        ) : (
-                            <a href="/login" onClick={handleClick} className="hover:text-red-400 transition-colors duration-200">
-                                Logout
-                            </a>
-                        )}
+                        {!LoggedInUser && (<Link href="/login" className="hover:text-indigo-400 transition-colors duration-200">
+                            Login
+                        </Link>)}
+
+                        {LoggedInUser && (<Link href="/login" onClick={handleClick} className="hover:text-red-400 transition-colors duration-200">
+                            Logout
+                        </Link>)}
                     </li>
                 </ul>
             </nav>
-            
+
         </header>
     );
 };

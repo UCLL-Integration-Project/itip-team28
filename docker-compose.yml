@@ -1,0 +1,28 @@
+services:
+  backend:
+    image: my-backend-test  # FastAPI için daha önce oluşturduğun imaj
+    container_name: fastapi-backend
+    ports:
+      - "8000:8000"  # Host:Container port
+    depends_on:
+      - influxdb
+    environment:
+      - INFLUXDB_URL=http://influxdb:8086
+      - INFLUXDB_TOKEN=C_XJFdVS3Vvlc-uPJNwK5dJZO1oaY0aZ2QrpvhtT61kC48bXdy8hRLcqooPQKVbChgDFZIism6dZ0upYha4EFQ==
+      - INFLUXDB_ORG=groep-28
+      - INFLUXDB_BUCKET=groep-28
+
+  influxdb:
+    image: my-influxdb-test  # InfluxDB için daha önce oluşturduğun imaj
+    container_name: influxdb
+    ports:
+      - "8086:8086"
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=yasirhozan
+      - DOCKER_INFLUXDB_INIT_PASSWORD=Recep1453.
+      - DOCKER_INFLUXDB_INIT_ORG=groep-28
+      - DOCKER_INFLUXDB_INIT_BUCKET=groep-28
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=C_XJFdVS3Vvlc-uPJNwK5dJZO1oaY0aZ2QrpvhtT61kC48bXdy8hRLcqooPQKVbChgDFZIism6dZ0upYha4EFQ==
+
+# ❗ `version:` etiketi artık gerekmediği için kullanılmıyor
