@@ -40,7 +40,7 @@ const Home: React.FC = () => {
         <>
             <Head>
                 <title>Home</title>
-                <meta name="description" content="BowlBuddies Pokebowl app" />
+                <meta name="description" content="Car app" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="assets/logo.png" />
             </Head>

@@ -88,11 +88,11 @@ const RegisterForm: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-center text-gray-800">Register</h2>
+        <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-xl sm:text-2xl font-semibold text-center text-gray-800">Register</h2>
 
             {statusMessages.length > 0 && (
-                <ul className="space-y-2">
+                <ul className="space-y-1 sm:space-y-2">
                     {statusMessages.map(({ message, type }, index) => (
                         <li
                             key={index}
