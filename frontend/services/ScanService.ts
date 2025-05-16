@@ -5,7 +5,6 @@ const getToken = (): string => {
 
 
 const getScans = () => {
-  console.log(getToken())
   return fetch(process.env.NEXT_PUBLIC_API_URL + '/scans', {
     method: 'GET',
     headers: {
