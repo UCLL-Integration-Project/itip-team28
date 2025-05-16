@@ -29,6 +29,7 @@ const Home: React.FC = () => {
         } else {
             const scans = await ScanResponse.json();
             setScans(scans);
+            console.log(scans);
         }
     };
 
