@@ -7,28 +7,30 @@ type Props = {
 };
 
 const ScansOverview: React.FC<Props> = ({ scans }: Props) => (
-    <div style={{ padding: "2rem" }}>
-        <h2 className=" text-3xl mb-4 font-semibold">Overview</h2>
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
-            <thead>
-                <tr>
-                    <th style={{ border: "1px solid #ccc", padding: "16px" }}>Scanner ID</th>
-                    <th style={{ border: "1px solid #ccc", padding: "16px" }}>Car ID</th>
-                    <th style={{ border: "1px solid #ccc", padding: "16px" }}>Tag ID</th>
-                    <th style={{ border: "1px solid #ccc", padding: "16px" }}>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody>
-                {scans.map((scan) => (
-                    <tr key={scan.id}>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.id}</td>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.car?.id}</td>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.tag?.id}</td>
-                        <td style={{ border: "1px solid #ccc", padding: "16px" }}>{scan.timestamp}</td>
+    <div className="p-4 sm:p-6">
+        <h2 className="text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 font-semibold text-gray-800">Overview</h2>
+        <div className="overflow-x-auto">
+            <table className="min-w-full border-collapse border border-gray-300">
+                <thead>
+                    <tr className="bg-gray-100">
+                        <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Scanner ID</th>
+                        <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Car ID</th>
+                        <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Tag ID</th>
+                        <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Timestamp</th>
                     </tr>
-                ))}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {scans.map((scan) => (
+                        <tr key={scan.id} className="hover:bg-gray-50">
+                            <td className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-gray-600">{scan.id}</td>
+                            <td className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-gray-600">{scan.car?.id}</td>
+                            <td className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-gray-600">{scan.tag?.id}</td>
+                            <td className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-gray-600">{scan.timestamp}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
     </div>
 );
 
