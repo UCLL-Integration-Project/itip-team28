@@ -6,12 +6,22 @@ export type User = {
     role?: string;
 };
 
+export type Car = {
+    id?: number;
+    number?: number;
+}
+
+export type Tag = {
+    id?: number;
+    number?: number;
+}
+
 export type Scan = {
-    id: string;
-    name: string;
-    ReaderId: string;
-    timestamp: string;
-    status: "active" | "inactive";
+    id?: string;
+    car?: Car;
+    tag?: Tag;
+    timestamp?: string;
+    status?: "active" | "inactive";
 };
 
 export type StatusMessage = {
