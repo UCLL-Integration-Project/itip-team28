@@ -13,7 +13,9 @@ export type Car = {
 
 export type Reader = {
     id?: number;
-    number?: number;
+    MacAddress: string;
+    name: string;
+    coordinates: string;
 }
 
 export type Scan = {
