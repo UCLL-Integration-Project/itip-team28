@@ -11,7 +11,7 @@ export type Car = {
     number?: number;
 }
 
-export type Tag = {
+export type Reader = {
     id?: number;
     number?: number;
 }
@@ -19,7 +19,7 @@ export type Tag = {
 export type Scan = {
     id?: string;
     car?: Car;
-    tag?: Tag;
+    reader?: Reader;
     timestamp?: string;
     status?: "active" | "inactive";
 };
