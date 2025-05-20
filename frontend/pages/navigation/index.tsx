@@ -10,20 +10,25 @@ const Navigation: React.FC = () => {
     const [selectReader, setSelectReader] = useState<Reader | null>(null);
 
     const getReaders = async () => {
-        setError("");
-        const response = await ReaderService.getReaders();
+        setError('');
+        const responses = await Promise.all([
+            ReaderService.getReaders()
+        ]);
 
-        if (!response.ok) {
-            if (response.status === 401) {
+        const [ReaderResponse] = responses;
+
+        if (!ReaderResponse.ok) {
+            if (ReaderResponse.status === 401) {
                 setError(
-                    "You are not authorized to view this page. Please login first."
+                    'You are not authorized to view this page. Please login first.'
                 );
             } else {
-                setError(response.statusText);
+                setError(ReaderResponse.statusText);
             }
         } else {
-            const readers = await response.json();
+            const readers = await ReaderResponse.json();
             setReaders(readers);
+            console.log(readers);
         }
     };
 
@@ -35,7 +40,7 @@ const Navigation: React.FC = () => {
         setSelectReader(reader);
     };
 
-    return(
+    return (
         <>
             <head>
                 <title>Readers</title>
@@ -43,7 +48,8 @@ const Navigation: React.FC = () => {
             <Header />
             <main className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
                 <section className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md">
-                    <NavigationComponent readers={readers} selectReader={handleSelectReader}/>
+                    {error && <div className="text-red-500">{error}</div>}
+                    {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} />}
                 </section>
             </main>
         </>

@@ -11,11 +11,17 @@ export type Car = {
     number?: number;
 }
 
+export type Coordinates = {
+    id?: number;
+    longitude?: number;
+    latitude?: number;
+}
+
 export type Reader = {
     id?: number;
     name?: string;
-    MacAddress?: string;
-    coordinates?: string; //to do import and adjust new coordinates class
+    macAddress?: string;
+    coordinates?: Coordinates;
 }
 
 export type Scan = {

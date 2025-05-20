@@ -1,6 +1,6 @@
 import RouteService from "@/services/RouteService";
 import ReaderService from "@/services/ReaderService";
-import { Reader, Route, StatusMessage, User } from "@/types";
+import { Coordinates, Reader, Route, StatusMessage, User } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -9,13 +9,13 @@ type Props = {
     selectReader: (reader: Reader) => void;
 }
 
-const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
+const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [name, setName] = useState("");
     const [MacAddress, setMacAddress] = useState("");
-    const [coordinates, setCoordinates] = useState("");
+    const [coordinates, setCoordinates] = useState<Coordinates>();
     const [nameError, setNameError] = useState("");
     const [macAddressError, setMacAddressError] = useState("");
     const [coordinatesError, setCoordinatesError] = useState("");
@@ -28,30 +28,30 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
         setStatusMessages([]);
     };
 
-    const validate = (): boolean => {
-        let result = true;
-        clearErrors();
+    // const validate = (): boolean => {
+    //     let result = true;
+    //     clearErrors();
 
-        if (!name || name.trim() === "") {
-            setNameError("Name is required");
-            result = false;
-        }
-        //check if this validation is in the correct format
-        if (!MacAddress || MacAddress.trim() === "") {
-        setMacAddressError("Mac address is required");
-        result = false;
-        } else if (!/^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$/.test(MacAddress)) {
-        setMacAddressError("Mac address must be in the format: XX:XX:XX:XX:XX:XX");
-        result = false;
-        }
-        // extra validation for mac coordinates might be wanted/needed at a later point
-        if (!coordinates || coordinates.trim() === "") {
-            setCoordinatesError("Coordinates are required");
-            result = false;
-        }
+    //     if (!name || name.trim() === "") {
+    //         setNameError("Name is required");
+    //         result = false;
+    //     }
+    //     //check if this validation is in the correct format
+    //     if (!MacAddress || MacAddress.trim() === "") {
+    //         setMacAddressError("Mac address is required");
+    //         result = false;
+    //     } else if (!/^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$/.test(MacAddress)) {
+    //         setMacAddressError("Mac address must be in the format: XX:XX:XX:XX:XX:XX");
+    //         result = false;
+    //     }
+    //     // extra validation for mac coordinates might be wanted/needed at a later point
+    //     if (!coordinates || coordinates.trim() === "") {
+    //         setCoordinatesError("Coordinates are required");
+    //         result = false;
+    //     }
 
-        return result;
-    };
+    //     return result;
+    // };
 
     useEffect(() => {
         const LoggedInUserString = sessionStorage.getItem('LoggedInUser');
@@ -80,44 +80,44 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        clearErrors();
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     clearErrors();
 
-        if (!validate()) {
-            return;
-        }
+    //     if (!validate()) {
+    //         return;
+    //     }
 
-        try{
-            const response = await ReaderService.createReader({
-                name,
-                MacAddress,
-                coordinates,
-            });
+    //     try {
+    //         const response = await ReaderService.createReader({
+    //             name,
+    //             macAddress,
+    //             coordinates,
+    //         });
 
-            const result = await response.json();
+    //         const result = await response.json();
 
-            if (response.status === 200) {
-                setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
-                setIsModalOpen(false);
-                setName("");
-                setMacAddress("");
-                setCoordinates("");
-                setTimeout(() => {
-                    router.push("/navigation");
-                }, 2000);
-            } else if (response.status === 400) {
-                setStatusMessages([{ message: result.message || "Failed to create reader", type: "error" }]);
-            } else {
-                setStatusMessages([{ message: "Failed to create reader", type: "error" }]);
-            }
-        } catch (error:any) {
-            setStatusMessages([{ message: error.message || "Failed to create reader", type: "error" }]);
-        }
-    };
+    //         if (response.status === 200) {
+    //             setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
+    //             setIsModalOpen(false);
+    //             setName("");
+    //             setMacAddress("");
+    //             setCoordinates();
+    //             setTimeout(() => {
+    //                 router.push("/navigation");
+    //             }, 2000);
+    //         } else if (response.status === 400) {
+    //             setStatusMessages([{ message: result.message || "Failed to create reader", type: "error" }]);
+    //         } else {
+    //             setStatusMessages([{ message: "Failed to create reader", type: "error" }]);
+    //         }
+    //     } catch (error: any) {
+    //         setStatusMessages([{ message: error.message || "Failed to create reader", type: "error" }]);
+    //     }
+    // };
 
     const IsManager = LoggedInUser && (LoggedInUser.role?.toUpperCase() === "MANAGER");
-    
+
     if (!IsManager) {
         return <p className="text-center mt-10 text-red-600">You are not authorized to view this page.</p>;
     }
@@ -138,9 +138,8 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                         {StatusMessages.map(({ message, type }, index) => (
                             <li
                                 key={index}
-                                className={`text-sm text-center ${
-                                    type === "success" ? "text-green-600" : "text-red-600"
-                                }`}>
+                                className={`text-sm text-center ${type === "success" ? "text-green-600" : "text-red-600"
+                                    }`}>
                                 {message}
                             </li>
                         ))}
@@ -173,10 +172,10 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                                     {reader.name || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.MacAddress || "N/A"}
+                                    {reader.macAddress || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.coordinates || "N/A"}
+                                    {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
                                     <button
@@ -200,8 +199,8 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                     Add Location
                 </button>
             </div>
-            
-            {isModalOpen && (
+
+            {/* {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-40 backdrop-blur-sm z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full space-y-4 sm:space-y-6">
                         <h4 className="text-lg sm:text-xl font-semibold text-center text-gray-800">
@@ -210,13 +209,13 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
 
                         <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                             <div>
-                                <label 
-                                    htmlFor="name" 
+                                <label
+                                    htmlFor="name"
                                     className="block text-xs sm:text-sm font-medium text-gray-700"
                                 >
                                     Name
                                 </label>
-                                <input 
+                                <input
                                     type="text"
                                     id="name"
                                     value={name}
@@ -229,14 +228,14 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                             </div>
 
                             <div>
-                                <label 
+                                <label
                                     htmlFor="macAddress"
                                     className="block text-xs sm:text-sm font-medium text-gray-700"
                                 >
                                     Mac Address
                                 </label>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     id="macAddress"
                                     value={MacAddress}
                                     onChange={(e) => setMacAddress(e.target.value)}
@@ -248,13 +247,13 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                             </div>
 
                             <div>
-                                <label 
+                                <label
                                     htmlFor="coordinates"
                                     className="block text-xs sm:text-sm font-medium text-gray-700"
                                 >
                                     Coordinates
                                 </label>
-                                <input 
+                                <input
                                     type="text"
                                     id="coordinates"
                                     value={coordinates}
@@ -290,7 +289,7 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                         </form>
                     </div>
                 </div>
-            )}
+            )} */}
         </>
     );
 
