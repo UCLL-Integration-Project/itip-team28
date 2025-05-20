@@ -1,7 +1,7 @@
 import { Reader } from "@/types";
 
 const getToken = (): string => {
-    const loggedInUserString = sessionStorage.getItem('loggedInUser');
+    const loggedInUserString = sessionStorage.getItem('LoggedInUser');
     return loggedInUserString ? JSON.parse(loggedInUserString).token : '';
 };
 

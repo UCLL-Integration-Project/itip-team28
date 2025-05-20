@@ -14,7 +14,7 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [name, setName] = useState("");
-    const [macAddress, setMacAddress] = useState("");
+    const [MacAddress, setMacAddress] = useState("");
     const [coordinates, setCoordinates] = useState("");
     const [nameError, setNameError] = useState("");
     const [macAddressError, setMacAddressError] = useState("");
@@ -37,10 +37,10 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
             result = false;
         }
         //check if this validation is in the correct format
-        if (!macAddress || macAddress.trim() === "") {
+        if (!MacAddress || MacAddress.trim() === "") {
         setMacAddressError("Mac address is required");
         result = false;
-        } else if (!/^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$/.test(macAddress)) {
+        } else if (!/^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$/.test(MacAddress)) {
         setMacAddressError("Mac address must be in the format: XX:XX:XX:XX:XX:XX");
         result = false;
         }
@@ -91,7 +91,7 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
         try{
             const response = await ReaderService.createReader({
                 name,
-                macAddress,
+                MacAddress,
                 coordinates,
             });
 
@@ -173,7 +173,7 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                                     {reader.name || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.macAddress || "N/A"}
+                                    {reader.MacAddress || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
                                     {reader.coordinates || "N/A"}
@@ -202,8 +202,8 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
             </div>
             
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-md max-w-md w-full space-y-4 sm:space-y-6">
+                <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-40 backdrop-blur-sm z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full space-y-4 sm:space-y-6">
                         <h4 className="text-lg sm:text-xl font-semibold text-center text-gray-800">
                             Add New Location
                         </h4>
@@ -238,7 +238,7 @@ const Navigation: React.FC<Props> = ({readers, selectReader}: Props) => {
                                 <input 
                                     type="text" 
                                     id="macAddress"
-                                    value={macAddress}
+                                    value={MacAddress}
                                     onChange={(e) => setMacAddress(e.target.value)}
                                     className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                                 />

@@ -14,7 +14,7 @@ export type Car = {
 export type Reader = {
     id?: number;
     name?: string;
-    macAddress?: string;
+    MacAddress?: string;
     coordinates?: string; //to do import and adjust new coordinates class
 }
 
