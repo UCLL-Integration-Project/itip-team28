@@ -13,9 +13,19 @@ export type Car = {
 
 export type Reader = {
     id?: number;
-    MacAddress: string;
-    name: string;
-    coordinates: string;
+    MacAddress?: string;
+    name?: string;
+    coordinates?: string;
+}
+
+export type Route = {
+    id?: number;
+    status?: boolean;
+    StartingPoint?: Reader;
+    destination?: Reader;
+    CurrentPoint?: Reader;
+    timestamp?: string;
+    instructions?: string[];
 }
 
 export type Scan = {
