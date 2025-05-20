@@ -13,7 +13,9 @@ export type Car = {
 
 export type Reader = {
     id?: number;
-    number?: number;
+    name?: string;
+    macAddress?: string;
+    coordinates?: string; //to do import and adjust new coordinates class
 }
 
 export type Scan = {
@@ -23,6 +25,15 @@ export type Scan = {
     timestamp?: string;
     status?: "active" | "inactive";
 };
+
+export type Route = {
+    id?: number;
+    status?: boolean;
+    startingPoint?: Reader;
+    destination?: Reader;
+    timestamp?: Date;
+    instructions?: Array<string>;
+}
 
 export type StatusMessage = {
     message: string;
