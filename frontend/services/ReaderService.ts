@@ -37,8 +37,37 @@ const createReader = (reader: Reader) => {
     }
 }
 
+const updateReader = (reader: Reader) => {
+    const url = process.env.NEXT_PUBLIC_API_URL + "/readers/" + reader.id;
+    const token = getToken();
+    console.log("fetching: ", url);
+    try {
+        const readerInput = {
+            MacAddress: reader.MacAddress,
+            name: reader.name,
+            coordinates: {
+                longitude: reader.coordinates?.longitude,
+                latitude: reader.coordinates?.latitude,
+            },
+        };
+        const response = fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+            body: JSON.stringify(readerInput),
+        });
+        return response;
+    } catch (error) {
+        console.error("Error during update:", error);
+        throw new Error("Network error during update. Please try again.");
+    }
+};
+
 const ReaderService = {
     getReaders,
-    createReader
+    createReader,
+    updateReader
 };
 export default ReaderService;
