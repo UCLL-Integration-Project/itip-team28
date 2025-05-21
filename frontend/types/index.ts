@@ -11,11 +11,17 @@ export type Car = {
     number?: number;
 }
 
+export type Coordinates = {
+    id?: number;
+    longitude?: number;
+    latitude?: number;
+}
+
 export type Reader = {
     id?: number;
-    MacAddress?: string;
     name?: string;
-    coordinates?: string;
+    MacAddress?: string;
+    coordinates?: Coordinates;
 }
 
 export type Route = {
