@@ -24,6 +24,16 @@ export type Reader = {
     coordinates?: Coordinates;
 }
 
+export type Route = {
+    id?: number;
+    status?: boolean;
+    StartingPoint?: Reader;
+    destination?: Reader;
+    CurrentPoint?: Reader;
+    timestamp?: string;
+    instructions?: string[];
+}
+
 export type Scan = {
     id?: string;
     car?: Car;
@@ -31,15 +41,6 @@ export type Scan = {
     timestamp?: string;
     status?: "active" | "inactive";
 };
-
-export type Route = {
-    id?: number;
-    status?: boolean;
-    startingPoint?: Reader;
-    destination?: Reader;
-    timestamp?: Date;
-    instructions?: Array<string>;
-}
 
 export type StatusMessage = {
     message: string;
