@@ -13,7 +13,7 @@ const ScansOverview: React.FC<Props> = ({ scans }: Props) => (
             <table className="min-w-full border-collapse border border-gray-300">
                 <thead>
                     <tr className="bg-gray-100">
-                        <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Scanner ID</th>
+                        <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Scan ID</th>
                         <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Car ID</th>
                         <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Reader ID</th>
                         <th className="border border-gray-300 px-3 py-2 sm:px-4 sm:py-3 text-left text-xs sm:text-sm font-medium text-gray-700">Timestamp</th>

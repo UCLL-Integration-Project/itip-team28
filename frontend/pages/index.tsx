@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import styles from '@styles/home.module.css';
 import ScansOverview from '@/components/ScansOverview';
 import Header from '@/components/header';
 import ScanService from '@/services/ScanService';
@@ -8,6 +7,7 @@ import { Scan } from '@/types';
 
 const Home: React.FC = () => {
     const [scans, setScans] = useState<Scan[]>([]);
+    
     const [error, setError] = useState<string | null>(null);
 
     const getAllScans = async () => {
@@ -29,9 +29,9 @@ const Home: React.FC = () => {
         } else {
             const scans = await ScanResponse.json();
             setScans(scans);
-            console.log(scans);
         }
     };
+
 
     useEffect(() => {
         getAllScans();
