@@ -63,7 +63,7 @@ const RegisterForm: React.FC = () => {
                 username,
                 email,
                 password,
-                role: "user", 
+                role: "user",
             });
 
             const result = await response.json();
@@ -74,7 +74,7 @@ const RegisterForm: React.FC = () => {
                     router.push("/login");
                 }, 2000);
             } else if (response.status === 400) {
-                setStatusMessages([{ message: result.message || "Registration failed", type: "error" }]);
+                setStatusMessages([{ message: result.ServiceException || "Registration failed", type: "error" }]);
             } else {
                 setStatusMessages([
                     { message: "An unexpected error occurred. Please try again later.", type: "error" },

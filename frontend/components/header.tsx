@@ -19,7 +19,7 @@ const Header: React.FC = () => {
         setLoggedInUser(null);
     };
 
-    const IsManager = LoggedInUser && (LoggedInUser.role === "MANAGER");
+    const IsManager = LoggedInUser && (LoggedInUser.role?.toUpperCase() === "MANAGER");
 
     return (
         <header className="bg-gray-800 text-white py-4 shadow-md">

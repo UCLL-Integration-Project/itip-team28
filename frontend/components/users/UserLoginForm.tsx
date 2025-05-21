@@ -45,6 +45,7 @@ const UserLoginForm: React.FC = () => {
         const user = { username, password };
         const response = await UserService.loginUser(user);
 
+
         if (response.status === 200) {
             setStatusMessages([{ message: "Login successful", type: "success" }]);
 
@@ -63,13 +64,12 @@ const UserLoginForm: React.FC = () => {
                 router.push("/");
             }, 2000);
         } else if (response.status === 401) {
-            const { errorMessage } = await response.json();
-            setStatusMessages([{ message: errorMessage, type: "error" }]);
+            setStatusMessages([{ message: "Incorrect credentials", type: "error" }]);
         } else {
-            const error = await response.json();
+            const result = await response.json();
             setStatusMessages([
                 {
-                    message: error.message,
+                    message: result.ServiceException,
                     type: "error"
                 },
             ]);
