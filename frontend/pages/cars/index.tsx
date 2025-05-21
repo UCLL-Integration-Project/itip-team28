@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import CarOverview from '../components/CarOverview';
+import CarOverview from '@/components/CarOverview';
 import { Car } from '@/types';
 import CarService from '@/services/CarService';
 import Header from '@/components/header';
 
-const NavigationPage: React.FC = () => {
+const CarNavigationPage: React.FC = () => {
     const [cars, setCars] = useState<Car[]>([]);
     const [error, setError] = useState<string | null>(null);
 
@@ -30,20 +30,20 @@ const NavigationPage: React.FC = () => {
         }
     };
 
-    useEffect(() => { 
-        getCars(); 
+    useEffect(() => {
+        getCars();
     }, []);
 
     return (
         <>
-        <Header />
-        <div>
-            <h1>Navigation</h1>
-            {error && <div style={{ color: 'red' }}>{error}</div>}
-            <CarOverview cars={cars} />
-        </div>
+            <Header />
+            <div>
+                <h1>Navigation</h1>
+                {error && <div style={{ color: 'red' }}>{error}</div>}
+                <CarOverview cars={cars} />
+            </div>
         </>
     );
 };
 
-export default NavigationPage;
+export default CarNavigationPage;
