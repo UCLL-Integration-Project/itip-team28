@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
-  onSuccess: () => void;
-  setStatusMessages: (messages: StatusMessage[]) => void;
+    isOpen: boolean;
+    onClose: () => void;
+    onSuccess: () => void;
+    setStatusMessages: (messages: StatusMessage[]) => void;
 };
 
 const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMessages }) => {
@@ -20,7 +20,7 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
     const [longitudeError, setLongitudeError] = useState("");
     const [latitudeError, setLatitudeError] = useState("");
     const router = useRouter();
-    
+
 
     const clearErrors = () => {
         setNameError("");
@@ -100,14 +100,14 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                     router.push("/login");
                 }, 2000);
             } else {
-                setStatusMessages([{ message: "Failed to create reader", type: "error" }]);
+                setStatusMessages([{ message: result.ServiceException, type: "error" }]);
             }
         } catch (error: any) {
             setStatusMessages([{ message: error.message || "Failed to create reader", type: "error" }]);
         }
     };
 
-    if (!isOpen) {return null;}
+    if (!isOpen) { return null; }
 
     return (
         <div
@@ -123,108 +123,108 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                 </h4>
 
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
-                            <div>
-                                <label
-                                    htmlFor="name"
-                                    className="block text-xs sm:text-sm font-medium text-gray-700"
-                                >
-                                    Name
-                                </label>
-                                <input
-                                    type="text"
-                                    id="name"
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                                {nameError && (
-                                    <p className="mt-1 text-xs sm:text-sm text-red-600">{nameError}</p>
-                                )}
-                            </div>
+                    <div>
+                        <label
+                            htmlFor="name"
+                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                        >
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        />
+                        {nameError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{nameError}</p>
+                        )}
+                    </div>
 
-                            <div>
-                                <label
-                                    htmlFor="macAddress"
-                                    className="block text-xs sm:text-sm font-medium text-gray-700"
-                                >
-                                    Mac Address
-                                </label>
-                                <input
-                                    type="text"
-                                    id="macAddress"
-                                    value={macAddress}
-                                    onChange={(e) => setMacAddress(e.target.value)}
-                                    className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                                {macAddressError && (
-                                    <p className="mt-1 text-xs sm:text-sm text-red-600">{macAddressError}</p>
-                                )}
-                            </div>
+                    <div>
+                        <label
+                            htmlFor="macAddress"
+                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                        >
+                            Mac Address
+                        </label>
+                        <input
+                            type="text"
+                            id="macAddress"
+                            value={macAddress}
+                            onChange={(e) => setMacAddress(e.target.value)}
+                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        />
+                        {macAddressError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{macAddressError}</p>
+                        )}
+                    </div>
 
-                            <div>
-                                <label
-                                    htmlFor="longitude"
-                                    className="block text-xs sm:text-sm font-medium text-gray-700"
-                                >
-                                 Longitude
-                                </label>
-                                <input
-                                    type="number"
-                                    id="longitude"
-                                    value={longitude}
-                                    onChange={(e) =>
-                                        setLongtitude(parseInt(e.target.value))
-                                        }
-                                    className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"/>
-                                {longitudeError && (
-                                    <p className="mt-1 text-xs sm:text-sm text-red-600">{longitudeError}</p>
-                                )}
-                            </div>
+                    <div>
+                        <label
+                            htmlFor="longitude"
+                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                        >
+                            Longitude
+                        </label>
+                        <input
+                            type="number"
+                            id="longitude"
+                            value={longitude}
+                            onChange={(e) =>
+                                setLongtitude(parseInt(e.target.value))
+                            }
+                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                        {longitudeError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{longitudeError}</p>
+                        )}
+                    </div>
 
-                             <div>
-                                <label
-                                    htmlFor="latitude"
-                                    className="block text-xs sm:text-sm font-medium text-gray-700"
-                                >
-                                    Latitude
-                                </label>
-                                <input
-                                    type="number"
-                                    id="latitude"
-                                    value={latitude}
-                                    onChange={(e) =>
-                                        setLatitude(parseInt(e.target.value))
-                                    }
-                                    className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                                {latitudeError && (
-                                    <p className="mt-1 text-xs sm:text-sm text-red-600">{latitudeError}</p>
-                                )}
-                            </div>
+                    <div>
+                        <label
+                            htmlFor="latitude"
+                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                        >
+                            Latitude
+                        </label>
+                        <input
+                            type="number"
+                            id="latitude"
+                            value={latitude}
+                            onChange={(e) =>
+                                setLatitude(parseInt(e.target.value))
+                            }
+                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                        />
+                        {latitudeError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{latitudeError}</p>
+                        )}
+                    </div>
 
-                            <div className="flex justify-end space-x-2">
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setName("");
-                                        setMacAddress("");
-                                        setLatitude(0);
-                                        setLongtitude(0);
-                                        clearErrors();
-                                        onClose();
-                                    }}
-                                    className="bg-gray-300 text-gray-800 py-1 px-4 rounded-md text-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition"
-                                >
-                                    Cancel
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="bg-gray-800 text-white py-1 px-4 rounded-md text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
-                                >
-                                    Add Location
-                                </button>
-                            </div>
-                        </form>
+                    <div className="flex justify-end space-x-2">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                setName("");
+                                setMacAddress("");
+                                setLatitude(0);
+                                setLongtitude(0);
+                                clearErrors();
+                                onClose();
+                            }}
+                            className="bg-gray-300 text-gray-800 py-1 px-4 rounded-md text-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="bg-gray-800 text-white py-1 px-4 rounded-md text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
+                        >
+                            Add Location
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     )
