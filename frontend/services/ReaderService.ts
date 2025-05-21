@@ -43,7 +43,7 @@ const updateReader = (reader: Reader) => {
     console.log("fetching: ", url);
     try {
         const readerInput = {
-            MacAddress: reader.MacAddress,
+            MacAddress: reader.macAddress,
             name: reader.name,
             coordinates: {
                 longitude: reader.coordinates?.longitude,

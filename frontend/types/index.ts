@@ -20,7 +20,7 @@ export type Coordinates = {
 export type Reader = {
     id?: number;
     name?: string;
-    MacAddress?: string;
+    macAddress?: string;
     coordinates?: Coordinates;
 }
 

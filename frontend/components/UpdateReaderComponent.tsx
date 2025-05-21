@@ -27,7 +27,7 @@ const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
             setNameError("Name is required");
             isValid = false;
         }
-        if (!reader?.MacAddress) {
+        if (!reader?.macAddress) {
             setFormError("MAC address is missing");
             isValid = false;
         }
@@ -50,7 +50,7 @@ const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
             const response = await ReaderService.updateReader({
                 id: reader.id,
                 name,
-                MacAddress: reader.MacAddress,
+                macAddress: reader.macAddress,
                 coordinates: reader.coordinates,
             });
 

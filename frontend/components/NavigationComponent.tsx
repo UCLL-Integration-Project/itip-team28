@@ -118,7 +118,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                                     {reader.name || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.MacAddress || "N/A"}
+                                    {reader.macAddress || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
                                     {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
@@ -135,7 +135,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                                             setSelectedReader(reader);
                                             setIsUpdateModalOpen(true);
                                         }}
-                                        className="bg-blue-500 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
+                                        className="bg-gray-800 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
                                     >
                                         Update Name
                                     </button>
