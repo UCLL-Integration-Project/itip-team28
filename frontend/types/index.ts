@@ -42,6 +42,11 @@ export type Scan = {
     status?: "active" | "inactive";
 };
 
+export type Block = {
+    id?: number;
+    coordinates?: Coordinates;
+}
+
 export type StatusMessage = {
     message: string;
     type: "error" | "success";
