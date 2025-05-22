@@ -7,12 +7,12 @@ const RegisterForm: React.FC = () => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [usernameError, setUsernameError] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [confirmPasswordError, setConfirmPasswordError] = useState('');
-    const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
+    const [ConfirmPassword, setConfirmPassword] = useState('');
+    const [UsernameError, setUsernameError] = useState('');
+    const [EmailError, setEmailError] = useState('');
+    const [PasswordError, setPasswordError] = useState('');
+    const [ConfirmPasswordError, setConfirmPasswordError] = useState('');
+    const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const router = useRouter();
 
     const clearErrors = () => {
@@ -42,7 +42,7 @@ const RegisterForm: React.FC = () => {
             result = false;
         }
 
-        if (password !== confirmPassword) {
+        if (password !== ConfirmPassword) {
             setConfirmPasswordError('Passwords do not match');
             result = false;
         }
@@ -63,7 +63,7 @@ const RegisterForm: React.FC = () => {
                 username,
                 email,
                 password,
-                role: "user", 
+                role: "user",
             });
 
             const result = await response.json();
@@ -74,7 +74,7 @@ const RegisterForm: React.FC = () => {
                     router.push("/login");
                 }, 2000);
             } else if (response.status === 400) {
-                setStatusMessages([{ message: result.message || "Registration failed", type: "error" }]);
+                setStatusMessages([{ message: result.ServiceException || "Registration failed", type: "error" }]);
             } else {
                 setStatusMessages([
                     { message: "An unexpected error occurred. Please try again later.", type: "error" },
@@ -88,12 +88,12 @@ const RegisterForm: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-center text-gray-800">Register</h2>
+        <div className="space-y-4 sm:space-y-6">
+            <h2 className="text-xl sm:text-2xl font-semibold text-center text-gray-800">Register</h2>
 
-            {statusMessages.length > 0 && (
-                <ul className="space-y-2">
-                    {statusMessages.map(({ message, type }, index) => (
+            {StatusMessages.length > 0 && (
+                <ul className="space-y-1 sm:space-y-2">
+                    {StatusMessages.map(({ message, type }, index) => (
                         <li
                             key={index}
                             className={`text-sm ${type === 'error' ? 'text-red-600' : 'text-green-600'}`}
@@ -116,7 +116,7 @@ const RegisterForm: React.FC = () => {
                         onChange={(e) => setUsername(e.target.value)}
                         className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    {usernameError && <p className="text-red-600 text-sm">{usernameError}</p>}
+                    {UsernameError && <p className="text-red-600 text-sm">{UsernameError}</p>}
                 </div>
 
                 <div>
@@ -130,7 +130,7 @@ const RegisterForm: React.FC = () => {
                         onChange={(e) => setEmail(e.target.value)}
                         className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    {emailError && <p className="text-red-600 text-sm">{emailError}</p>}
+                    {EmailError && <p className="text-red-600 text-sm">{EmailError}</p>}
                 </div>
 
                 <div>
@@ -144,7 +144,7 @@ const RegisterForm: React.FC = () => {
                         onChange={(e) => setPassword(e.target.value)}
                         className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    {passwordError && <p className="text-red-600 text-sm">{passwordError}</p>}
+                    {PasswordError && <p className="text-red-600 text-sm">{PasswordError}</p>}
                 </div>
 
                 <div>
@@ -154,11 +154,11 @@ const RegisterForm: React.FC = () => {
                     <input
                         id="confirmPassword"
                         type="password"
-                        value={confirmPassword}
+                        value={ConfirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
-                    {confirmPasswordError && <p className="text-red-600 text-sm">{confirmPasswordError}</p>}
+                    {ConfirmPasswordError && <p className="text-red-600 text-sm">{ConfirmPasswordError}</p>}
                 </div>
 
                 <div>

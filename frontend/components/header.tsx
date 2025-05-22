@@ -19,7 +19,7 @@ const Header: React.FC = () => {
         setLoggedInUser(null);
     };
 
-    const IsManager = LoggedInUser && (LoggedInUser.role === "MANAGER");
+    const IsManager = LoggedInUser && (LoggedInUser.role?.toUpperCase() === "MANAGER");
 
     return (
         <header className="bg-gray-800 text-white py-4 shadow-md">
@@ -36,6 +36,13 @@ const Header: React.FC = () => {
                         <li>
                             <Link href="/navigation" className="hover:text-indigo-400 transition-colors duration-200">
                                 Navigation
+                            </Link>
+                        </li>
+                    )}
+                    {IsManager && (
+                        <li>
+                            <Link href="/cars" className="hover:text-indigo-400 transition-colors duration-200">
+                                Cars
                             </Link>
                         </li>
                     )}

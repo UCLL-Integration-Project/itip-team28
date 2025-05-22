@@ -45,6 +45,7 @@ const UserLoginForm: React.FC = () => {
         const user = { username, password };
         const response = await UserService.loginUser(user);
 
+
         if (response.status === 200) {
             setStatusMessages([{ message: "Login successful", type: "success" }]);
 
@@ -63,13 +64,12 @@ const UserLoginForm: React.FC = () => {
                 router.push("/");
             }, 2000);
         } else if (response.status === 401) {
-            const { errorMessage } = await response.json();
-            setStatusMessages([{ message: errorMessage, type: "error" }]);
+            setStatusMessages([{ message: "Incorrect credentials", type: "error" }]);
         } else {
-            const error = await response.json();
+            const result = await response.json();
             setStatusMessages([
                 {
-                    message: error.message,
+                    message: result.ServiceException,
                     type: "error"
                 },
             ]);
@@ -77,13 +77,13 @@ const UserLoginForm: React.FC = () => {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-4 sm:space-y-6">
             <div>
-                <h3 className="text-2xl font-semibold text-center text-gray-800">Login</h3>
+                <h3 className="text-xl sm:text-2xl font-semibold text-center text-gray-800">Login</h3>
             </div>
             {StatusMessages && (
-                <div>
-                    <ul className="space-y-2">
+                <div className="p-3 sm:p-4 rounded-md">
+                    <ul className="space-y-1 sm:space-y-2">
                         {StatusMessages.map(({ message, type }, index) => (
                             <li
                                 key={index}
@@ -96,35 +96,35 @@ const UserLoginForm: React.FC = () => {
                     </ul>
                 </div>
             )}
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                 <div>
-                    <label htmlFor="username" className="block mb-1 font-medium text-gray-700">Username</label>
+                    <label htmlFor="username" className="block text-xs sm:text-sm font-medium text-gray-700">Username</label>
                     <input
                         type="text"
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
                     />
-                    {UsernameError && <p className="text-sm text-red-600 mt-1">{UsernameError}</p>}
+                    {UsernameError && <p className="mt-1 text-xs sm:text-sm text-red-600">{UsernameError}</p>}
                 </div>
                 <div>
-                    <label htmlFor="password" className="block mb-1 font-medium text-gray-700">Password</label>
+                    <label htmlFor="password" className="block text-xs sm:text-sm font-medium text-gray-700">Password</label>
                     <input
                         type="password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
                     />
-                    {PasswordError && <p className="text-sm text-red-600 mt-1">{PasswordError}</p>}
+                    {PasswordError && <p className="mt-1 text-xs sm:text-sm text-red-600">{PasswordError}</p>}
                 </div>
-                <div>
-                    <button type="submit" className="w-full bg-gray-800 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition">Login</button>
+                <div >
+                    <button type="submit" className="w-full bg-gray-800 text-white py-2 px-4 rounded-md text-sm sm:text-base hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-gray-500 transition">Login</button>
                 </div>
             </form>
-            <div>
-                <p className="text-sm text-center text-gray-600">Don't have an account? <a href="/login/register" className="text-indigo-600 hover:underline">Register</a></p>
+            <div className="text-center">
+                <p className="text-xs sm:text-sm text-gray-600">Don't have an account? <a href="/login/register" className="text-indigo-600 hover:underline">Register</a></p>
             </div>
         </div>
     );
