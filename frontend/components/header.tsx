@@ -39,10 +39,10 @@ const Header: React.FC = () => {
                             </Link>
                         </li>
                     )}
-                    {LoggedInUser && (
+                    {IsManager && (
                         <li>
-                            <Link href="/route" className="hover:text-indigo-400 transition-colors duration-200">
-                                Route
+                            <Link href="/cars" className="hover:text-indigo-400 transition-colors duration-200">
+                                Cars
                             </Link>
                         </li>
                     )}

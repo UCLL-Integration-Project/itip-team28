@@ -8,7 +8,7 @@ export type User = {
 
 export type Car = {
     id?: number;
-    number?: number;
+    name?: string;
 }
 
 export type Coordinates = {
@@ -20,7 +20,7 @@ export type Coordinates = {
 export type Reader = {
     id?: number;
     name?: string;
-    MacAddress?: string;
+    macAddress?: string;
     coordinates?: Coordinates;
 }
 
