@@ -73,7 +73,7 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
         try {
             const response = await ReaderService.createReader({
                 name,
-                MacAddress: macAddress,
+                macAddress: macAddress,
                 coordinates: {
                     longitude,
                     latitude,
