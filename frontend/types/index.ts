@@ -8,7 +8,7 @@ export type User = {
 
 export type Car = {
     id?: number;
-    number?: number;
+    name?: string;
 }
 
 export type Coordinates = {

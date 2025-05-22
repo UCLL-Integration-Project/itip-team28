@@ -101,7 +101,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                                 Name
                             </th>
                             <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
-                                Mac adress
+                                Mac address
                             </th>
                             <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
                                 Coordinates

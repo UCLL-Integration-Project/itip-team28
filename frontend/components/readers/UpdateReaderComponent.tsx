@@ -1,5 +1,6 @@
 import ReaderService from "@/services/ReaderService";
 import { Reader, StatusMessage } from "@/types";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 type Props = {
@@ -14,6 +15,7 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
     const [NameError, setNameError] = useState("");
     const [FormError, setFormError] = useState("");
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
+    const router = useRouter();
 
     const clearErrors = () => {
         setNameError("");
@@ -52,9 +54,12 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
 
             if (response.ok) {
                 setStatusMessages([{ message: "Reader name updated successfully", type: "success" }]);
-                onClose();
                 onSuccess();
                 setName("");
+                setTimeout(() => {
+                    router.push("/navigation");
+                }, 1000);
+                onClose();
             } else {
                 setStatusMessages([{ message: result.ServiceException || "Failed to update reader", type: "error" }]);
             }

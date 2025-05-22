@@ -84,11 +84,11 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
 
             if (response.ok) {
                 setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
-                onClose();
                 onSuccess();
                 setTimeout(() => {
                     router.push("/navigation");
-                }, 2000);
+                }, 1000);
+                onClose();
 
                 setName("");
                 setMacAddress("");
