@@ -75,7 +75,7 @@ const Navigation: React.FC = () => {
             <Header />
             <main className="bg-background min-h-screen flex items-center justify-center bg-gray-100 px-4">
                 {!error && <CarOverview cars={cars} />}
-                <section className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md">
+                <section className="bg-comp w-full max-w-4xl bg-white p-6 rounded-lg shadow-md">
                     {error && <div className="text-red-500">{error}</div>}
                     {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} />}
                 </section>

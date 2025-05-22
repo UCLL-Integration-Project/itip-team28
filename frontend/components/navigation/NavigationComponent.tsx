@@ -72,7 +72,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
         <>
             <div className="space-y-4 sm:space-y-6 p-4 sm:p-6 max-w-4xl mx-auto">
                 <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold text-center text-gray-800">
+                    <h3 className="text-xl sm:text-2xl font-semibold text-center text-text">
                         Navigation
                     </h3>
                 </div>
@@ -94,19 +94,19 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
             )}
 
             <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-300 rounded-md">
+                <table className="min-w-full border border-dk-300  rounded-md">
                     <thead>
-                        <tr className="bg-gray-100">
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
+                        <tr className="bg-lg">
+                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-text border-b border-dk -300">
                                 Name
                             </th>
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
+                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-text border-b border-dk-300">
                                 Mac address
                             </th>
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
+                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-text border-b border-dk-300">
                                 Coordinates
                             </th>
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
+                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-text border-b border-dk-300">
                                 Action
                             </th>
                         </tr>
@@ -114,19 +114,19 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                     <tbody>
                         {readers.map((reader, index) => (
                             <tr key={reader.id || index} className="hover:bg-gray-50">
-                                <td className="px-4 py-2 text-sm border-b border-gray-300">
+                                <td className="text-text px-4 py-2 text-sm border-b border-dk-300">
                                     {reader.name || "N/A"}
                                 </td>
-                                <td className="px-4 py-2 text-sm border-b border-gray-300">
+                                <td className="text-text px-4 py-2 text-sm border-b border-dk-300">
                                     {reader.macAddress || "N/A"}
                                 </td>
-                                <td className="px-4 py-2 text-sm border-b border-gray-300">
+                                <td className="text-text px-4 py-2 text-sm border-b border-dk-300">
                                     {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
                                 </td>
-                                <td className="px-4 py-2 text-sm border-b border-gray-300 space-x-2">
+                                <td className="text-text px-4 py-2 text-sm border-b border-dk-300 space-x-2">
                                     <button
                                         onClick={() => handleDrive(reader)}
-                                        className="bg-gray-800 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
+                                        className="bg-indigo-600 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
                                     >
                                         Drive here
                                     </button>
@@ -135,7 +135,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                                             setSelectedReader(reader);
                                             setIsUpdateModalOpen(true);
                                         }}
-                                        className="bg-gray-800 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
+                                        className="bg-indigo-600 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
                                     >
                                         Update Name
                                     </button>
@@ -149,7 +149,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
             <div>
                 <button
                     onClick={() => setIsModalOpen(true)}
-                    className="text-indigo-600 hover:underline text-xs sm:text-sm"
+                    className="link-text hover:underline text-xs sm:text-sm"
                 >
                     Add Location
                 </button>

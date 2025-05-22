@@ -11,7 +11,7 @@ const Register: React.FC = () => {
             </Head>
             <Header />
             <main className="bg-background text-text min-h-screen flex items-center justify-center bg-gray-100 px-4">
-                <section className="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+                <section className="bg-comp w-full max-w-md bg-white p-6 rounded-lg shadow-md">
                     <RegisterForm />
                 </section>
             </main>

@@ -3,12 +3,17 @@
 :root {
     --color-background: #ffffff;
     --color-text: #000000;
+    --color-background-comp: #ffffff;
+    --color-link-text: #4f39f6;
+    --color-background-lg: #ebe6e7;
 }
 
 html.dark {
     --color-background: #111827;
-    --color-background-comp: #001861;
+    --color-background-comp: #203063;
     --color-text: #f9fafb;
+    --color-link-text: #f58844;
+    --color-background-lg: #19254f;
 }
 
 .bg-background {
@@ -23,5 +28,21 @@ html.dark {
 
 .bg-comp {
     transition: 0.3s;
-    background-color: var(--color-text);
+    background-color: var(--color-background-comp);
+}
+
+.link-text {
+    transition: 0.3s;
+    color: var(--color-link-text);
+}
+
+.bg-lg {
+    transition: 0.3s;
+    background-color: var(--color-background-lg);
+}
+
+.border-dk {
+    transition: 0.3s;
+    border-radius: 1px;
+    border: var(--color-background-lg);
 }
