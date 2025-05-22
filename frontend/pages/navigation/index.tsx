@@ -1,6 +1,6 @@
 import CarOverview from "@/components/cars/CarOverview";
 import Header from "@/components/header";
-import NavigationComponent from "@/components/NavigationComponent";
+import NavigationComponent from "@/components/navigation/NavigationComponent";
 import { ReadersOverview } from "@/components/readers/ReadersOverview";
 import CarService from "@/services/CarService";
 import ReaderService from "@/services/ReaderService";
@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 const Navigation: React.FC = () => {
     const [readers, setReaders] = useState<Array<Reader>>([]);
     const [error, setError] = useState<string>("");
-    const [selectReader, setSelectReader] = useState<Reader | null>(null);
+    const [SelectReader, setSelectReader] = useState<Reader | null>(null);
 
     const getReaders = async () => {
         setError('');
@@ -57,7 +57,7 @@ const Navigation: React.FC = () => {
             setCars(cars);
         }
     };
-    
+
     useEffect(() => {
         getCars();
         getReaders();
