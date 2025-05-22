@@ -6,7 +6,8 @@ const GridComponent = () => {
 
   const [blockSize, setBlockSize] = useState(40);
   const [carPosition, setCarPosition] = useState({ x: 0, y: 0 });
-  const [path, setPath] = useState([]);
+  const [path, setPath] = useState<Array<{ x: number; y: number }>>([]);
+
   const [currentStep, setCurrentStep] = useState(0);
 
   const stops = [
@@ -15,7 +16,7 @@ const GridComponent = () => {
     { x: 8, y: 1 },
   ];
 
-  const calculatePath = (start, end) => {
+  const calculatePath = (start:{x:number, y:number}, end:{x:number, y:number}) => {
     const path = [];
     let { x: currentX, y: currentY } = start;
 
@@ -32,7 +33,7 @@ const GridComponent = () => {
     return path;
   };
 
-  const handleStopClick = (x, y) => {
+  const handleStopClick = (x:number, y:number) => {
     const newPath = calculatePath(carPosition, { x, y });
     setPath(newPath);
     setCurrentStep(0);

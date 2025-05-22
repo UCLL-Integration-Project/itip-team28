@@ -2,37 +2,39 @@ import React from "react";
 import { Reader } from "../../types";
 
 interface ReadersOverviewProps {
-    readers: Reader[];
+  readers: Reader[];
 }
 
-const shelfIcon = (
-<img src="../images/shelves.png" alt="" />
-);
+const shelfIcon = <img src="../images/shelves.png" alt="Shelf icon" className="w-6 h-6 object-contain" />;
 
 export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers }) => {
-    return (
-        <div className="flex flex-col gap-6 py-8 px-6 rounded-sm bg-gray-200">
-            <h1 className="text-2xl font-semibold">Readers overview</h1>
-            {readers.map((reader) => (
-                <div
-                    key={reader.id}
-                    className="border-1 border-gray-500 rounded-sm px-6 py-4 flex items-start justify-between min-w-[400px] max-w-[600px] bg-white"
-                >
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 ">{shelfIcon}</div>
-                        <div>
-                            <div className="text-lg font-medium">{reader.name}</div>
-                            <div className="text-sm text-gray-600">
-                                MAC: {reader.macAddress}
-                            </div>
-                        </div>
-                    </div>
-                    <div className="gap-2 text-sm text-gray-600 flex    flex-col">
-                        <p className="px-1 bg-green-200 rounded-sm border-green-400 border-1 text-green-800">X:{reader.coordinates?.longitude}</p> 
-                        <p className="px-1 bg-purple-200 rounded-sm border-purple-400 border-1 text-purple-800">Y:{reader.coordinates?.latitude}</p>
-                    </div>
-                </div>
-            ))}
+  return (
+    <div className="flex flex-col gap-4 py-4 px-3 rounded-md bg-gray-100 h-full w-full overflow-y-auto">
+      <h1 className="text-xl font-semibold">Readers Overview</h1>
+      
+      {readers.map((reader) => (
+        <div
+          key={reader.id}
+          className="border border-gray-300 rounded-md p-3 flex items-start justify-between bg-white shadow-sm w-full"
+        >
+          <div className="flex items-start gap-3">
+            <div className="shrink-0">{shelfIcon}</div>
+            <div className="text-sm">
+              <div className="font-medium text-gray-800 break-words">{reader.name}</div>
+              <div className="text-xs text-gray-600 break-all">MAC: {reader.macAddress}</div>
+            </div>
+          </div>
+
+          <div className="text-xs text-right flex flex-col gap-1 shrink-0">
+            <span className="px-2 py-0.5 bg-green-100 text-green-800 rounded border border-green-300 whitespace-nowrap">
+              X: {reader.coordinates?.longitude}
+            </span>
+            <span className="px-2 py-0.5 bg-purple-100 text-purple-800 rounded border border-purple-300 whitespace-nowrap">
+              Y: {reader.coordinates?.latitude}
+            </span>
+          </div>
         </div>
-    );
+      ))}
+    </div>
+  );
 };
