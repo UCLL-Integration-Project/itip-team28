@@ -3,13 +3,16 @@ const getToken = (): string => {
   return LoggedInUserString ? JSON.parse(LoggedInUserString).token : '';
 };
 
-const getCars= () => {
+const getCars = () => {
   return fetch(process.env.NEXT_PUBLIC_API_URL + '/cars', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${getToken()}`,
     },
+  }).catch((error) => {
+    console.error("Error:", error);
+    throw error;
   });
 };
 

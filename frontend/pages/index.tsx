@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import ScansOverview from '@/components/ScansOverview';
+import ScansOverview from '@/components/scans/ScansOverview';
 import Header from '@/components/header';
 import ScanService from '@/services/ScanService';
 import { Scan } from '@/types';
