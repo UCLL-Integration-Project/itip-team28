@@ -3,17 +3,17 @@ import { Reader, StatusMessage } from "@/types";
 import { useState } from "react";
 
 type Props = {
-    isOpen: boolean;
+    IsOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
-    setStatusMessages: (messages: StatusMessage[]) => void;
     reader: Reader | null;
 };
 
-const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMessages, reader }) => {
+const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) => {
     const [name, setName] = useState(reader?.name || "");
-    const [nameError, setNameError] = useState("");
-    const [formError, setFormError] = useState("");
+    const [NameError, setNameError] = useState("");
+    const [FormError, setFormError] = useState("");
+    const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
 
     const clearErrors = () => {
         setNameError("");
@@ -25,14 +25,6 @@ const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
         let isValid = true;
         if (!name || name.trim() === "") {
             setNameError("Name is required");
-            isValid = false;
-        }
-        if (!reader?.macAddress) {
-            setFormError("MAC address is missing");
-            isValid = false;
-        }
-        if (!reader?.coordinates || !reader.coordinates.latitude || !reader.coordinates.longitude) {
-            setFormError("Coordinates are missing or incomplete");
             isValid = false;
         }
         return isValid;
@@ -54,6 +46,8 @@ const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                 coordinates: reader.coordinates,
             });
 
+            console.log(reader.id);
+
             const result = await response.json();
 
             if (response.ok) {
@@ -69,7 +63,7 @@ const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
         }
     };
 
-    if (!isOpen || !reader) {
+    if (!IsOpen || !reader) {
         return null;
     }
 
@@ -87,6 +81,20 @@ const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                 </h4>
 
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                    {StatusMessages.length > 0 && (
+                        <div className="p-3 sm:p-4 rounded-md">
+                            <ul className="space-y-1 sm:space-y-2">
+                                {StatusMessages.map(({ message, type }, index) => (
+                                    <li
+                                        key={index}
+                                        className={`text-sm text-center ${type === "success" ? "text-green-600" : "text-red-600"}`}
+                                    >
+                                        {message}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                     <div>
                         <label
                             htmlFor="name"
@@ -101,13 +109,14 @@ const UpdateReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                             onChange={(e) => setName(e.target.value)}
                             className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         />
-                        {nameError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{nameError}</p>
+                        {NameError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{NameError}</p>
                         )}
-                        {formError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{formError}</p>
+                        {FormError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{FormError}</p>
                         )}
                     </div>
+
 
                     <div className="flex justify-end space-x-2">
                         <button

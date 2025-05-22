@@ -1,5 +1,5 @@
 import Header from "@/components/header";
-import NavigationComponent from "@/components/NavigationComponent";
+import NavigationComponent from "@/components/navigation/NavigationComponent";
 import ReaderService from "@/services/ReaderService";
 import { Reader } from "@/types";
 import { useEffect, useState } from "react";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const Navigation: React.FC = () => {
     const [readers, setReaders] = useState<Array<Reader>>([]);
     const [error, setError] = useState<string>("");
-    const [selectReader, setSelectReader] = useState<Reader | null>(null);
+    const [SelectReader, setSelectReader] = useState<Reader | null>(null);
 
     const getReaders = async () => {
         setError('');
@@ -34,7 +34,7 @@ const Navigation: React.FC = () => {
 
     useEffect(() => {
         getReaders();
-    }, [readers]);
+    }, []);
 
     const handleSelectReader = (reader: Reader) => {
         setSelectReader(reader);

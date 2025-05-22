@@ -1,10 +1,10 @@
 import RouteService from "@/services/RouteService";
-import ReaderService from "@/services/ReaderService"; 
+import ReaderService from "@/services/ReaderService";
 import { Reader, Route, StatusMessage, User } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import CreateReaderComponent from "./CreateReaderComponent";
-import UpdateReader from "./UpdateReaderComponent";
+import UpdateReader from "../readers/UpdateReaderComponent";
+import CreateReaderComponent from "../readers/CreateReaderComponent";
 
 type Props = {
     readers: Array<Reader>;
@@ -14,9 +14,9 @@ type Props = {
 const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-    const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
+    const [IsModalOpen, setIsModalOpen] = useState(false);
+    const [IsUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+    const [SelectedReader, setSelectedReader] = useState<Reader | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -48,7 +48,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
         ReaderService.getReaders().then(async (response) => {
             if (response.ok) {
                 const updatedReaders = await response.json();
-                readers.splice(0, readers.length, ...updatedReaders); 
+                readers.splice(0, readers.length, ...updatedReaders);
             }
         });
     };
@@ -57,7 +57,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
         ReaderService.getReaders().then(async (response) => {
             if (response.ok) {
                 const updatedReaders = await response.json();
-                readers.splice(0, readers.length, ...updatedReaders); 
+                readers.splice(0, readers.length, ...updatedReaders);
             }
         });
     };
@@ -156,17 +156,15 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
             </div>
 
             <CreateReaderComponent
-                isOpen={isModalOpen}
+                IsOpen={IsModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onSuccess={handleReaderCreated}
-                setStatusMessages={setStatusMessages}
             />
             <UpdateReader
-                isOpen={isUpdateModalOpen}
+                IsOpen={IsUpdateModalOpen}
                 onClose={() => setIsUpdateModalOpen(false)}
                 onSuccess={handleReaderUpdated}
-                setStatusMessages={setStatusMessages}
-                reader={selectedReader}
+                reader={SelectedReader}
             />
         </>
     );

@@ -4,21 +4,21 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 type Props = {
-    isOpen: boolean;
+    IsOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
-    setStatusMessages: (messages: StatusMessage[]) => void;
 };
 
-const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMessages }) => {
+const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
     const [name, setName] = useState("");
-    const [macAddress, setMacAddress] = useState("");
+    const [MacAddress, setMacAddress] = useState("");
     const [longitude, setLongtitude] = useState<number>(0);
     const [latitude, setLatitude] = useState<number>(0);
-    const [nameError, setNameError] = useState("");
-    const [macAddressError, setMacAddressError] = useState("");
-    const [longitudeError, setLongitudeError] = useState("");
-    const [latitudeError, setLatitudeError] = useState("");
+    const [NameError, setNameError] = useState("");
+    const [MacAddressError, setMacAddressError] = useState("");
+    const [LongitudeError, setLongitudeError] = useState("");
+    const [LatitudeError, setLatitudeError] = useState("");
+    const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const router = useRouter();
 
 
@@ -40,20 +40,20 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
             result = false;
         }
 
-        if (!macAddress || macAddress.trim() === "") {
+        if (!MacAddress || MacAddress.trim() === "") {
             setMacAddressError("Mac address is required");
             result = false;
-        } else if (!/^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$/.test(macAddress)) {
+        } else if (!/^([0-9A-Fa-f]{2}:){5}([0-9A-Fa-f]{2})$/.test(MacAddress)) {
             setMacAddressError("Mac address must be in the format: XX:XX:XX:XX:XX:XX");
             result = false;
         }
         // extra validation for mac coordinates might be wanted/needed at a later point
-        if (!longitude) {
+        if (longitude.toString().trim() === "") {
             setLongitudeError("Coordinates are required");
             result = false;
         }
 
-        if (!latitude) {
+        if (latitude.toString().trim() === "") {
             setLatitudeError("Coordinates are required");
             result = false;
         }
@@ -73,7 +73,7 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
         try {
             const response = await ReaderService.createReader({
                 name,
-                MacAddress: macAddress,
+                macAddress: MacAddress,
                 coordinates: {
                     longitude,
                     latitude,
@@ -107,7 +107,7 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
         }
     };
 
-    if (!isOpen) { return null; }
+    if (!IsOpen) { return null; }
 
     return (
         <div
@@ -123,6 +123,20 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                 </h4>
 
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                    {StatusMessages.length > 0 && (
+                        <div className="p-3 sm:p-4 rounded-md">
+                            <ul className="space-y-1 sm:space-y-2">
+                                {StatusMessages.map(({ message, type }, index) => (
+                                    <li
+                                        key={index}
+                                        className={`text-sm text-center ${type === "success" ? "text-green-600" : "text-red-600"}`}
+                                    >
+                                        {message}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                     <div>
                         <label
                             htmlFor="name"
@@ -137,8 +151,8 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                             onChange={(e) => setName(e.target.value)}
                             className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         />
-                        {nameError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{nameError}</p>
+                        {NameError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{NameError}</p>
                         )}
                     </div>
 
@@ -152,12 +166,12 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                         <input
                             type="text"
                             id="macAddress"
-                            value={macAddress}
+                            value={MacAddress}
                             onChange={(e) => setMacAddress(e.target.value)}
                             className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         />
-                        {macAddressError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{macAddressError}</p>
+                        {MacAddressError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{MacAddressError}</p>
                         )}
                     </div>
 
@@ -176,8 +190,8 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                                 setLongtitude(parseInt(e.target.value))
                             }
                             className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
-                        {longitudeError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{longitudeError}</p>
+                        {LongitudeError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{LongitudeError}</p>
                         )}
                     </div>
 
@@ -197,8 +211,8 @@ const createReader: React.FC<Props> = ({ isOpen, onClose, onSuccess, setStatusMe
                             }
                             className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                         />
-                        {latitudeError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{latitudeError}</p>
+                        {LatitudeError && (
+                            <p className="mt-1 text-xs sm:text-sm text-red-600">{LatitudeError}</p>
                         )}
                     </div>
 

@@ -8,7 +8,7 @@ type Props = {
 
 const ScansOverview: React.FC<Props> = ({ scans }: Props) => (
     <div className="p-4 sm:p-6">
-        <h2 className="text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 font-semibold text-gray-800">Overview</h2>
+        <h2 className="text-xl sm:text-2xl md:text-3xl mb-3 sm:mb-4 font-semibold text-gray-800">Scans Overview</h2>
         <div className="overflow-x-auto">
             <table className="min-w-full border-collapse border border-gray-300">
                 <thead>
