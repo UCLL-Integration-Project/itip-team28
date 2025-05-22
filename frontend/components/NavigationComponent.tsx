@@ -43,7 +43,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     };
 
     const handleReaderCreated = () => {
-        
+
     }
 
     const IsManager = LoggedInUser && (LoggedInUser.role?.toUpperCase() === "MANAGER");

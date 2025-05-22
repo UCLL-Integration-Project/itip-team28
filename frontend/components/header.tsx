@@ -4,15 +4,39 @@ import { useEffect, useState } from "react";
 
 const Header: React.FC = () => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
+    const [DarkMode, setDarkMode] = useState<boolean>(false);
 
     useEffect(() => {
+
+        const storedDarkMode = localStorage.getItem('darkmode');
+        if (storedDarkMode === 'true') {
+            setDarkMode(true);
+            document.documentElement.classList.add('dark');
+        } else {
+            setDarkMode(false);
+            document.documentElement.classList.remove('dark');
+        }
+
         const LoggedInUserString = sessionStorage.getItem('LoggedInUser');
         if (LoggedInUserString !== null) {
             setLoggedInUser(JSON.parse(LoggedInUserString));
         } else {
             setLoggedInUser(null);
         }
+
     }, []);
+
+    const handleDarkmode = (darkmode: boolean) => {
+        setDarkMode(darkmode);
+        localStorage.setItem('darkmode', darkmode.toString());
+
+        if (darkmode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }
+
 
     const handleClick = () => {
         sessionStorage.removeItem('LoggedInUser');
@@ -54,6 +78,10 @@ const Header: React.FC = () => {
                         {LoggedInUser && (<Link href="/login" onClick={handleClick} className="hover:text-red-400 transition-colors duration-200">
                             Logout
                         </Link>)}
+                    </li>
+                    <li>
+                        {!DarkMode && (<button onClick={() => handleDarkmode(true)}>Darkmode</button>)}
+                        {DarkMode && (<button onClick={() => handleDarkmode(false)}>Lightmode</button>)}
                     </li>
                 </ul>
             </nav>

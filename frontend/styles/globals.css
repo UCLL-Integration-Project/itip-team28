@@ -1,1 +1,19 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+:root {
+    --color-background: #ffffff;
+    --color-text: #000000;
+}
+
+html.dark {
+    --color-background: #111827;
+    --color-text: #f9fafb;
+}
+
+.bg-background {
+    background-color: var(--color-background);
+}
+
+.text-text {
+    color: var(--color-text);
+}
