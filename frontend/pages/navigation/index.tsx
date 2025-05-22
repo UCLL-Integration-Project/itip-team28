@@ -46,7 +46,7 @@ const Navigation: React.FC = () => {
                 <title>Readers</title>
             </head>
             <Header />
-            <main className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <main className="bg-background min-h-screen flex items-center justify-center bg-gray-100 px-4">
                 <section className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-md">
                     {error && <div className="text-red-500">{error}</div>}
                     {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} />}

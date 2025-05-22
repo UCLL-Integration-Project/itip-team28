@@ -7,13 +7,21 @@
 
 html.dark {
     --color-background: #111827;
+    --color-background-comp: #001861;
     --color-text: #f9fafb;
 }
 
 .bg-background {
+    transition: 0.3s;
     background-color: var(--color-background);
 }
 
 .text-text {
+    transition: 0.3s;
     color: var(--color-text);
+}
+
+.bg-comp {
+    transition: 0.3s;
+    background-color: var(--color-text);
 }
