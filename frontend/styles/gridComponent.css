@@ -1,0 +1,46 @@
+.grid-container {
+  padding: 1rem;
+}
+
+.grid-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.grid-controls {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.grid-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.grid-input {
+  border: 1px solid #ccc;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  width: 5rem;
+}
+
+.grid-wrapper {
+  display: inline-block;
+  border: 1px solid black;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-cell {
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: #4B5563;
+}
