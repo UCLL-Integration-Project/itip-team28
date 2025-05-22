@@ -12,7 +12,7 @@ type Props = {
 const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [IsModalOpen, setIsModalOpen] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     };
 
     const handleReaderCreated = () => {
-        
+
     }
 
     const IsManager = LoggedInUser && (LoggedInUser.role?.toUpperCase() === "MANAGER");
@@ -102,7 +102,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                                     {reader.name || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.MacAddress || "N/A"}
+                                    {reader.macAddress || "N/A"}
                                 </td>
                                 <td className="px-4 py-2 text-sm border-b border-gray-300">
                                     {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
@@ -131,7 +131,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
             </div>
 
             <CreateReaderComponent
-                isOpen={isModalOpen}
+                isOpen={IsModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 onSuccess={handleReaderCreated}
                 setStatusMessages={setStatusMessages}

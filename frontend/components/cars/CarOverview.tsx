@@ -10,11 +10,11 @@ const CarOverview: React.FC<CarOverviewProps> = ({ cars }) => {
     if (!car) return null;
 
     return (
-        <div className="relative rounded-3xl bg-gray-200 p-8 max-w-[340px] mx-auto my-4 flex flex-col items-start gap-4 shadow-lg">
+        <div className="rounded-md bg-gray-200 p-8 max-w-[340px] my-4 flex flex-col items-start gap-4">
             {/* Close button */}
             <div className='flex items-center justify-between w-full'>
                 <div className='flex items-center gap-4'>
-                    <h2 className="font-bold text-2xl text-[#2a2a2a]">{car.number}</h2>
+                    <h2 className="font-semibold text-2xl text-[#2a2a2a]">{car.name}</h2>
                     
                     <div className="text-gray-500 text-sm">
                         <strong>ID:</strong> {car.id}
