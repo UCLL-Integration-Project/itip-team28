@@ -50,10 +50,10 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
         }
 
         console.log("Submitting data:", {
-                macAddress: selectedReader,
-                stock,
-                type,
-            })
+            macAddress: selectedReader,
+            stock,
+            type,
+        })
 
         if (selectedReader) {
             onSubmit({
@@ -68,7 +68,7 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-xs bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50">
             <div className="bg-comp rounded-lg shadow-lg w-full max-w-md p-6 transition-all duration-300 hover:shadow-xl">
                 <h3 className="text-lg font-bold text-text mb-4">Stock Modal</h3>
                 <form onSubmit={handleSubmit}>

@@ -74,7 +74,7 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 dark:bg-opacity-70 backdrop-blur-sm z-50 transition-opacity duration-300"
+            className="fixed inset-0 flex items-center justify-center bg-black/85 bg-opacity-50 dark:bg-opacity-70 backdrop-blur-xs z-50 transition-opacity duration-300"
             onClick={onClose}
         >
             <div
