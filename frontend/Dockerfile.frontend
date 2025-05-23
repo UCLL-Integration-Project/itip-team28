@@ -1,0 +1,15 @@
+FROM node:18
+# Create app directory
+WORKDIR /usr/src/app
+# Install app dependencies
+COPY package*.json ./
+# Set the backend URL as an env var (public so frontend can access it)
+ARG NEXT_PUBLIC_API_URL=https://itip-team28-backend-itip-project28.apps.okd.ucll.cloud/
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+RUN npm install
+# Bundle app source
+COPY . .
+# Expose the port the app runs on
+EXPOSE 3000
+# Start the app
+CMD [ "npm", "run",  "dev" ]

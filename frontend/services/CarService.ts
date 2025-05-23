@@ -3,9 +3,8 @@ const getToken = (): string => {
   return LoggedInUserString ? JSON.parse(LoggedInUserString).token : '';
 };
 
-
-const getScans = () => {
-  return fetch(process.env.NEXT_PUBLIC_API_URL + '/scans', {
+const getCars = () => {
+  return fetch(process.env.NEXT_PUBLIC_API_URL + '/cars', {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -17,7 +16,7 @@ const getScans = () => {
   });
 };
 
-const ScanService = {
-  getScans,
+const CarService = {
+  getCars,
 };
-export default ScanService;
+export default CarService;

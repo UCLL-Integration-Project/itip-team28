@@ -35,7 +35,7 @@ const Route: React.FC = () => {
 
     useEffect(() => {
         getReaders();
-    }, [readers]);
+    }, []);
 
     const handleSelectReader = (reader: Reader) => {
         setSelectReader(reader);

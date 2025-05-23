@@ -1,40 +1,38 @@
-import Head from 'next/head';
 import React, { useEffect, useState } from 'react';
-import ScansOverview from '@/components/scans/ScansOverview';
+import CarOverview from '@/components/cars/CarOverview';
+import { Car } from '@/types';
+import CarService from '@/services/CarService';
 import Header from '@/components/header';
-import ScanService from '@/services/ScanService';
-import { Scan } from '@/types';
+import Head from 'next/head';
 
-const Home: React.FC = () => {
-    const [scans, setScans] = useState<Scan[]>([]);
-
+const CarNavigationPage: React.FC = () => {
+    const [cars, setCars] = useState<Car[]>([]);
     const [error, setError] = useState<string | null>(null);
 
-    const getAllScans = async () => {
+    const getCars = async () => {
         setError('');
         const responses = await Promise.all([
-            ScanService.getScans()
+            CarService.getCars()
         ]);
 
-        const [ScanResponse] = responses;
+        const [CarResponse] = responses;
 
-        if (!ScanResponse.ok) {
-            if (ScanResponse.status === 401) {
+        if (!CarResponse.ok) {
+            if (CarResponse.status === 401) {
                 setError(
                     'You are not authorized to view this page. Please login first.'
                 );
             } else {
-                setError(ScanResponse.statusText);
+                setError(CarResponse.statusText);
             }
         } else {
-            const scans = await ScanResponse.json();
-            setScans(scans);
+            const cars = await CarResponse.json();
+            setCars(cars);
         }
     };
-    
 
     useEffect(() => {
-        getAllScans()
+        getCars();
     }, []);
 
     return (
@@ -50,11 +48,11 @@ const Home: React.FC = () => {
             <main className="flex flex-col items-center justify-center min-h-screen">
                 <section>
                     {error && <div className="text-red-500">{error}</div>}
-                    {!error && <ScansOverview scans={scans} />}
+                    <CarOverview cars={cars} />
                 </section>
             </main>
         </>
     );
 };
 
-export default Home;
+export default CarNavigationPage;

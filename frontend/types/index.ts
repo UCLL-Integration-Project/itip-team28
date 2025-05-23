@@ -8,7 +8,7 @@ export type User = {
 
 export type Car = {
     id?: number;
-    number?: number;
+    name?: string;
 }
 
 export type Coordinates = {
@@ -20,8 +20,16 @@ export type Coordinates = {
 export type Reader = {
     id?: number;
     name?: string;
-    MacAddress?: string;
+    macAddress?: string;
     coordinates?: Coordinates;
+    stocks?: [{
+        id?: number,
+        item?: {
+            id?: number,
+            name: string,
+        },
+        quantity: number
+    }];
 }
 
 export type Route = {
@@ -32,6 +40,12 @@ export type Route = {
     CurrentPoint?: Reader;
     timestamp?: string;
     instructions?: string[];
+}
+
+export type RouteData = {
+    macAddress?: string;
+    stock?: number;
+    type?: "delivery" | "pick-up";
 }
 
 export type Scan = {
