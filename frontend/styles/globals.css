@@ -1,19 +1,29 @@
 @import "tailwindcss";
 
 :root {
-    --color-background: #ffffff;
-    --color-text: #000000;
+    --color-background: #F8FAFC;
+    --color-text: #111827;
     --color-background-comp: #ffffff;
-    --color-link-text: #4f39f6;
-    --color-background-lg: #ebe6e7;
+    --color-link-text: #1D4ED8;
+    --color-background-lg: #E2E8F0;
+    --color-background-table: #F9FAFB;
+    --color-button: #1D4ED8;
+    --font-family: 'Inter', sans-serif;
 }
 
 html.dark {
-    --color-background: #111827;
-    --color-background-comp: #203063;
-    --color-text: #f9fafb;
-    --color-link-text: #f58844;
-    --color-background-lg: #19254f;
+    --color-background: #0F172A;
+    --color-background-comp: #1F2A44;
+    --color-form: #374151;
+    --color-text: #D1D5DB;
+    --color-link-text: #3B82F6;
+    --color-background-lg: #475569;
+    --color-background-table: #293548;
+    --color-button: #3B82F6;
+}
+
+body {
+    font-family: var(--font-family);
 }
 
 .bg-background {
@@ -31,6 +41,11 @@ html.dark {
     background-color: var(--color-background-comp);
 }
 
+.bg-table {
+    transition: 0.3s;
+    background-color: var(--color-background-table);
+}
+
 .link-text {
     transition: 0.3s;
     color: var(--color-link-text);
@@ -45,4 +60,24 @@ html.dark {
     transition: 0.3s;
     border-radius: 1px;
     border: var(--color-background-lg);
+}
+
+.bg-button {
+    transition: 0.3s;
+    background-color: var(--color-button);
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

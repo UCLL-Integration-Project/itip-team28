@@ -1,6 +1,7 @@
 import { User } from '@/types';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
+import {MdSunny, MdDarkMode} from 'react-icons/md';
 
 const Header: React.FC = () => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -79,11 +80,17 @@ const Header: React.FC = () => {
                             Logout
                         </Link>)}
                     </li>
-                    <li>
-                        {!DarkMode && (<button onClick={() => handleDarkmode(true)}>Darkmode</button>)}
-                        {DarkMode && (<button onClick={() => handleDarkmode(false)}>Lightmode</button>)}
-                    </li>
                 </ul>
+                <div className="flex items-center">
+                    {!DarkMode && (
+                        <button onClick={() => handleDarkmode(true)} aria-label="Switch to Dark Mode">
+                            <MdDarkMode className="text-2xl hover:text-indigo-400 transition-colors duration-200" />
+                        </button>)}
+                    {DarkMode && (
+                        <button onClick={() => handleDarkmode(false)} aria-label="Switch to Light Mode">
+                            <MdSunny className="text-2xl hover:text-indigo-400 transition-colors duration-200" />
+                        </button>)}
+                </div>
             </nav>
 
         </header>

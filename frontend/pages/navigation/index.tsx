@@ -73,10 +73,10 @@ const Navigation: React.FC = () => {
                 <title>Readers</title>
             </head>
             <Header />
-            <main className="bg-background min-h-screen flex items-center justify-center bg-gray-100 px-4">
+            <main className="bg-background min-h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8 py-10">
                 {!error && <CarOverview cars={cars} />}
-                <section className="bg-comp w-full max-w-4xl bg-white p-6 rounded-lg shadow-md">
-                    {error && <div className="text-red-500">{error}</div>}
+                <section className="bg-comp w-full max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mb-10">
+                    {error && <div className="text-red-500 dark:text-red-400 text-lg font-medium text-center">{error}</div>}
                     {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} />}
                 </section>
                 {!error && <ReadersOverview readers={readers} />}
