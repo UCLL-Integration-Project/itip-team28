@@ -1,0 +1,21 @@
+.layout-container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.map-container {
+  flex: 4;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.overview-container {
+  flex: 1;
+  max-width: 400px;
+  min-width: 300px;
+  overflow-y: auto;
+}

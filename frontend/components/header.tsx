@@ -1,18 +1,44 @@
 import { User } from '@/types';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
+import {MdSunny, MdDarkMode} from 'react-icons/md';
 
 const Header: React.FC = () => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
+    const [DarkMode, setDarkMode] = useState<boolean>(false);
 
     useEffect(() => {
+
+        const storedDarkMode = localStorage.getItem('darkmode');
+        if (storedDarkMode === 'true') {
+            setDarkMode(true);
+            document.documentElement.classList.add('dark');
+        } else {
+            setDarkMode(false);
+            document.documentElement.classList.remove('dark');
+        }
+
         const LoggedInUserString = sessionStorage.getItem('LoggedInUser');
+
         if (LoggedInUserString !== null) {
             setLoggedInUser(JSON.parse(LoggedInUserString));
         } else {
             setLoggedInUser(null);
         }
+
     }, []);
+
+    const handleDarkmode = (darkmode: boolean) => {
+        setDarkMode(darkmode);
+        localStorage.setItem('darkmode', darkmode.toString());
+
+        if (darkmode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }
+
 
     const handleClick = () => {
         sessionStorage.removeItem('LoggedInUser');
@@ -46,6 +72,13 @@ const Header: React.FC = () => {
                             </Link>
                         </li>
                     )}
+                    {IsManager && (
+                        <li>
+                            <Link href="/route" className="hover:text-indigo-400 transition-colors duration-200">
+                                Route
+                            </Link>
+                        </li>
+                    )}
                     <li>
                         {!LoggedInUser && (<Link href="/login" className="hover:text-indigo-400 transition-colors duration-200">
                             Login
@@ -56,6 +89,16 @@ const Header: React.FC = () => {
                         </Link>)}
                     </li>
                 </ul>
+                <div className="flex items-center">
+                    {!DarkMode && (
+                        <button onClick={() => handleDarkmode(true)} aria-label="Switch to Dark Mode">
+                            <MdDarkMode className="text-2xl hover:text-indigo-400 transition-colors duration-200" />
+                        </button>)}
+                    {DarkMode && (
+                        <button onClick={() => handleDarkmode(false)} aria-label="Switch to Light Mode">
+                            <MdSunny className="text-2xl hover:text-indigo-400 transition-colors duration-200" />
+                        </button>)}
+                </div>
             </nav>
 
         </header>

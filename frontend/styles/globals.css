@@ -1,1 +1,83 @@
-@import "tailwindcss"
+@import "tailwindcss";
+
+:root {
+    --color-background: #F8FAFC;
+    --color-text: #111827;
+    --color-background-comp: #ffffff;
+    --color-link-text: #1D4ED8;
+    --color-background-lg: #E2E8F0;
+    --color-background-table: #F9FAFB;
+    --color-button: #1D4ED8;
+    --font-family: 'Inter', sans-serif;
+}
+
+html.dark {
+    --color-background: #0F172A;
+    --color-background-comp: #1F2A44;
+    --color-form: #374151;
+    --color-text: #D1D5DB;
+    --color-link-text: #3B82F6;
+    --color-background-lg: #475569;
+    --color-background-table: #293548;
+    --color-button: #3B82F6;
+}
+
+body {
+    font-family: var(--font-family);
+}
+
+.bg-background {
+    transition: 0.3s;
+    background-color: var(--color-background);
+}
+
+.text-text {
+    transition: 0.3s;
+    color: var(--color-text);
+}
+
+.bg-comp {
+    transition: 0.3s;
+    background-color: var(--color-background-comp);
+}
+
+.bg-table {
+    transition: 0.3s;
+    background-color: var(--color-background-table);
+}
+
+.link-text {
+    transition: 0.3s;
+    color: var(--color-link-text);
+}
+
+.bg-lg {
+    transition: 0.3s;
+    background-color: var(--color-background-lg);
+}
+
+.border-dk {
+    transition: 0.3s;
+    border-radius: 1px;
+    border: var(--color-background-lg);
+}
+
+.bg-button {
+    transition: 0.3s;
+    background-color: var(--color-button);
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
