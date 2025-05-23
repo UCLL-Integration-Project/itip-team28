@@ -2,12 +2,10 @@ import React from "react";
 import { Reader } from "../../types";
 
 interface ReadersOverviewProps {
-    readers: Reader[];
+  readers: Reader[];
 }
 
-const shelfIcon = (
-<img src="../images/shelves.png" alt="" />
-);
+const shelfIcon = <img src="../images/shelves.png" alt="Shelf icon" className="w-6 h-6 object-contain" />;
 
 export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers }) => {
     return (
