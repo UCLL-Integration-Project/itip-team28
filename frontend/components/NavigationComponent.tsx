@@ -3,6 +3,7 @@ import { Reader, Route, StatusMessage, User } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import CreateReaderComponent from "./CreateReaderComponent";
+import StockModal from "./StockModal";
 
 type Props = {
     readers: Array<Reader>;
@@ -12,7 +13,8 @@ type Props = {
 const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isStockModalOpen, setIsStockModalOpen] = useState(false);
+    const [isCreateReaderModalOpen, setIsCreateReaderModalOpen] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
@@ -27,14 +29,13 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
 
     const handleDrive = async (destination: Reader) => {
         setStatusMessages([]);
-
+        setIsStockModalOpen(true);
         try {
-            const route: Route = {
-                destination,
-                status: false,
-            };
-
-            await RouteService.createRoute(route);
+            // const route: Route = {
+            //     destination,
+            //     status: false,
+            // };
+            // await RouteService.createRoute(route);
             setStatusMessages([{ message: "Route created successfully", type: "success" }]);
             selectReader(destination);
         } catch (err) {
@@ -43,8 +44,9 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     };
 
     const handleReaderCreated = () => {
-        
-    }
+        setIsCreateReaderModalOpen(false);
+        setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
+    };
 
     const IsManager = LoggedInUser && (LoggedInUser.role?.toUpperCase() === "MANAGER");
 
@@ -61,6 +63,23 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                     </h3>
                 </div>
             </div>
+
+            {isStockModalOpen && (
+                <StockModal
+                    isOpen={isStockModalOpen}
+                    onClose={() => setIsStockModalOpen(false)}
+                    onSubmit={({ macAddress, stock }) => {
+                        const destination = readers.find(r => r.MacAddress === macAddress);
+                        if (destination) {
+                            handleDrive(destination);
+                        } else {
+                            setStatusMessages([{ message: "Reader not found", type: "error" }]);
+                        }
+                        setIsStockModalOpen(false);
+                        setStatusMessages([{ message: "The car is on its way!", type: "success" }]);
+                    }}
+                />
+            )}
 
             {StatusMessages.length > 0 && (
                 <div className="p-3 sm:p-4 rounded-md">
@@ -123,7 +142,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
 
             <div>
                 <button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => setIsCreateReaderModalOpen(true)}
                     className="text-indigo-600 hover:underline text-xs sm:text-sm"
                 >
                     Add Location
@@ -131,13 +150,12 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
             </div>
 
             <CreateReaderComponent
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                isOpen={isCreateReaderModalOpen}
+                onClose={() => setIsCreateReaderModalOpen(false)}
                 onSuccess={handleReaderCreated}
                 setStatusMessages={setStatusMessages}
             />
         </>
     );
-
 }
 export default Navigation;
