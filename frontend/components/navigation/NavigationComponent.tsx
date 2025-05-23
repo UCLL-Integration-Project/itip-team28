@@ -36,11 +36,6 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
         setStatusMessages([]);
         setIsStockModalOpen(true);
         try {
-            // const route: Route = {
-            //     destination,
-            //     status: false,
-            // };
-            // await RouteService.createRoute(route);
             setStatusMessages([{ message: "Route created successfully", type: "success" }]);
             selectReader(destination);
         } catch (err) {

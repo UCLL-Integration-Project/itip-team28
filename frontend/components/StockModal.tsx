@@ -68,7 +68,7 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-xs flex items-center justify-center z-50">
             <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
                 <h2 className="text-xl font-semibold mb-4">Stock Modal</h2>
                 <form onSubmit={handleSubmit}>
