@@ -51,3 +51,13 @@ export type StatusMessage = {
     message: string;
     type: "error" | "success";
 };
+export type GridInput= {
+  coordinates: { longitude: number, latitude: number;}[];
+  measurement: number;
+}
+export type Grid = {
+  id: number;
+  coordinates: { id:number,longitude: number, latitude: number;}[];
+  measurement: number;
+};
+

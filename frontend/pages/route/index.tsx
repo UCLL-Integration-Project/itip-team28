@@ -1,8 +1,9 @@
 import GridComponent from "@/components/GridComponent"
+import GridCreate from "@/components/GridCreate";
 import Header from "@/components/header"
 import { ReadersOverview } from "@/components/readers/ReadersOverview";
 import ReaderService from "@/services/ReaderService";
-import { Reader } from "@/types";
+import { Grid, Reader } from "@/types";
 import { useEffect, useState } from "react";
 
 const Route: React.FC = () => {
@@ -10,6 +11,8 @@ const Route: React.FC = () => {
     const [readers, setReaders] = useState<Array<Reader>>([]);
     const [error, setError] = useState<string>("");
     const [selectReader, setSelectReader] = useState<Reader | null>(null);
+    const [grid, setGrid] = useState<Grid | null>(null);
+
 
     const getReaders = async () => {
         setError('');
@@ -52,9 +55,9 @@ const Route: React.FC = () => {
   <section className="w-full max-w-6xl bg-white p-6 rounded-lg shadow-md overflow-hidden">
     <div className="flex gap-6 h-[600px]">
       
-      
+      <div> <GridCreate onGridCreated={setGrid} /></div>
       <div className="flex-[3] h-full overflow-hidden rounded-lg">
-        <GridComponent />
+        <GridComponent grid={grid}/>
       </div>
       
       
