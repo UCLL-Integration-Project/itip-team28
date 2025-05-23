@@ -22,6 +22,14 @@ export type Reader = {
     name?: string;
     macAddress?: string;
     coordinates?: Coordinates;
+    stocks?: [{
+        id?: number,
+        item?: {
+            id?: number,
+            name: string,
+        },
+        quantity: number
+    }];
 }
 
 export type Route = {
@@ -32,6 +40,12 @@ export type Route = {
     CurrentPoint?: Reader;
     timestamp?: string;
     instructions?: string[];
+}
+
+export type RouteData = {
+    macAddress?: string;
+    stock?: number;
+    type?: "delivery" | "pick-up";
 }
 
 export type Scan = {
