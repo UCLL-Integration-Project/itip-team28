@@ -89,7 +89,7 @@ const RegisterForm: React.FC = () => {
 
     return (
         <div className="space-y-4 sm:space-y-6">
-            <h2 className="text-xl sm:text-2xl font-semibold text-center text-gray-800">Register</h2>
+            <h2 className="text-xl sm:text-2xl font-semibold text-center text-text">Register</h2>
 
             {StatusMessages.length > 0 && (
                 <ul className="space-y-1 sm:space-y-2">
@@ -106,7 +106,7 @@ const RegisterForm: React.FC = () => {
 
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="username" className="block text-sm font-medium text-text">
                         Username
                     </label>
                     <input
@@ -114,13 +114,13 @@ const RegisterForm: React.FC = () => {
                         type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="text-text w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {UsernameError && <p className="text-red-600 text-sm">{UsernameError}</p>}
                 </div>
 
                 <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="email" className="block text-sm font-medium text-text">
                         Email
                     </label>
                     <input
@@ -128,13 +128,13 @@ const RegisterForm: React.FC = () => {
                         type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="text-text w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {EmailError && <p className="text-red-600 text-sm">{EmailError}</p>}
                 </div>
 
                 <div>
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="password" className="block text-sm font-medium text-text">
                         Password
                     </label>
                     <input
@@ -142,13 +142,13 @@ const RegisterForm: React.FC = () => {
                         type="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="text-text w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {PasswordError && <p className="text-red-600 text-sm">{PasswordError}</p>}
                 </div>
 
                 <div>
-                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-text">
                         Confirm Password
                     </label>
                     <input
@@ -156,7 +156,7 @@ const RegisterForm: React.FC = () => {
                         type="password"
                         value={ConfirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="text-text w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
                     {ConfirmPasswordError && <p className="text-red-600 text-sm">{ConfirmPasswordError}</p>}
                 </div>
@@ -164,7 +164,7 @@ const RegisterForm: React.FC = () => {
                 <div>
                     <button
                         type="submit"
-                        className="w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition"
+                        className="text-text w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition"
                     >
                         Register
                     </button>

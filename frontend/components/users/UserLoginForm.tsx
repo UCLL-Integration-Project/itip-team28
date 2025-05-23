@@ -79,7 +79,7 @@ const UserLoginForm: React.FC = () => {
     return (
         <div className="space-y-4 sm:space-y-6">
             <div>
-                <h3 className="text-xl sm:text-2xl font-semibold text-center text-gray-800">Login</h3>
+                <h3 className="text-xl sm:text-2xl font-semibold text-center text-text">Login</h3>
             </div>
             {StatusMessages && (
                 <div className="p-3 sm:p-4 rounded-md">
@@ -98,33 +98,33 @@ const UserLoginForm: React.FC = () => {
             )}
             <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
                 <div>
-                    <label htmlFor="username" className="block text-xs sm:text-sm font-medium text-gray-700">Username</label>
+                    <label htmlFor="username" className="block text-xs sm:text-sm font-medium text-text">Username</label>
                     <input
                         type="text"
                         id="username"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
-                        className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
+                        className="text-text mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
                     />
                     {UsernameError && <p className="mt-1 text-xs sm:text-sm text-red-600">{UsernameError}</p>}
                 </div>
                 <div>
-                    <label htmlFor="password" className="block text-xs sm:text-sm font-medium text-gray-700">Password</label>
+                    <label htmlFor="password" className="block text-xs sm:text-sm font-medium text-text">Password</label>
                     <input
                         type="password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
+                        className="text-text mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:bg-gray-100"
                     />
                     {PasswordError && <p className="mt-1 text-xs sm:text-sm text-red-600">{PasswordError}</p>}
                 </div>
                 <div >
-                    <button type="submit" className="w-full bg-gray-800 text-white py-2 px-4 rounded-md text-sm sm:text-base hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-gray-500 transition">Login</button>
+                    <button type="submit" className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md text-sm sm:text-base hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:bg-gray-500 transition">Login</button>
                 </div>
             </form>
             <div className="text-center">
-                <p className="text-xs sm:text-sm text-gray-600">Don't have an account? <a href="/login/register" className="text-indigo-600 hover:underline">Register</a></p>
+                <p className="text-xs sm:text-sm text-text">Don't have an account? <a href="/login/register" className="link-text hover:underline">Register</a></p>
             </div>
         </div>
     );
