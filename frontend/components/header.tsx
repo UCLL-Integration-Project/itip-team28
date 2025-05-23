@@ -7,6 +7,7 @@ const Header: React.FC = () => {
 
     useEffect(() => {
         const LoggedInUserString = sessionStorage.getItem('LoggedInUser');
+
         if (LoggedInUserString !== null) {
             setLoggedInUser(JSON.parse(LoggedInUserString));
         } else {
@@ -43,6 +44,13 @@ const Header: React.FC = () => {
                         <li>
                             <Link href="/cars" className="hover:text-indigo-400 transition-colors duration-200">
                                 Cars
+                            </Link>
+                        </li>
+                    )}
+                    {IsManager && (
+                        <li>
+                            <Link href="/route" className="hover:text-indigo-400 transition-colors duration-200">
+                                Route
                             </Link>
                         </li>
                     )}
