@@ -1,5 +1,5 @@
-import GridComponent from "@/components/GridComponent"
-import GridCreate from "@/components/GridCreate";
+import GridComponent from "@/components/grid/GridComponent"
+import GridCreate from "@/components/grid/GridCreate";
 import Header from "@/components/header"
 import { ReadersOverview } from "@/components/readers/ReadersOverview";
 import ReaderService from "@/services/ReaderService";
@@ -57,7 +57,7 @@ const Route: React.FC = () => {
 
                         <div> <GridCreate onGridCreated={setGrid} /></div>
                         <div className="flex-[3] h-full overflow-hidden rounded-lg">
-                            <GridComponent grid={grid} />
+                            <GridComponent grid={grid} readers={readers} />
                         </div>
 
 
