@@ -88,23 +88,24 @@ const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
         }
 
         const isCar = carPosition.x === w && carPosition.y === h;
-        const isStop = stops.some((stop) => stop.x === w && stop.y === h);
+        //const isStop = stops.some((stop) => stop.x === w && stop.y === h);
         const isPath = path.some((step) => step.x === w && step.y === h);
+        const isReader = readers.some((reader) => reader.coordinates?.latitude === w && reader.coordinates?.longitude === h);
 
         let className = "grid-cell";
         if (isCar) className += " car";
         else if (isPath) className += " bg-blue-500 bg-opacity-70";
-        else if (isStop) className += " stop cursor-pointer";
+        else if (isReader) className += " stop cursor-pointer";
 
         row.push(
           <div
             key={`${w},${h}`}
             className={className}
             style={{ width: blockSize, height: blockSize }}
-            onClick={() => isStop && handleStopClick(w, h)}
+            onClick={() => isReader && handleStopClick(w, h)}
             title={`Coordinate ID: ${coord.id} (Lng: ${coord.longitude}, Lat: ${coord.latitude})`}
           >
-            {isCar ? "🚗" : isStop ? "🟢" : `(${w},${h})`}
+            {isCar ? "🚗" : isReader ? "🟢" : `(${w},${h})`}
           </div>
         );
       }
