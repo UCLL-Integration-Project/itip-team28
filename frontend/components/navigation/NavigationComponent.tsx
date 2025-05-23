@@ -3,6 +3,7 @@ import ReaderService from "@/services/ReaderService";
 import { Reader, Route, StatusMessage, User } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import StockModal from "../StockModal";
 import UpdateReader from "../readers/UpdateReaderComponent";
 import CreateReaderComponent from "../readers/CreateReaderComponent";
 
@@ -14,7 +15,9 @@ type Props = {
 const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
-    const [IsModalOpen, setIsModalOpen] = useState(false);
+    const [isCreateReaderModalOpen, setIsCreateReaderModalOpen] = useState(false);
+
+    const [isStockModalOpen, setIsStockModalOpen] = useState(false);
     const [IsUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [SelectedReader, setSelectedReader] = useState<Reader | null>(null);
     const router = useRouter();
@@ -31,12 +34,13 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
 
     const handleDrive = async (destination: Reader) => {
         setStatusMessages([]);
+        setIsStockModalOpen(true);
         try {
-            const route: Route = {
-                destination,
-                status: false,
-            };
-            await RouteService.createRoute(route);
+            // const route: Route = {
+            //     destination,
+            //     status: false,
+            // };
+            // await RouteService.createRoute(route);
             setStatusMessages([{ message: "Route created successfully", type: "success" }]);
             selectReader(destination);
         } catch (err) {
@@ -45,12 +49,8 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     };
 
     const handleReaderCreated = () => {
-        ReaderService.getReaders().then(async (response) => {
-            if (response.ok) {
-                const updatedReaders = await response.json();
-                readers.splice(0, readers.length, ...updatedReaders);
-            }
-        });
+        setIsCreateReaderModalOpen(false);
+        setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
     };
 
     const handleReaderUpdated = () => {
@@ -77,6 +77,23 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                     </h3>
                 </div>
             </div>
+
+            {isStockModalOpen && (
+                <StockModal
+                    isOpen={isStockModalOpen}
+                    onClose={() => setIsStockModalOpen(false)}
+                    onSubmit={({ macAddress, stock }) => {
+                        const destination = readers.find(r => r.macAddress === macAddress);
+                        if (destination) {
+                            handleDrive(destination);
+                        } else {
+                            setStatusMessages([{ message: "Reader not found", type: "error" }]);
+                        }
+                        setIsStockModalOpen(false);
+                        setStatusMessages([{ message: "The car is on its way!", type: "success" }]);
+                    }}
+                />
+            )}
 
             {StatusMessages.length > 0 && (
                 <div className="p-3 sm:p-4 rounded-md">
@@ -148,7 +165,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
 
             <div>
                 <button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={() => setIsCreateReaderModalOpen(true)}
                     className="text-indigo-600 hover:underline text-xs sm:text-sm"
                 >
                     Add Location
@@ -156,8 +173,8 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
             </div>
 
             <CreateReaderComponent
-                IsOpen={IsModalOpen}
-                onClose={() => setIsModalOpen(false)}
+                IsOpen={isCreateReaderModalOpen}
+                onClose={() => setIsCreateReaderModalOpen(false)}
                 onSuccess={handleReaderCreated}
             />
             <UpdateReader

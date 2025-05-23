@@ -31,10 +31,10 @@ const Home: React.FC = () => {
             setScans(scans);
         }
     };
-
+    
 
     useEffect(() => {
-        getAllScans();
+        getAllScans()
     }, []);
 
     return (

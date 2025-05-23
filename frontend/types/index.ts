@@ -34,6 +34,12 @@ export type Route = {
     instructions?: string[];
 }
 
+export type RouteData = {
+    macAddress?: string;
+    stock?: number;
+    type?: "delivery" | "pick-up";
+}
+
 export type Scan = {
     id?: string;
     car?: Car;
