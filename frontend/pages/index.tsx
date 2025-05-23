@@ -46,8 +46,7 @@ const Home: React.FC = () => {
                 <link rel="icon" href="assets/logo.png" />
             </Head>
             <Header />
-
-            <main className="flex flex-col items-center justify-center min-h-screen">
+            <main className="bg-background text-text flex flex-col items-center justify-center min-h-screen">
                 <section>
                     {error && <div className="text-red-500">{error}</div>}
                     {!error && <ScansOverview scans={scans} />}

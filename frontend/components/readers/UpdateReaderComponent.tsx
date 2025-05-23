@@ -74,25 +74,25 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
 
     return (
         <div
-            className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-40 backdrop-blur-sm z-50 transition-opacity duration-300"
+            className="fixed inset-0 flex items-center justify-center bg-black/85 bg-opacity-50 dark:bg-opacity-70 backdrop-blur-xs z-50 transition-opacity duration-300"
             onClick={onClose}
         >
             <div
-                className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full space-y-4 sm:space-y-6 transform transition-all duration-300 scale-95"
+                className="bg-comp rounded-lg shadow-lg max-w-md w-full p-6 space-y-4 sm:space-y-6 transform transition-all duration-300 scale-95 hover:shadow-xl"
                 onClick={(e) => e.stopPropagation()}
             >
-                <h4 className="text-lg sm:text-xl font-semibold text-center text-gray-800">
+                <h4 className="text-lg font-bold text-text text-center">
                     Update Reader Name
                 </h4>
 
-                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     {StatusMessages.length > 0 && (
                         <div className="p-3 sm:p-4 rounded-md">
                             <ul className="space-y-1 sm:space-y-2">
                                 {StatusMessages.map(({ message, type }, index) => (
                                     <li
                                         key={index}
-                                        className={`text-sm text-center ${type === "success" ? "text-green-600" : "text-red-600"}`}
+                                        className={`text-sm text-center ${type === "success" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
                                     >
                                         {message}
                                     </li>
@@ -103,7 +103,7 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
                     <div>
                         <label
                             htmlFor="name"
-                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                            className="block text-base font-medium text-text"
                         >
                             Name
                         </label>
@@ -112,18 +112,18 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 w-full p-2 sm:p-3 border border-dk rounded-md text-base bg-background focus:ring-2 focus:ring-link-text focus:border-link-text text-text placeholder-gray-500 dark:placeholder-gray-400"
                         />
                         {NameError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{NameError}</p>
+                            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{NameError}</p>
                         )}
                         {FormError && (
-                            <p className="mt-1 text-xs sm:text-sm text-red-600">{FormError}</p>
+                            <p className="mt-1 text-sm text-red-600 dark:text-red-400">{FormError}</p>
                         )}
                     </div>
 
 
-                    <div className="flex justify-end space-x-2">
+                    <div className="flex justify-end space-x-4">
                         <button
                             type="button"
                             onClick={() => {
@@ -131,13 +131,13 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
                                 clearErrors();
                                 onClose();
                             }}
-                            className="bg-gray-300 text-gray-800 py-1 px-4 rounded-md text-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition"
+                            className="bg-background text-text py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="bg-gray-800 text-white py-1 px-4 rounded-md text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
+                            className="bg-button text-white py-2 px-4 rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                         >
                             Update Name
                         </button>

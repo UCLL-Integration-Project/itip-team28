@@ -50,10 +50,10 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
         }
 
         console.log("Submitting data:", {
-                macAddress: selectedReader,
-                stock,
-                type,
-            })
+            macAddress: selectedReader,
+            stock,
+            type,
+        })
 
         if (selectedReader) {
             onSubmit({
@@ -68,21 +68,21 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-                <h2 className="text-xl font-semibold mb-4">Stock Modal</h2>
+        <div className="fixed inset-0 bg-black/85 backdrop-blur-xs bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center z-50">
+            <div className="bg-comp rounded-lg shadow-lg w-full max-w-md p-6 transition-all duration-300 hover:shadow-xl">
+                <h3 className="text-lg font-bold text-text mb-4">Stock Modal</h3>
                 <form onSubmit={handleSubmit}>
                     {error && (
-                        <div className="mb-4 text-red-500 text-sm">
+                        <div className="mb-4 text-red-500 dark:text-red-400 text-sm">
                             {error}
                         </div>
                     )}
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-base font-medium text-text mb-1">
                             Reader:
                         </label>
                         <select
-                            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full border border-dk rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-link-text text-text"
                             value={selectedReader}
                             onChange={(e) => setSelectedReader(e.target.value)}
                         >
@@ -95,22 +95,22 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
                         </select>
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-base font-medium text-text mb-1">
                             Stock:
                         </label>
                         <input
                             type="number"
-                            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full border border-dk rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-link-text text-text"
                             value={stock}
                             onChange={(e) => setStock(Number(e.target.value))}
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                        <label className="block text-base font-medium text-text mb-1">
                             Type:
                         </label>
                         <select
-                            className="w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full border border-dk rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-link-text text-text"
                             value={type}
                             onChange={(e) => setType(e.target.value as 'delivery' | 'pick-up')}
                         >
@@ -121,13 +121,13 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
                     <div className="flex justify-end space-x-4">
                         <button
                             type="submit"
-                            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="bg-button text-white px-4 py-2 rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                         >
                             Submit
                         </button>
                         <button
                             type="button"
-                            className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-300"
+                            className="bg-button text-white px-4 py-2 rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                             onClick={onClose}
                         >
                             Close

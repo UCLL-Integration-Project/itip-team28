@@ -6,8 +6,14 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: 'var(--color-background)',
+        text: 'var(--color-text)',
+      }
+    },
   },
   plugins: [],
 };

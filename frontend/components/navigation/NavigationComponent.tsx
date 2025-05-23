@@ -36,11 +36,6 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
         setStatusMessages([]);
         setIsStockModalOpen(true);
         try {
-            // const route: Route = {
-            //     destination,
-            //     status: false,
-            // };
-            // await RouteService.createRoute(route);
             setStatusMessages([{ message: "Route created successfully", type: "success" }]);
             selectReader(destination);
         } catch (err) {
@@ -65,14 +60,14 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
     const IsManager = LoggedInUser && LoggedInUser.role?.toUpperCase() === "MANAGER";
 
     if (!IsManager) {
-        return <p className="text-center mt-10 text-red-600">You are not authorized to view this page.</p>;
+        return <p className="text-center mt-12 text-red-600 dark:text-red-400 text-lg font-medium">You are not authorized to view this page.</p>;
     }
 
     return (
         <>
-            <div className="space-y-4 sm:space-y-6 p-4 sm:p-6 max-w-4xl mx-auto">
-                <div>
-                    <h3 className="text-xl sm:text-2xl font-semibold text-center text-gray-800">
+            <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+                <div className="mb-10 text-center">
+                    <h3 className="text-3xl sm:text-4xl font-bold text-text">
                         Navigation
                     </h3>
                 </div>
@@ -96,12 +91,12 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
             )}
 
             {StatusMessages.length > 0 && (
-                <div className="p-3 sm:p-4 rounded-md">
-                    <ul className="space-y-1 sm:space-y-2">
+                <div className="mb-8 max-w-3xl mx-auto p-4 rounded-lg bg-background animate-fade-in shadow-sm">
+                    <ul className="space-y-2">
                         {StatusMessages.map(({ message, type }, index) => (
                             <li
                                 key={index}
-                                className={`text-sm text-center ${type === "success" ? "text-green-600" : "text-red-600"}`}
+                                className={`text-base text-center ${type === "success" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
                             >
                                 {message}
                             </li>
@@ -110,63 +105,65 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                 </div>
             )}
 
-            <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-300 rounded-md">
-                    <thead>
-                        <tr className="bg-gray-100">
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
-                                Name
-                            </th>
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
-                                Mac address
-                            </th>
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
-                                Coordinates
-                            </th>
-                            <th className="px-4 py-2 text-left text-xs sm:text-sm font-medium text-gray-700 border-b border-gray-300">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {readers.map((reader, index) => (
-                            <tr key={reader.id || index} className="hover:bg-gray-50">
-                                <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.name || "N/A"}
-                                </td>
-                                <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.macAddress || "N/A"}
-                                </td>
-                                <td className="px-4 py-2 text-sm border-b border-gray-300">
-                                    {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
-                                </td>
-                                <td className="px-4 py-2 text-sm border-b border-gray-300 space-x-2">
-                                    <button
-                                        onClick={() => handleDrive(reader)}
-                                        className="bg-gray-800 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
-                                    >
-                                        Drive here
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setSelectedReader(reader);
-                                            setIsUpdateModalOpen(true);
-                                        }}
-                                        className="bg-gray-800 text-white py-1 px-3 rounded-md text-xs sm:text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
-                                    >
-                                        Update Name
-                                    </button>
-                                </td>
+            <div className="bg-comp dark:bg-indigo-900 rounded-xl shadow-lg overflow-hidden max-w-5xl mx-auto">
+                <div className="overflow-x-auto">
+                    <table className="min-w-full border border-dk rounded-xl bg-table">
+                        <thead>
+                            <tr className="bg-lg">
+                                <th className="px-6 py-4 text-left text-sm font-semibold text-text border-b border-dk">
+                                    Name
+                                </th>
+                                <th className="px-6 py-4 text-left text-sm font-semibold text-text border-b border-dk">
+                                    Mac address
+                                </th>
+                                <th className="px-6 py-4 text-left text-sm font-semibold text-text border-b border-dk">
+                                    Coordinates
+                                </th>
+                                <th className="px-6 py-4 text-left text-sm font-semibold text-text border-b border-dk">
+                                    Action
+                                </th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {readers.map((reader, index) => (
+                                <tr key={reader.id || index} className="hover:bg-blue-50 dark:hover:bg-blue-900/50 transition-colors duration-300">
+                                    <td className="text-text hover:text-white px-6 py-4 text-sm border-b border-dk">
+                                        {reader.name || "N/A"}
+                                    </td>
+                                    <td className="text-text hover:text-white px-6 py-4 text-sm border-b border-dk">
+                                        {reader.macAddress || "N/A"}
+                                    </td>
+                                    <td className="text-text hover:text-white px-6 py-4 text-sm border-b border-dk">
+                                        {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
+                                    </td>
+                                    <td className="hover:text-white px-6 py-4 text-sm border-b border-dk space-x-4">
+                                        <button
+                                            onClick={() => handleDrive(reader)}
+                                            className="bg-button text-white py-2 px-5 rounded-lg text-base font-medium hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+                                        >
+                                            Drive here
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                setSelectedReader(reader);
+                                                setIsUpdateModalOpen(true);
+                                            }}
+                                            className="bg-button text-white py-2 px-5 rounded-lg text-base font-medium hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+                                        >
+                                            Update Name
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
-            <div>
+            <div className="mt-6 text-left">
                 <button
                     onClick={() => setIsCreateReaderModalOpen(true)}
-                    className="text-indigo-600 hover:underline text-xs sm:text-sm"
+                    className="link-text text-sm font-medium py-2 px-4 rounded-md hover:bg-indigo-100 dark:hover:bg-indigo-800 transition-colors duration-200"
                 >
                     Add Location
                 </button>
