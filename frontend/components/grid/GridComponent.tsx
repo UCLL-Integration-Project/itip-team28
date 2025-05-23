@@ -1,9 +1,11 @@
-import { Grid } from "@/types";
+import { Grid, Reader } from "@/types";
 import React, { useState, useEffect } from "react";
 type GridComponentProps = {
   grid: Grid | null;
+  readers: Array<Reader>;
 };
-const GridComponent: React.FC<GridComponentProps> = ({ grid }) => {
+
+const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
   const [blockSize, setBlockSize] = useState(40);
   const [carPosition, setCarPosition] = useState({ x: 0, y: 0 });
   const [path, setPath] = useState<Array<{ x: number; y: number }>>([]);
