@@ -11,6 +11,9 @@ const getScans = () => {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${getToken()}`,
     },
+  }).catch((error) => {
+    console.error("Error:", error);
+    throw error;
   });
 };
 
