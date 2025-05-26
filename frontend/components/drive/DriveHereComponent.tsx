@@ -6,9 +6,10 @@ type Props = {
     readers: Array<Reader>;
     reader: Reader;
     selectReader: (reader: Reader) => void;
+    setNewStatusMessages?: (message: StatusMessage) => void;
 }
 
-const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader }) => {
+const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, setNewStatusMessages }) => {
     const [isStockModalOpen, setIsStockModalOpen] = useState(false);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
 
@@ -18,6 +19,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader }) 
         setIsStockModalOpen(true);
         try {
             setStatusMessages([{ message: "Route created successfully", type: "success" }]);
+            setNewStatusMessages?.({ message: "Route created successfully", type: "success" });
             selectReader(destination);
         } catch (err) {
             setStatusMessages([{ message: "Failed to create route", type: "error" }]);
@@ -38,9 +40,11 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader }) 
                                 handleDrive(destination);
                             } else {
                                 setStatusMessages([{ message: "Reader not found", type: "error" }]);
+
                             }
                             setIsStockModalOpen(false);
                             setStatusMessages([{ message: "The car is on its way!", type: "success" }]);
+                            setNewStatusMessages?.({ message: "The car is on its way!", type: "success" });
                         }}
                     />
                 )

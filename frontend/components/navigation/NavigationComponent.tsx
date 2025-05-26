@@ -50,6 +50,10 @@ const Navigation: React.FC<Props> = ({ readers }: Props) => {
         });
     };
 
+    const handleStatusMessages = (StatusMessage: StatusMessage) => {
+        setStatusMessages([StatusMessage]);
+    }
+
     const IsManager = LoggedInUser && LoggedInUser.role?.toUpperCase() === "MANAGER";
 
     if (!IsManager) {
@@ -113,7 +117,7 @@ const Navigation: React.FC<Props> = ({ readers }: Props) => {
                                         {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
                                     </td>
                                     <td className="hover:text-white px-6 py-4 text-sm border-b border-dk space-x-4">
-                                        {<DriveHereComponent readers={readers} reader={reader} selectReader={handleSelectReader} />}
+                                        {<DriveHereComponent readers={readers} reader={reader} selectReader={handleSelectReader} setNewStatusMessages={handleStatusMessages} />}
                                         <button
                                             onClick={() => {
                                                 setSelectedReader(reader);
