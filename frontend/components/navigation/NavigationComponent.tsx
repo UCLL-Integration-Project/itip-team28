@@ -11,9 +11,10 @@ import StockService from "@/services/StockService";
 type Props = {
     readers: Array<Reader>;
     selectReader: (reader: Reader) => void;
+    refreshReaders: () => void; // ✅ new prop
 };
 
-const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
+const Navigation: React.FC<Props> = ({ readers, selectReader, refreshReaders }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const [isCreateReaderModalOpen, setIsCreateReaderModalOpen] = useState(false);
@@ -84,7 +85,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
 
                             const requestId = await StockService.requestStockTransfer(1, Number(readerId), itemId, stock, direction);
                             await StockService.completeStockTransfer(requestId); // ✅ Apply the stock change now
-                            await ReaderService.getReaders(); // ✅ Refresh local state to reflect updated stock
+                            refreshReaders();
 
                             setStatusMessages([{ message: 'Stock updated and car dispatched!', type: 'success' }]);
                         } catch (err: any) {

@@ -11,8 +11,13 @@ import { useEffect, useState } from "react";
 
 const Navigation: React.FC = () => {
     const [readers, setReaders] = useState<Array<Reader>>([]);
+    const [cars, setCars] = useState<Car[]>([]);
     const [error, setError] = useState<string>("");
     const [SelectReader, setSelectReader] = useState<Reader | null>(null);
+
+    const refreshReaders = () => {
+        getReaders();
+    };
 
     const getReaders = async () => {
         setError('');
@@ -33,10 +38,10 @@ const Navigation: React.FC = () => {
         } else {
             const readers = await ReaderResponse.json();
             setReaders(readers);
+            updateReaders = !updateReaders ;
         }
     };
-
-    const [cars, setCars] = useState<Car[]>([]);
+    
 
     const getCars = async () => {
         setError('');
@@ -60,14 +65,12 @@ const Navigation: React.FC = () => {
         }
     };
 
+    let updateReaders = false;
 
     useEffect(() => {
         getCars();
-    }, []);
-
-    useEffect(() => {
         getReaders();
-    }, [])
+    }, []);
 
     const handleSelectReader = (reader: Reader) => {
         setSelectReader(reader);
@@ -83,7 +86,7 @@ const Navigation: React.FC = () => {
                 {!error && <CarOverview cars={cars} />}
                 <section className="bg-comp w-full max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mb-10">
                     {error && <div className="text-red-500 dark:text-red-400 text-lg font-medium text-center">{error}</div>}
-                    {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} />}
+                    {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} refreshReaders={refreshReaders}  />}
                 </section>
                 {!error && <ReadersOverview readers={readers} />}
             </main>
