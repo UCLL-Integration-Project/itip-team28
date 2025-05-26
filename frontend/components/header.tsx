@@ -74,8 +74,8 @@ const Header: React.FC = () => {
                     )}
                     {IsManager && (
                         <li>
-                            <Link href="/route" className="hover:text-indigo-400 transition-colors duration-200">
-                                Route
+                            <Link href="/dashboard" className="hover:text-indigo-400 transition-colors duration-200">
+                                Dashboard
                             </Link>
                         </li>
                     )}

@@ -1,4 +1,4 @@
-import GridComponent from "@/components/grid/GridComponent"
+/* import GridComponent from "@/components/grid/GridComponent"
 import GridCreate from "@/components/grid/GridCreate";
 import Header from "@/components/header"
 import { ReadersOverview } from "@/components/readers/ReadersOverview";
@@ -73,4 +73,4 @@ const Route: React.FC = () => {
     )
 }
 
-export default Route
+export default Route */

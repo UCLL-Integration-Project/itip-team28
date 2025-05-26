@@ -1,4 +1,4 @@
-import CarOverview from "@/components/cars/CarOverview";
+/* import CarOverview from "@/components/cars/CarOverview";
 import Header from "@/components/header";
 import NavigationComponent from "@/components/navigation/NavigationComponent";
 import { ReadersOverview } from "@/components/readers/ReadersOverview";
@@ -84,4 +84,4 @@ const Navigation: React.FC = () => {
         </>
     )
 }
-export default Navigation;
+export default Navigation; */

@@ -46,12 +46,12 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
                             setStatusMessages([{ message: "The car is on its way!", type: "success" }]);
                             setNewStatusMessages?.({ message: "The car is on its way!", type: "success" });
                         }}
-                    />
+                    />  
                 )
             }
             <button
                 onClick={() => handleDrive(reader)}
-                className="bg-button text-white py-2 px-5 rounded-lg text-base font-medium hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
+                className="w-full bg-gray-300 border-1 border-gray-400 text-green py-1 px-3 mt-1 mb-1 rounded-sm text-xs font-light hover:bg-gray-700 dark:hover:bg-gray-200 focus:outline-none focus:ring-2  transition-colors duration-200 cursor-pointer"
             >
                 Drive here
             </button>

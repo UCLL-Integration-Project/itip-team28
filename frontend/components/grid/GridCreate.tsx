@@ -3,9 +3,10 @@ import GridService from "@/services/GridService";
 import { Grid, GridInput } from "@/types";
 type GridCreateProps = {
   onGridCreated: (grid: Grid) => void;
+  onClose:() => void;
 };
 
-const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated }) =>  {
+const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated, onClose }) =>  {
   const [width, setWidth] = useState(3);
   const [height, setHeight] = useState(4);
   const [blockSize, setBlockSize] = useState(40);
@@ -36,13 +37,37 @@ const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated }) =>  {
     }
   };
 
-  return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-2xl mt-10 space-y-6">
-      <h2 className="text-2xl font-semibold text-center text-gray-800">Create Grid</h2>
+return (
+    <div className="bg-comp rounded-lg shadow-md px-4 py-4 flex flex-col items-start gap-4 transition-all duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:shadow-lg relative">
+      <div className="flex items-center justify-between w-full">
+        <h2 className="text-lg font-medium text-text hover:text-link-text transition-colors duration-300">
+          Create Grid
+        </h2>
+        <button
+          onClick={onClose}
+          className="text-text hover:text-link-text rounded-full p-2 focus:outline-none transition-colors duration-200"
+          aria-label="Close"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 w-full">
         <div>
-          <label className="block text-sm font-medium text-gray-700">Width</label>
+          <label className="block text-sm font-medium text-text">Width</label>
           <input
             type="number"
             value={width}
@@ -52,7 +77,7 @@ const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated }) =>  {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Height</label>
+          <label className="block text-sm font-medium text-text">Height</label>
           <input
             type="number"
             value={height}
@@ -62,7 +87,9 @@ const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated }) =>  {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Block Size (px)</label>
+          <label className="block text-sm font-medium text-text">
+            Block Size (px)
+          </label>
           <input
             type="number"
             value={blockSize}
@@ -73,13 +100,17 @@ const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated }) =>  {
 
         <button
           onClick={handleCreateGrid}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 transition duration-200"
+          className="w-full bg-button text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 dark:hover:bg-blue-500 transition duration-200"
         >
           Create Grid
         </button>
 
         {message && (
-          <p className={`text-center text-sm font-medium ${message.startsWith("✅") ? "text-green-600" : "text-red-600"}`}>
+          <p
+            className={`text-center text-sm font-medium ${
+              message.startsWith("✅") ? "text-green-600" : "text-red-600"
+            }`}
+          >
             {message}
           </p>
         )}
