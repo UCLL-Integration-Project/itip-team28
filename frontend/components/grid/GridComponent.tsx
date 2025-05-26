@@ -88,7 +88,6 @@ const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
         }
 
         const isCar = carPosition.x === w && carPosition.y === h;
-        //const isStop = stops.some((stop) => stop.x === w && stop.y === h);
         const isPath = path.some((step) => step.x === w && step.y === h);
         const isReader = readers.some((reader) => reader.coordinates?.latitude === w && reader.coordinates?.longitude === h);
 
