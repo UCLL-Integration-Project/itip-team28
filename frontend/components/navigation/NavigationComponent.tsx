@@ -3,21 +3,20 @@ import ReaderService from "@/services/ReaderService";
 import { Reader, Route, StatusMessage, User } from "@/types";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import StockModal from "../StockModal";
 import UpdateReader from "../readers/UpdateReaderComponent";
 import CreateReaderComponent from "../readers/CreateReaderComponent";
+import DriveHereComponent from "../drive/DriveHereComponent";
 
 type Props = {
     readers: Array<Reader>;
     selectReader: (reader: Reader) => void;
 };
 
-const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
+const Navigation: React.FC<Props> = ({ readers }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const [isCreateReaderModalOpen, setIsCreateReaderModalOpen] = useState(false);
 
-    const [isStockModalOpen, setIsStockModalOpen] = useState(false);
     const [IsUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
     const [SelectedReader, setSelectedReader] = useState<Reader | null>(null);
     const router = useRouter();
@@ -32,16 +31,10 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
         }
     }, []);
 
-    const handleDrive = async (destination: Reader) => {
-        setStatusMessages([]);
-        setIsStockModalOpen(true);
-        try {
-            setStatusMessages([{ message: "Route created successfully", type: "success" }]);
-            selectReader(destination);
-        } catch (err) {
-            setStatusMessages([{ message: "Failed to create route", type: "error" }]);
-        }
+    const handleSelectReader = (reader: Reader) => {
+        setSelectedReader(reader);
     };
+
 
     const handleReaderCreated = () => {
         setIsCreateReaderModalOpen(false);
@@ -72,23 +65,6 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                     </h3>
                 </div>
             </div>
-
-            {isStockModalOpen && (
-                <StockModal
-                    isOpen={isStockModalOpen}
-                    onClose={() => setIsStockModalOpen(false)}
-                    onSubmit={({ macAddress, stock }) => {
-                        const destination = readers.find(r => r.macAddress === macAddress);
-                        if (destination) {
-                            handleDrive(destination);
-                        } else {
-                            setStatusMessages([{ message: "Reader not found", type: "error" }]);
-                        }
-                        setIsStockModalOpen(false);
-                        setStatusMessages([{ message: "The car is on its way!", type: "success" }]);
-                    }}
-                />
-            )}
 
             {StatusMessages.length > 0 && (
                 <div className="mb-8 max-w-3xl mx-auto p-4 rounded-lg bg-background animate-fade-in shadow-sm">
@@ -137,12 +113,7 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                                         {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
                                     </td>
                                     <td className="hover:text-white px-6 py-4 text-sm border-b border-dk space-x-4">
-                                        <button
-                                            onClick={() => handleDrive(reader)}
-                                            className="bg-button text-white py-2 px-5 rounded-lg text-base font-medium hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-200"
-                                        >
-                                            Drive here
-                                        </button>
+                                        {<DriveHereComponent readers={readers} reader={reader} selectReader={handleSelectReader} />}
                                         <button
                                             onClick={() => {
                                                 setSelectedReader(reader);
