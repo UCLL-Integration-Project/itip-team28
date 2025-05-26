@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import StockModal from "../StockModal";
 import UpdateReader from "../readers/UpdateReaderComponent";
 import CreateReaderComponent from "../readers/CreateReaderComponent";
+import StockService from "@/services/StockService";
 
 type Props = {
     readers: Array<Reader>;
@@ -77,15 +78,21 @@ const Navigation: React.FC<Props> = ({ readers, selectReader }: Props) => {
                 <StockModal
                     isOpen={isStockModalOpen}
                     onClose={() => setIsStockModalOpen(false)}
-                    onSubmit={({ macAddress, stock }) => {
-                        const destination = readers.find(r => r.macAddress === macAddress);
-                        if (destination) {
-                            handleDrive(destination);
-                        } else {
-                            setStatusMessages([{ message: "Reader not found", type: "error" }]);
+                    onSubmit={async ({ readerId, itemId, stock, type }) => {
+                        try {
+                            const direction = type === 'delivery' ? 'DELIVERY' : 'PICKUP';
+
+                            const requestId = await StockService.requestStockTransfer(1, Number(readerId), itemId, stock, direction);
+                            await StockService.completeStockTransfer(requestId); // ✅ Apply the stock change now
+                            await ReaderService.getReaders(); // ✅ Refresh local state to reflect updated stock
+
+                            setStatusMessages([{ message: 'Stock updated and car dispatched!', type: 'success' }]);
+                        } catch (err: any) {
+                            console.error(err);
+                            setStatusMessages([{ message: err.message, type: 'error' }]);
+                        } finally {
+                            setIsStockModalOpen(false);
                         }
-                        setIsStockModalOpen(false);
-                        setStatusMessages([{ message: "The car is on its way!", type: "success" }]);
                     }}
                 />
             )}

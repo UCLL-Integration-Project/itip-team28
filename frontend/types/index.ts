@@ -75,3 +75,7 @@ export type Grid = {
     measurement: number;
 };
 
+export type StockInput = {
+    itemId: number;
+    quantity: number;
+}

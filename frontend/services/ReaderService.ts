@@ -1,4 +1,5 @@
-import { Reader } from "@/types";
+import { Reader, StockInput } from "@/types";
+import { get } from "http";
 
 const getToken = (): string => {
     const loggedInUserString = sessionStorage.getItem('LoggedInUser');
@@ -49,9 +50,51 @@ const updateReader = (reader: Reader) => {
     });
 };
 
+const getReadersStock = (readerId: string) => {
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/readers/${readerId}/stocks`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
+        },
+    }).catch((error) => {
+        console.error("Error:", error);
+        throw error;
+    });
+};
+
+const addStockToReader = async ({
+  readerId,
+  itemId,
+  quantity,
+}: {
+  readerId: string;
+  itemId: number;
+  quantity: number;
+}): Promise<any> => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/readers/${readerId}/stocks`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ itemId, quantity }),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Failed to update stock: ${errorText}`);
+  }
+
+  return res.json();
+};
+
+
 const ReaderService = {
     getReaders,
     createReader,
-    updateReader
+    updateReader,
+    getReadersStock,
+    addStockToReader
 };
 export default ReaderService;

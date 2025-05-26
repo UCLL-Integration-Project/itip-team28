@@ -5,6 +5,8 @@ import { ReadersOverview } from "@/components/readers/ReadersOverview";
 import CarService from "@/services/CarService";
 import ReaderService from "@/services/ReaderService";
 import { Car, Reader } from "@/types";
+import { read } from "fs";
+import { get } from "http";
 import { useEffect, useState } from "react";
 
 const Navigation: React.FC = () => {
@@ -58,10 +60,14 @@ const Navigation: React.FC = () => {
         }
     };
 
+
     useEffect(() => {
         getCars();
-        getReaders();
     }, []);
+
+    useEffect(() => {
+        getReaders();
+    }, [])
 
     const handleSelectReader = (reader: Reader) => {
         setSelectReader(reader);
