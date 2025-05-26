@@ -24,14 +24,26 @@ const Home: React.FC = () => {
                     'You are not authorized to view this page. Please login first.'
                 );
             } else {
-                setError(ScanResponse.statusText);
+                const result = await ScanResponse.json();
+                setError(result.ServiceException);
             }
         } else {
-            const scans = await ScanResponse.json();
-            setScans(scans);
+            const text = await ScanResponse.text();
+
+            if (!text) {
+                setError("Database error: could not fetch data");
+            } else {
+                try {
+                    const scans = JSON.parse(text);
+                    setScans(scans);
+                } catch (e) {
+                    console.error("Failed to parse JSON", e);
+                    setError("Received invalid JSON data from server");
+                }
+            }
         }
     };
-    
+
 
     useEffect(() => {
         getAllScans()
