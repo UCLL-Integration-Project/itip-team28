@@ -32,14 +32,8 @@ const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
   }
 
 
-  const width = Math.max(...grid.coordinates.map((c) => c.latitude)) + 1;
-  const height = Math.max(...grid.coordinates.map((c) => c.longitude)) + 1;
-
-  const stops = [
-    { x: 2, y: 3 },
-    { x: 5, y: 7 },
-    { x: 8, y: 1 },
-  ];
+  const width = Math.max(...grid.coordinates.map((c) => c.longitude)) + 1;
+  const height = Math.max(...grid.coordinates.map((c) => c.latitude)) + 1;
 
   const calculatePath = (
     start: { x: number; y: number },
@@ -77,7 +71,7 @@ const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
 
       for (let w = 0; w < width; w++) {
         const coord = grid.coordinates.find(
-          (c) => c.longitude === h && c.latitude === w
+          (c) => c.longitude === w && c.latitude === h
         );
 
         if (!coord) {
@@ -88,23 +82,23 @@ const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
         }
 
         const isCar = carPosition.x === w && carPosition.y === h;
-        const isStop = stops.some((stop) => stop.x === w && stop.y === h);
         const isPath = path.some((step) => step.x === w && step.y === h);
+        const isReader = readers.some((reader) => reader.coordinates?.longitude === w && reader.coordinates?.latitude === h);
 
         let className = "grid-cell";
         if (isCar) className += " car";
         else if (isPath) className += " bg-blue-500 bg-opacity-70";
-        else if (isStop) className += " stop cursor-pointer";
+        else if (isReader) className += " stop cursor-pointer";
 
         row.push(
           <div
             key={`${w},${h}`}
             className={className}
             style={{ width: blockSize, height: blockSize }}
-            onClick={() => isStop && handleStopClick(w, h)}
+            onClick={() => isReader && handleStopClick(w, h)}
             title={`Coordinate ID: ${coord.id} (Lng: ${coord.longitude}, Lat: ${coord.latitude})`}
           >
-            {isCar ? "🚗" : isStop ? "🟢" : `(${w},${h})`}
+            {isCar ? "🚗" : isReader ? "🟢" : `(${w},${h})`}
           </div>
         );
       }
