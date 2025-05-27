@@ -1,7 +1,7 @@
 import { User } from '@/types';
 import Link from 'next/link';
 import { useEffect, useState } from "react";
-import {MdSunny, MdDarkMode} from 'react-icons/md';
+import { MdSunny, MdDarkMode } from 'react-icons/md';
 
 const Header: React.FC = () => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
@@ -60,22 +60,8 @@ const Header: React.FC = () => {
                     )}
                     {IsManager && (
                         <li>
-                            <Link href="/navigation" className="hover:text-indigo-400 transition-colors duration-200">
-                                Navigation
-                            </Link>
-                        </li>
-                    )}
-                    {IsManager && (
-                        <li>
-                            <Link href="/cars" className="hover:text-indigo-400 transition-colors duration-200">
-                                Cars
-                            </Link>
-                        </li>
-                    )}
-                    {IsManager && (
-                        <li>
-                            <Link href="/route" className="hover:text-indigo-400 transition-colors duration-200">
-                                Route
+                            <Link href="/dashboard" className="hover:text-indigo-400 transition-colors duration-200">
+                                Dashboard
                             </Link>
                         </li>
                     )}

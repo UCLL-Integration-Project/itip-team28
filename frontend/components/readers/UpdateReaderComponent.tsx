@@ -8,6 +8,7 @@ type Props = {
     onClose: () => void;
     onSuccess: () => void;
     reader: Reader | null;
+    pushNotification: (message: StatusMessage) => void;
 };
 
 const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) => {
@@ -55,7 +56,7 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
                 onSuccess();
                 setName("");
                 setTimeout(() => {
-                    router.push("/navigation");
+                    router.push("/dashboard");
                 }, 1000);
                 onClose();
             } else {

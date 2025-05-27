@@ -7,6 +7,7 @@ type Props = {
     IsOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
+    pushNotification: (message: StatusMessage) => void;
 };
 
 const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
@@ -86,7 +87,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                 setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
                 onSuccess();
                 setTimeout(() => {
-                    router.push("/navigation");
+                    router.push("/dashboard");
                 }, 1000);
                 onClose();
 
@@ -115,10 +116,10 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
             onClick={onClose}
         >
             <div
-                className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full space-y-4 sm:space-y-6 transform transition-all duration-300 scale-95"
+                className="bg-comp p-6 rounded-lg shadow-lg max-w-md w-full space-y-4 sm:space-y-6 transform transition-all duration-300 scale-95"
                 onClick={(e) => e.stopPropagation()}
             >
-                <h4 className="text-lg sm:text-xl font-semibold text-center text-gray-800">
+                <h4 className="text-lg sm:text-xl font-semibold text-center text-text">
                     Add new Location
                 </h4>
 
@@ -140,7 +141,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                     <div>
                         <label
                             htmlFor="name"
-                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                            className="block text-xs sm:text-sm font-medium text-text"
                         >
                             Name
                         </label>
@@ -149,7 +150,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 w-full p-2 sm:p-3 border border-dk rounded-md text-base bg-background focus:ring-2 focus:ring-link-text focus:border-link-text text-text placeholder-gray-500 dark:placeholder-gray-400"
                         />
                         {NameError && (
                             <p className="mt-1 text-xs sm:text-sm text-red-600">{NameError}</p>
@@ -159,7 +160,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                     <div>
                         <label
                             htmlFor="macAddress"
-                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                            className="block text-xs sm:text-sm font-medium text-text"
                         >
                             Mac Address
                         </label>
@@ -168,7 +169,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                             id="macAddress"
                             value={MacAddress}
                             onChange={(e) => setMacAddress(e.target.value)}
-                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 w-full p-2 sm:p-3 border border-dk rounded-md text-base bg-background focus:ring-2 focus:ring-link-text focus:border-link-text text-text placeholder-gray-500 dark:placeholder-gray-400"
                         />
                         {MacAddressError && (
                             <p className="mt-1 text-xs sm:text-sm text-red-600">{MacAddressError}</p>
@@ -178,7 +179,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                     <div>
                         <label
                             htmlFor="longitude"
-                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                            className="block text-xs sm:text-sm font-medium text-text"
                         >
                             Longitude
                         </label>
@@ -189,7 +190,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                             onChange={(e) =>
                                 setLongtitude(parseInt(e.target.value))
                             }
-                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+                            className="mt-1 w-full p-2 sm:p-3 border border-dk rounded-md text-base bg-background focus:ring-2 focus:ring-link-text focus:border-link-text text-text placeholder-gray-500 dark:placeholder-gray-400" />
                         {LongitudeError && (
                             <p className="mt-1 text-xs sm:text-sm text-red-600">{LongitudeError}</p>
                         )}
@@ -198,7 +199,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                     <div>
                         <label
                             htmlFor="latitude"
-                            className="block text-xs sm:text-sm font-medium text-gray-700"
+                            className="block text-xs sm:text-sm font-medium text-text"
                         >
                             Latitude
                         </label>
@@ -209,7 +210,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                             onChange={(e) =>
                                 setLatitude(parseInt(e.target.value))
                             }
-                            className="mt-1 w-full p-2 sm:p-3 border border-gray-300 rounded-md text-sm sm:text-base focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 w-full p-2 sm:p-3 border border-dk rounded-md text-base bg-background focus:ring-2 focus:ring-link-text focus:border-link-text text-text placeholder-gray-500 dark:placeholder-gray-400"
                         />
                         {LatitudeError && (
                             <p className="mt-1 text-xs sm:text-sm text-red-600">{LatitudeError}</p>
@@ -227,20 +228,20 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                                 clearErrors();
                                 onClose();
                             }}
-                            className="bg-gray-300 text-gray-800 py-1 px-4 rounded-md text-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition"
+                            className="bg-background text-text py-2 px-4 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                         >
                             Cancel
                         </button>
                         <button
                             type="submit"
-                            className="bg-gray-800 text-white py-1 px-4 rounded-md text-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition"
+                            className="bg-button text-white py-2 px-4 rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                         >
                             Add Location
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 };
 

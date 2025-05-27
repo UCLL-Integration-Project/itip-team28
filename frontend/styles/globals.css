@@ -22,8 +22,17 @@ html.dark {
     --color-button: #3B82F6;
 }
 
+html,
 body {
     font-family: var(--font-family);
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root,
+#__next {
+  height: 100%;
 }
 
 .bg-background {
@@ -80,4 +89,11 @@ body {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+@supports (-webkit-touch-callout: none) {
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
 }
