@@ -1,10 +1,9 @@
-import { Car, Reader, StatusMessage } from "@/types";
+import { Reader, StatusMessage } from "@/types";
 import { useState } from "react";
-import StockModal from "../StockModal";
+import StockModal from "../stock/StockModal";
 import StockService from "@/services/StockService";
 
 type Props = {
-    readers: Array<Reader>;
     reader: Reader;
     selectReader: (reader: Reader) => void;
     setNewStatusMessages?: (message: StatusMessage) => void;
@@ -13,7 +12,7 @@ type Props = {
     pushNotification?: (message: StatusMessage) => void;
 }
 
-const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, setNewStatusMessages, refreshReaders, onRouteStart, pushNotification }) => {
+const DriveHereComponent: React.FC<Props> = ({ reader, selectReader, setNewStatusMessages, refreshReaders, onRouteStart, pushNotification }) => {
     const [isStockModalOpen, setIsStockModalOpen] = useState(false);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
 

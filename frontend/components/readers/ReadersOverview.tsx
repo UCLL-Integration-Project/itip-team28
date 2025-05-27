@@ -146,7 +146,6 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
             {/* Drive Here and Update Buttons */}
             <div className="flex items-center justify-between gap-2 border-t border-gray-300 dark:border-gray-600 pt-2 mt-2"    >
               <DriveHereComponent
-                readers={readers}
                 reader={reader}
                 selectReader={handleSelectReader}
                 setNewStatusMessages={handleStatusMessages} pushNotification={pushNotification} refreshReaders={refreshReaders} onRouteStart={handleStart} />
