@@ -4,9 +4,11 @@ import React, { useState, useEffect } from "react";
 type GridComponentProps = {
   grid: Grid | null;
   readers: Array<Reader>;
+  setSelectedReaderId?: (id: number | null) => void;
+  setActiveComponent?: (component: string | null) => void;
 };
 
-const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
+const GridComponent: React.FC<GridComponentProps> = ({ grid, readers, setSelectedReaderId, setActiveComponent }) => {
   const [blockSize, setBlockSize] = useState(40);
   const [carPosition, setCarPosition] = useState({ x: 0, y: 0 });
   const [path, setPath] = useState<Array<{ x: number; y: number }>>([]);
@@ -64,55 +66,73 @@ const GridComponent: React.FC<GridComponentProps> = ({ grid, readers }) => {
 
 
 
-  const renderGrid = () => {
-    const gridCells = [];
+const renderGrid = () => {
+  const gridCells = [];
 
-    for (let h = height - 1; h >= 0; h--) {
-      const row = [];
+  for (let h = height - 1; h >= 0; h--) {
+    const row = [];
 
-      for (let w = 0; w < width; w++) {
-        const coord = grid.coordinates.find(
-          (c) => c.longitude === w && c.latitude === h
-        );
+    for (let w = 0; w < width; w++) {
+      const coord = grid.coordinates.find(
+        (c) => c.longitude === w && c.latitude === h
+      );
 
-        if (!coord) {
-          row.push(
-            <div key={`${w},${h}`} className="grid-cell empty-cell"
-              style={{ width: blockSize, height: blockSize }} />);
-          continue;
-        }
-
-        const isCar = carPosition.x === w && carPosition.y === h;
-        const isPath = path.some((step) => step.x === w && step.y === h);
-        const isReader = readers.some((reader) => reader.coordinates?.longitude === w && reader.coordinates?.latitude === h);
-
-        let className = "grid-cell";
-        if (isCar) className += " car";
-        else if (isPath) className += " bg-blue-500 bg-opacity-70";
-        else if (isReader) className += " stop cursor-pointer";
-
+      if (!coord) {
         row.push(
           <div
             key={`${w},${h}`}
-            className={className}
+            className="grid-cell empty-cell"
             style={{ width: blockSize, height: blockSize }}
-            onClick={() => isReader && handleStopClick(w, h)}
-            title={`Coordinate ID: ${coord.id} (Lng: ${coord.longitude}, Lat: ${coord.latitude})`}
-          >
-            {isCar ? "🚗" : isReader ? "🟢" : `(${w},${h})`}
-          </div>
+          />
         );
+        continue;
       }
 
-      gridCells.push(
-        <div key={`row-${h}`} className="grid-row">
-          {row}
+      const isCar = carPosition.x === w && carPosition.y === h;
+      const isPath = path.some((step) => step.x === w && step.y === h);
+      const reader = readers.find(
+        (r) =>
+          r.coordinates?.longitude === w &&
+          r.coordinates?.latitude === h
+      );
+
+      let className = "grid-cell";
+      if (isCar) className += " car";
+      else if (isPath) className += " bg-blue-500 bg-opacity-70";
+      else if (reader) className += " stop cursor-pointer";
+
+      row.push(
+        <div
+          key={`${w},${h}`}
+          className={className}
+          style={{ width: blockSize, height: blockSize }}
+          onClick={() => {
+            if (reader) {
+              setSelectedReaderId?.(reader.id!); // assuming reader has id
+              setActiveComponent?.("readers"); // ⬅️ open sidebar reader panel
+          }
+            reader && handleStopClick(w, h);}}
+          title={
+            reader
+              ? `${reader.name} (${w},${h})`
+              : `(${w},${h})`
+          }
+        >
+          {isCar ? "🚗" : reader ? reader.name || "🟢" : `(${w},${h})`}
         </div>
       );
     }
 
-    return gridCells;
-  };
+    gridCells.push(
+      <div key={`row-${h}`} className="grid-row">
+        {row}
+      </div>
+    );
+  }
+
+  return gridCells;
+};
+
 
   return (
     <div className="grid-container">

@@ -11,13 +11,14 @@ interface ReadersOverviewProps {
   onClose: () => void;
   refreshReaders: () => void;
   pushNotification: (message: StatusMessage) => void;
+  selectedReaderId?: number | null;
 }
 
 const shelfIcon = (
   <img src="../images/shelves.png" alt="" className="w-8 h-8 bg-gray-300 rounded" />
 );
 
-export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, pushNotification }) => {
+export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, pushNotification, selectedReaderId }) => {
   const [readers, setReaders] = useState<Reader[]>(initialReaders);
   const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -115,7 +116,10 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
         {readers.map((reader) => (
           <div
             key={reader.id}
-            className="bg-white rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            className={`border rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 ${selectedReaderId === reader.id
+              ? "border-blue-500 bg-blue-100"
+              : "border-gray-300 bg-white"
+              }`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
