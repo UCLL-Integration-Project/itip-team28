@@ -54,16 +54,18 @@ const Route: React.FC = () => {
             <main className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
                 <section className="w-full max-w-6xl bg-white p-6 rounded-lg shadow-md overflow-hidden">
                     <div className="flex gap-6 h-[600px]">
+                        {error && (<div className="text-red-500">{error}</div>)}
+                        {!error && readers.length == 0 && (<div className="text-red-500">No readers available</div>)}
+                        {!error && readers.length !== 0 && (<>
+                            <div> <GridCreate onGridCreated={setGrid} /></div>
+                            <div className="flex-[3] h-full overflow-hidden rounded-lg">
+                                <GridComponent grid={grid} readers={readers} />
+                            </div>
+                            <div className="flex-[1] h-full overflow-y-auto rounded-lg border border-gray-200 p-4 bg-gray-50">
+                                <ReadersOverview readers={readers} />
+                            </div>
+                        </>)}
 
-                        <div> <GridCreate onGridCreated={setGrid} /></div>
-                        <div className="flex-[3] h-full overflow-hidden rounded-lg">
-                            <GridComponent grid={grid} readers={readers} />
-                        </div>
-
-
-                        <div className="flex-[1] h-full overflow-y-auto rounded-lg border border-gray-200 p-4 bg-gray-50">
-                            {!error && <ReadersOverview readers={readers} />}
-                        </div>
                     </div>
                 </section>
             </main>

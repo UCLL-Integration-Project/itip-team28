@@ -48,7 +48,8 @@ const CarNavigationPage: React.FC = () => {
             <main className="bg-background text-text flex flex-col items-center justify-center min-h-screen">
                 <section>
                     {error && <div className="text-red-500">{error}</div>}
-                    <CarOverview cars={cars} />
+                    {!error && cars.length == 0 && (<div className="text-red-500">No cars available</div>)}
+                    {!error && (<CarOverview cars={cars} />)}
                 </section>
             </main>
         </>

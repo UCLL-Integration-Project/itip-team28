@@ -155,12 +155,14 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
                     </div>
                     <div className="flex justify-end space-x-4">
                         <button
+                            id='submitButton'
                             type="submit"
                             className="bg-button text-white px-4 py-2 rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                         >
                             Submit
                         </button>
                         <button
+                            id='closeButton'
                             type="button"
                             className="bg-button text-white px-4 py-2 rounded-md hover:bg-blue-700 dark:hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                             onClick={onClose}
