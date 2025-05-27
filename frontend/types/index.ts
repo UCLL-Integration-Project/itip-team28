@@ -9,6 +9,7 @@ export type User = {
 export type Car = {
     id?: number;
     name?: string;
+    stock?: number;
 }
 
 export type Coordinates = {
@@ -75,3 +76,7 @@ export type Grid = {
     measurement: number;
 };
 
+export type StockInput = {
+    itemId: number;
+    quantity: number;
+}

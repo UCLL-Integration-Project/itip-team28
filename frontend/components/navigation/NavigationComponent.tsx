@@ -10,9 +10,10 @@ import DriveHereComponent from "../drive/DriveHereComponent";
 type Props = {
     readers: Array<Reader>;
     selectReader: (reader: Reader) => void;
-};
+    refreshReaders: () => void;
+}
 
-const Navigation: React.FC<Props> = ({ readers }: Props) => {
+const Navigation: React.FC<Props> = ({ readers, refreshReaders }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const [isCreateReaderModalOpen, setIsCreateReaderModalOpen] = useState(false);
@@ -117,7 +118,7 @@ const Navigation: React.FC<Props> = ({ readers }: Props) => {
                                         {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
                                     </td>
                                     <td className="hover:text-white px-6 py-4 text-sm border-b border-dk space-x-4">
-                                        {<DriveHereComponent readers={readers} reader={reader} selectReader={handleSelectReader} setNewStatusMessages={handleStatusMessages} />}
+                                        {<DriveHereComponent readers={readers} reader={reader} selectReader={handleSelectReader} setNewStatusMessages={handleStatusMessages} refreshReaders={refreshReaders} />}
                                         <button
                                             onClick={() => {
                                                 setSelectedReader(reader);

@@ -7,63 +7,64 @@ import DriveHereComponent from "../drive/DriveHereComponent";
 import { useRouter } from "next/router";
 
 interface ReadersOverviewProps {
-    readers: Reader[];
-    onClose: () => void;
+  readers: Reader[];
+  onClose: () => void;
+  refreshReaders: () => void;
 }
 
 const shelfIcon = (
-    <img src="../images/shelves.png" alt="" className="w-8 h-8 bg-gray-300 rounded" />
+  <img src="../images/shelves.png" alt="" className="w-8 h-8 bg-gray-300 rounded" />
 );
 
-export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose }) => {
-    const [readers, setReaders] = useState<Reader[]>(initialReaders);
-    const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
-    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-    const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
-    const router = useRouter();
+export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders }) => {
+  const [readers, setReaders] = useState<Reader[]>(initialReaders);
+  const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
+  const router = useRouter();
 
-    useEffect(() => {
-        setReaders(initialReaders);
-    }
+  useEffect(() => {
+    setReaders(initialReaders);
+  }
     , [initialReaders]);
 
-    const handleSelectReader = (reader: Reader) => {
-        setSelectedReader(reader);
-    }
+  const handleSelectReader = (reader: Reader) => {
+    setSelectedReader(reader);
+  }
 
-    const handleReaderCreated = () => {
-        setIsCreateModalOpen(false);
-        setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
-        ReaderService.getReaders().then(async (response) => {
-            if (response.ok) {
-                const updatedReaders = await response.json();
-                setReaders(updatedReaders);
-            }
-        }). catch((error) => {
-            setStatusMessages([{ message: `Error fetching readers: ${error.message}`, type: "error" }]);
-        });
-    };
+  const handleReaderCreated = () => {
+    setIsCreateModalOpen(false);
+    setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
+    ReaderService.getReaders().then(async (response) => {
+      if (response.ok) {
+        const updatedReaders = await response.json();
+        setReaders(updatedReaders);
+      }
+    }).catch((error) => {
+      setStatusMessages([{ message: `Error fetching readers: ${error.message}`, type: "error" }]);
+    });
+  };
 
-    const handleReaderUpdated = () => {
-        setIsUpdateModalOpen(false);
-        setStatusMessages([{ message: "Reader updated successfully", type: "success" }]);
-        ReaderService.getReaders().then(async (response) => {
-            if (response.ok) {
-                const updatedReaders = await response.json();
-                setReaders(updatedReaders);
-            }
-        })
-        .catch((error) => {
-            setStatusMessages([{ message: `Error fetching readers: ${error.message}`, type: "error" }]);
-        });
-    };
+  const handleReaderUpdated = () => {
+    setIsUpdateModalOpen(false);
+    setStatusMessages([{ message: "Reader updated successfully", type: "success" }]);
+    ReaderService.getReaders().then(async (response) => {
+      if (response.ok) {
+        const updatedReaders = await response.json();
+        setReaders(updatedReaders);
+      }
+    })
+      .catch((error) => {
+        setStatusMessages([{ message: `Error fetching readers: ${error.message}`, type: "error" }]);
+      });
+  };
 
-    const handleStatusMessages = (statusMessage: StatusMessage) => {
-        setStatusMessages([statusMessage]);
-    };
+  const handleStatusMessages = (statusMessage: StatusMessage) => {
+    setStatusMessages([statusMessage]);
+  };
 
- return (
+  return (
     <div className="bg-comp rounded-lg shadow-md px-4 py-4 flex flex-col items-start gap-4 transition-all duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:shadow-lg relative">
       <div className="flex items-center justify-between w-full">
         <h1 className="text-lg font-medium text-text hover:text-link-text transition-colors duration-300">
@@ -93,9 +94,8 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
             {statusMessages.map(({ message, type }, index) => (
               <li
                 key={index}
-                className={`text-sm text-center ${
-                  type === "success" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
-                }`}
+                className={`text-sm text-center ${type === "success" ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"
+                  }`}
               >
                 {message}
               </li>
@@ -139,7 +139,7 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
                 readers={readers}
                 reader={reader}
                 selectReader={handleSelectReader}
-                setNewStatusMessages={handleStatusMessages}
+                setNewStatusMessages={handleStatusMessages} refreshReaders={refreshReaders}
               />
               <button
                 onClick={() => {
