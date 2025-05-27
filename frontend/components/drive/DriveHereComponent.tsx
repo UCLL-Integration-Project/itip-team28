@@ -1,10 +1,9 @@
-import { Car, Reader, StatusMessage } from "@/types";
+import { Reader, StatusMessage } from "@/types";
 import { useState } from "react";
-import StockModal from "../StockModal";
+import StockModal from "../stock/StockModal";
 import StockService from "@/services/StockService";
 
 type Props = {
-    readers: Array<Reader>;
     reader: Reader;
     selectReader: (reader: Reader) => void;
     setNewStatusMessages?: (message: StatusMessage) => void;

@@ -4,35 +4,23 @@ const getToken = (): string => {
 };
 
 const getStockForReader = async (readerId: number) => {
-    const token = getToken();
-
-    if(!token) {
-        throw new Error('No authentication token found. Please Log in again.');
-    }
-
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/readers/${readerId}/stocks`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-    });
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/readers/${readerId}/stocks`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
 };
 
 const getStockForCar = async (carId: number) => {
-    const token = getToken();
-
-    if(!token) {
-        throw new Error('No authentication token found. Please Log in again.');
-    }
-
-    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/${carId}/stocks`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-        },
-    });
+  return fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/${carId}/stocks`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
 };
 
 const requestStockTransfer = async (
@@ -42,15 +30,12 @@ const requestStockTransfer = async (
   quantity: number,
   direction: 'PICKUP' | 'DELIVERY'
 ): Promise<number> => {
-  const token = getToken();
-  if (!token) throw new Error('No token');
-
   const endpoint = direction === 'PICKUP' ? 'requestPickup' : 'requestDelivery';
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/cars/${carId}/${endpoint}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify({ readerId, itemId, quantity }),
   });
@@ -58,15 +43,14 @@ const requestStockTransfer = async (
   if (!res.ok) throw new Error(await res.text());
 
   const result = await res.json();
-  return result.id; // 🔥 the requestId
+  return result.id;
 };
 
 const completeStockTransfer = async (requestId: number): Promise<void> => {
-  const token = getToken();
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/stocktransferrequests/${requestId}/complete`, {
     method: 'PUT',
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${getToken()}`,
     },
   });
 
@@ -79,10 +63,10 @@ const completeStockTransfer = async (requestId: number): Promise<void> => {
 
 
 const StockService = {
-    getStockForReader,
-    getStockForCar,
-    requestStockTransfer,
-    completeStockTransfer
-};  
+  getStockForReader,
+  getStockForCar,
+  requestStockTransfer,
+  completeStockTransfer
+};
 
 export default StockService;

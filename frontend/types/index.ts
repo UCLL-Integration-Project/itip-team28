@@ -80,3 +80,14 @@ export type StockInput = {
     itemId: number;
     quantity: number;
 }
+
+export type Item ={
+    id: number;
+    name: string;
+};
+
+export type Stock = {
+    id: number;
+    item: Item;
+    quantity: number;
+};

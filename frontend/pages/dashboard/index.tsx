@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/header";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Header from "../../components/header";
 import { Car, Grid, Reader, Route, StatusMessage } from "@/types";
 import GridCreate from "@/components/grid/GridCreate";
 import GridComponent from "@/components/grid/GridComponent";
