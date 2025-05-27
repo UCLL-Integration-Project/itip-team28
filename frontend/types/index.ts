@@ -9,6 +9,7 @@ export type User = {
 export type Car = {
     id?: number;
     name?: string;
+    stock?: number;
 }
 
 export type Coordinates = {
