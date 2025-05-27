@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/header";
-import { Grid, Reader } from "@/types";
+import { Car, Grid, Reader, Route } from "@/types";
 import GridCreate from "@/components/grid/GridCreate";
 import GridComponent from "@/components/grid/GridComponent";
 import ReaderService from "@/services/ReaderService";
 import { ReadersOverview } from "@/components/readers/ReadersOverview";
+import CarService from "@/services/CarService";
+import CarOverview from "@/components/cars/CarOverview";
+import RouteService from "@/services/RouteService";
+import RouteHistory from "@/components/routes/RouteHistory";
 
 const Dashboard: React.FC = () => {
     const [activeComponent, setActiveComponent] = useState<string | null>(null);
     const [grid, setGrid] = useState<Grid | null>(null);
     const [readers, setReaders] = useState<Reader[]>([]); 
+    const [cars, setCars] = useState<Car[]>([]); 
+    const [routes, setRoutes] = useState<Route[]>([]);
     const [error, setError] = useState<string>("");
 
     const getReaders = async () => {
@@ -32,8 +38,50 @@ const Dashboard: React.FC = () => {
         }
     };
 
+    const getCars = async () => {
+        setError('');
+        try{
+            const response = await CarService.getCars();
+            if (!response.ok) {
+                if (response.status === 401) {
+                    setError('You are not authorized to view this page. Please login first.');
+                } else {
+                    setError(response.statusText);
+                }
+            } else {
+                const carsData = await response.json();
+                setCars(carsData);
+                console.log(carsData);  
+            }
+        } catch (err: any) {
+            setError(err.message || 'Failed to fetch cars');
+        }
+    };
+
+    const getRoutes = async () => {
+        setError('');
+        try {
+            const response = await RouteService.getAllRoutes();
+            if (!response.ok) {
+                if (response.status === 401) {
+                    setError('You are not authorized to view this page. Please login first.');
+                } else {
+                    setError(response.statusText);
+                }
+            } else {
+                const routesData = await response.json();
+                setRoutes(routesData);
+                console.log(routesData);
+            }
+        } catch (err: any) {
+            setError(err.message || 'Failed to fetch routes');
+        }
+    };
+
     useEffect(() => {
         getReaders();
+        getCars();
+        getRoutes();
     }, []);
 
     const handleToggle = (component: string | null) => {
@@ -67,6 +115,20 @@ return (
                 readers={readers}
                 onClose={() => setActiveComponent(null)}
             />
+            )}
+
+            {activeComponent === "cars" && (
+                <CarOverview
+                    cars={cars}
+                    onClose={() => setActiveComponent(null)}
+                />
+            )}
+
+            {activeComponent === "routes" && (
+                <RouteHistory
+                    routes={routes}
+                    onClose={() => setActiveComponent(null)}
+                />
             )}
 
             {/* GridComponent in the center */}

@@ -58,20 +58,20 @@ const Header: React.FC = () => {
                             </Link>
                         </li>
                     )}
-                    {IsManager && (
+{/*                     {IsManager && (
                         <li>
                             <Link href="/navigation" className="hover:text-indigo-400 transition-colors duration-200">
                                 Navigation
                             </Link>
                         </li>
-                    )}
-                    {IsManager && (
+                    )} */}
+{/*                     {IsManager && (
                         <li>
                             <Link href="/cars" className="hover:text-indigo-400 transition-colors duration-200">
                                 Cars
                             </Link>
                         </li>
-                    )}
+                    )} */}
                     {IsManager && (
                         <li>
                             <Link href="/dashboard" className="hover:text-indigo-400 transition-colors duration-200">

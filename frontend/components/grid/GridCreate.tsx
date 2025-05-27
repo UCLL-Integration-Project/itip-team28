@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import GridService from "@/services/GridService";
 import { Grid, GridInput } from "@/types";
+
 type GridCreateProps = {
   onGridCreated: (grid: Grid) => void;
   onClose:() => void;
@@ -72,7 +73,7 @@ return (
             type="number"
             value={width}
             onChange={(e) => setWidth(Number(e.target.value))}
-            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-background text-text"
           />
         </div>
 
@@ -82,7 +83,7 @@ return (
             type="number"
             value={height}
             onChange={(e) => setHeight(Number(e.target.value))}
-            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-background text-text"
           />
         </div>
 
@@ -94,13 +95,13 @@ return (
             type="number"
             value={blockSize}
             onChange={(e) => setBlockSize(Number(e.target.value))}
-            className="mt-1 block w-full border border-gray-300 rounded-md px-3 py-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full border border-gray-300 dark:border-gray-600 rounded-md px-3 py-2 shadow-sm focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-blue-500 dark:focus:border-blue-400 bg-background text-text"
           />
         </div>
 
         <button
           onClick={handleCreateGrid}
-          className="w-full bg-button text-white py-2 px-4 rounded-md shadow hover:bg-blue-700 dark:hover:bg-blue-500 transition duration-200"
+          className="w-full bg-gray-300 border-1 border-gray-400 text-green py-1 px-3 mt-1 mb-1 rounded-sm text-xs font-light hover:bg-gray-700 dark:hover:bg-gray-200 focus:outline-none focus:ring-2  transition-colors duration-200 cursor-pointer"
         >
           Create Grid
         </button>

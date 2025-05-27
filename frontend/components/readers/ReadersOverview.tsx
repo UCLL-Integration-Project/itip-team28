@@ -109,22 +109,22 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
         {readers.map((reader) => (
           <div
             key={reader.id}
-            className="bg-table rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100"
+            className="bg-white rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-700"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-8 h-8">{shelfIcon}</div>
                 <div>
-                  <div className="text-lg font-medium text-text">{reader.name}</div>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-lg font-medium text-gray-600 dark:text-gray-600">{reader.name}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-600">
                     MAC: {reader.macAddress}
                   </div>
-                  <div className="text-sm text-gray-600">
+                  <div className="text-sm text-gray-600 dark:text-gray-600">
                     Stock: {reader?.stocks?.[reader.stocks?.length - 1]?.quantity ?? "No stock"}
                   </div>
                 </div>
               </div>
-              <div className="gap-2 text-sm text-gray-600 flex flex-col">
+              <div className="gap-2 text-sm text-text flex flex-col">
                 <p className="px-2 py-1 bg-green-200 rounded-sm border-green-400 border-1 text-green-800 shadow-sm">
                   X:{reader.coordinates?.longitude}
                 </p>
@@ -134,7 +134,7 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
               </div>
             </div>
             {/* Drive Here and Update Buttons */}
-            <div className="flex gap-2 border-t-1 border-gray-300 pt-2 items-center content-between mt-2"    >
+            <div className="flex items-center justify-between gap-2 border-t border-gray-300 dark:border-gray-600 pt-2 mt-2"    >
               <DriveHereComponent
                 readers={readers}
                 reader={reader}
