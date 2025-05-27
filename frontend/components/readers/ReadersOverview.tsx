@@ -12,13 +12,14 @@ interface ReadersOverviewProps {
   refreshReaders: () => void;
   pushNotification: (message: StatusMessage) => void;
   selectedReaderId?: number | null;
+  setStartMoving: (val: boolean) => void;
 }
 
 const shelfIcon = (
   <img src="../images/shelves.png" alt="" className="w-8 h-8 bg-gray-300 rounded" />
 );
 
-export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, pushNotification, selectedReaderId }) => {
+export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, pushNotification, selectedReaderId,setStartMoving }) => {
   const [readers, setReaders] = useState<Reader[]>(initialReaders);
   const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -146,6 +147,7 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
             {/* Drive Here and Update Buttons */}
             <div className="flex items-center justify-between gap-2 border-t border-gray-300 dark:border-gray-600 pt-2 mt-2"    >
               <DriveHereComponent
+                setStartMoving={setStartMoving}
                 readers={readers}
                 reader={reader}
                 selectReader={handleSelectReader}

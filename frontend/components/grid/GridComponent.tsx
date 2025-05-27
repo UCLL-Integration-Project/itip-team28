@@ -6,29 +6,43 @@ type GridComponentProps = {
   readers: Array<Reader>;
   setSelectedReaderId?: (id: number | null) => void;
   setActiveComponent?: (component: string | null) => void;
+  startMoving: boolean;
+  setStartMoving: (val: boolean) => void;
 };
 
-const GridComponent: React.FC<GridComponentProps> = ({ grid, readers, setSelectedReaderId, setActiveComponent }) => {
+const GridComponent: React.FC<GridComponentProps> = ({ grid, readers, setSelectedReaderId, setActiveComponent,startMoving, setStartMoving}) => {
   const [blockSize, setBlockSize] = useState(40);
   const [carPosition, setCarPosition] = useState({ x: 0, y: 0 });
   const [path, setPath] = useState<Array<{ x: number; y: number }>>([]);
 
   const [currentStep, setCurrentStep] = useState(0);
   useEffect(() => {
-
     if (grid?.measurement && blockSize !== grid.measurement) {
       setBlockSize(grid.measurement);
     }
+  }, [grid?.measurement, blockSize]);
 
-    if (path.length > 0 && currentStep < path.length) {
-      const timer = setTimeout(() => {
-        setCarPosition(path[currentStep]);
-        setCurrentStep(currentStep + 1);
-      }, 300);
+  // This useEffect handles the car movement
+  useEffect(() => {
+    if (!startMoving || path.length === 0 || currentStep >= path.length) return;
 
-      return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      setCarPosition(path[currentStep]);
+      setCurrentStep((prev) => prev + 1);
+    if (currentStep + 1 === path.length) {
+        setStartMoving(false); 
+      }
+
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [startMoving, path, currentStep]);
+  useEffect(() => {
+    if (startMoving && currentStep >= path.length) {
+      setStartMoving(false);
     }
-  }, [grid?.measurement, blockSize, path, currentStep]);
+  }, [currentStep, path.length, startMoving, setStartMoving]);
+
 
   if (!grid) {
     return <div className="text-gray-600 text-center">No grid created yet</div>;
@@ -69,7 +83,7 @@ const GridComponent: React.FC<GridComponentProps> = ({ grid, readers, setSelecte
 const renderGrid = () => {
   const gridCells = [];
 
-  for (let h = height - 1; h >= 0; h--) {
+  for (let h = 0; h < height; h++) {
     const row = [];
 
     for (let w = 0; w < width; w++) {
@@ -108,8 +122,8 @@ const renderGrid = () => {
           style={{ width: blockSize, height: blockSize }}
           onClick={() => {
             if (reader) {
-              setSelectedReaderId?.(reader.id!); // assuming reader has id
-              setActiveComponent?.("readers"); // ⬅️ open sidebar reader panel
+              setSelectedReaderId?.(reader.id!); 
+              setActiveComponent?.("readers"); 
           }
             reader && handleStopClick(w, h);}}
           title={

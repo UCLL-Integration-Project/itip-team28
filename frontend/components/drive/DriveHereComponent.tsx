@@ -11,9 +11,10 @@ type Props = {
     refreshReaders: () => void;
     onRouteStart: () => void;
     pushNotification?: (message: StatusMessage) => void;
+    setStartMoving: (val: boolean) => void;
 }
 
-const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, setNewStatusMessages, refreshReaders, onRouteStart, pushNotification }) => {
+const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, setNewStatusMessages, refreshReaders, onRouteStart, pushNotification,setStartMoving}) => {
     const [isStockModalOpen, setIsStockModalOpen] = useState(false);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
 
@@ -25,6 +26,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
                 setStatusMessages([{ message: "Route created successfully", type: "success" }]);
                 setNewStatusMessages?.({ message: "Route created successfully", type: "success" });
                 selectReader(destination);
+               
 
             } catch (err) {
                 setStatusMessages([{ message: "Failed to create route", type: "error" }]);
@@ -47,6 +49,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
 
                             const requestId = await StockService.requestStockTransfer(1, Number(readerId), itemId, stock, direction);
                             pushNotification?.({ message: 'Stock transfer request complete.', type: 'success' });
+                            setStartMoving(true);
 
                             await new Promise(resolve => setTimeout(resolve, 1000));
                             await StockService.completeStockTransfer(requestId);
