@@ -43,8 +43,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
                     onSubmit={async ({ readerId, itemId, stock, type }) => {
                         try {
                             const direction = type === 'delivery' ? 'DELIVERY' : 'PICKUP';
-
-                            pushNotification?.({ message: 'Sending stock transfer request...', type: 'success' });
+                            console.log(pushNotification);
 
                             const requestId = await StockService.requestStockTransfer(1, Number(readerId), itemId, stock, direction);
                             pushNotification?.({ message: 'Stock transfer request complete.', type: 'success' });

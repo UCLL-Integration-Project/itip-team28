@@ -145,7 +145,7 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
                 readers={readers}
                 reader={reader}
                 selectReader={handleSelectReader}
-                setNewStatusMessages={handleStatusMessages} refreshReaders={refreshReaders} onRouteStart={handleStart} />
+                setNewStatusMessages={handleStatusMessages} pushNotification={pushNotification} refreshReaders={refreshReaders} onRouteStart={handleStart} />
               <button
                 onClick={() => {
                   setSelectedReader(reader);
