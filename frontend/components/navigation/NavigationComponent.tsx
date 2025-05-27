@@ -10,8 +10,8 @@ import DriveHereComponent from "../drive/DriveHereComponent";
 type Props = {
     readers: Array<Reader>;
     selectReader: (reader: Reader) => void;
-    refreshReaders: () => void; // ✅ new prop
-};
+    refreshReaders: () => void;
+}
 
 const Navigation: React.FC<Props> = ({ readers, refreshReaders }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);

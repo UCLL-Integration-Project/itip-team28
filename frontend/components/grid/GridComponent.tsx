@@ -1,5 +1,6 @@
 import { Grid, Reader } from "@/types";
 import React, { useState, useEffect } from "react";
+
 type GridComponentProps = {
   grid: Grid | null;
   readers: Array<Reader>;

@@ -8,6 +8,7 @@
 .grid-title {
   font-size: 1.25rem;
   font-weight: bold;
+  color: var(--color-text);
 }
 
 .grid-controls {
@@ -21,6 +22,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: var(--color-text);
 }
 
 .grid-input {
@@ -28,6 +30,8 @@
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   width: 5rem;
+  background-color: var(--color-background);
+  color: var(--color-text);
 }
 
 .grid-wrapper {
@@ -57,4 +61,35 @@
   color: #4B5563;
   min-width: 20px;
   max-width: 60px;
+  background-color: #ffffff;
+}
+
+html.dark .grid-cell {
+  border: 1px solid #666; 
+  color: #D1D5DB; 
+  background-color: #293548; 
+}
+
+.grid-cell.empty-cell {
+  background-color: #f0f0f0; 
+}
+
+html.dark .grid-cell.empty-cell {
+  background-color: #1F2A44; 
+}
+
+.grid-cell.car {
+  background-color: #293548;
+}
+
+html.dark .grid-cell.car {
+  background-color: #9394b9; 
+}
+
+.grid-cell.stop {
+  background-color: #4caf50; /* Green for stops */
+}
+
+html.dark .grid-cell.stop {
+  background-color: #388e3c; /* Darker green for better contrast in dark mode */
 }
