@@ -14,15 +14,16 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
 
     const handleDrive = async (destination: Reader) => {
-        console.log("CLICK");
         setStatusMessages([]);
         setIsStockModalOpen(true);
-        try {
-            setStatusMessages([{ message: "Route created successfully", type: "success" }]);
-            setNewStatusMessages?.({ message: "Route created successfully", type: "success" });
-            selectReader(destination);
-        } catch (err) {
-            setStatusMessages([{ message: "Failed to create route", type: "error" }]);
+        if (document.getElementById('submitButton')) {
+            try {
+                setStatusMessages([{ message: "Route created successfully", type: "success" }]);
+                setNewStatusMessages?.({ message: "Route created successfully", type: "success" });
+                selectReader(destination);
+            } catch (err) {
+                setStatusMessages([{ message: "Failed to create route", type: "error" }]);
+            }
         }
     };
 
