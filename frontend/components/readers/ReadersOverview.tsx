@@ -15,7 +15,6 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers }) => 
             <h1 className="text-3xl sm:text-4xl font-bold text-text mb-10 text-center">Readers overview</h1>
             <div className="flex flex-col gap-6">
                 {readers.map((reader) => {
-                    console.log(reader?.stocks?.[reader.stocks?.length - 1]?.quantity ?? "No stock available");
                     return (
                         <div
                             key={reader.id}

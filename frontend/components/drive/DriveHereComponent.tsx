@@ -9,9 +9,11 @@ type Props = {
     selectReader: (reader: Reader) => void;
     setNewStatusMessages?: (message: StatusMessage) => void;
     refreshReaders: () => void;
+    onRouteStart: () => void;
+    pushNotification?: (message: StatusMessage) => void;
 }
 
-const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, setNewStatusMessages, refreshReaders }) => {
+const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, setNewStatusMessages, refreshReaders, onRouteStart, pushNotification }) => {
     const [isStockModalOpen, setIsStockModalOpen] = useState(false);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
 
@@ -23,6 +25,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
                 setStatusMessages([{ message: "Route created successfully", type: "success" }]);
                 setNewStatusMessages?.({ message: "Route created successfully", type: "success" });
                 selectReader(destination);
+
             } catch (err) {
                 setStatusMessages([{ message: "Failed to create route", type: "error" }]);
             }
@@ -36,21 +39,29 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
                 <StockModal
                     isOpen={isStockModalOpen}
                     onClose={() => setIsStockModalOpen(false)}
+                    onRouteStart={onRouteStart}
                     onSubmit={async ({ readerId, itemId, stock, type }) => {
-                        try {
-                            const direction = type === 'delivery' ? 'DELIVERY' : 'PICKUP';
+                    try {
+                        const direction = type === 'delivery' ? 'DELIVERY' : 'PICKUP';
 
-                            const requestId = await StockService.requestStockTransfer(1, Number(readerId), itemId, stock, direction);
-                            await StockService.completeStockTransfer(requestId); // ✅ Apply the stock change now
-                            refreshReaders();
+                        pushNotification?.({ message: 'Sending stock transfer request...', type: 'success' });
 
-                            setStatusMessages([{ message: 'Stock updated and car dispatched!', type: 'success' }]);
-                        } catch (err: any) {
-                            console.error(err);
-                            setStatusMessages([{ message: err.message, type: 'error' }]);
-                        } finally {
-                            setIsStockModalOpen(false);
-                        }
+                        const requestId = await StockService.requestStockTransfer(1, Number(readerId), itemId, stock, direction);
+                        pushNotification?.({ message: 'Stock transfer request complete.', type: 'success' });
+
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        await StockService.completeStockTransfer(requestId);
+                        pushNotification?.({ message: 'Stock transfer completed successfully.', type: 'success' });
+
+                        refreshReaders();
+                    } catch (err: any) {
+                        const errorJson = JSON.parse(err.message.replace(/^Error:\s*/, ''));
+                        const readableMessage = errorJson.ServiceException || 'Something went wrong';
+  
+                        pushNotification?.({ message: readableMessage, type: 'error' });
+                    } finally {
+                        setIsStockModalOpen(false);
+                    }
                     }}
                 />
             )}

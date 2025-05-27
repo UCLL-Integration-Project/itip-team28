@@ -48,8 +48,6 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
                 coordinates: reader.coordinates,
             });
 
-            console.log(reader.id);
-
             const result = await response.json();
 
             if (response.ok) {

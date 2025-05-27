@@ -8,12 +8,14 @@ import CreateReaderComponent from "../readers/CreateReaderComponent";
 import DriveHereComponent from "../drive/DriveHereComponent";
 
 type Props = {
-    readers: Array<Reader>;
-    selectReader: (reader: Reader) => void;
-    refreshReaders: () => void; // ✅ new prop
+  readers: Array<Reader>;
+  selectReader: (reader: Reader) => void;
+  refreshReaders: () => void;
+  onRouteStart: () => void;
+  pushNotification: (message: StatusMessage) => void;
 };
 
-const Navigation: React.FC<Props> = ({ readers, refreshReaders }: Props) => {
+const Navigation: React.FC<Props> = ({ readers, refreshReaders, onRouteStart, pushNotification }: Props) => {
     const [LoggedInUser, setLoggedInUser] = useState<User | null>(null);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
     const [isCreateReaderModalOpen, setIsCreateReaderModalOpen] = useState(false);
@@ -118,7 +120,7 @@ const Navigation: React.FC<Props> = ({ readers, refreshReaders }: Props) => {
                                         {reader.coordinates?.longitude + ", " + reader.coordinates?.latitude || "N/A"}
                                     </td>
                                     <td className="hover:text-white px-6 py-4 text-sm border-b border-dk space-x-4">
-                                        {<DriveHereComponent readers={readers} reader={reader} selectReader={handleSelectReader} setNewStatusMessages={handleStatusMessages} refreshReaders={refreshReaders} />}
+                                        {<DriveHereComponent readers={readers} reader={reader} selectReader={handleSelectReader} setNewStatusMessages={handleStatusMessages} refreshReaders={refreshReaders} onRouteStart={onRouteStart} pushNotification={pushNotification}  />}
                                         <button
                                             onClick={() => {
                                                 setSelectedReader(reader);
