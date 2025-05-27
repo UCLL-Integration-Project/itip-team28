@@ -3,41 +3,41 @@ import { Car, Stock } from '@/types';
 import React, { useEffect, useState } from 'react';
 
 export interface CarOverviewProps {
-    cars: Car[];
-    onClose: () => void;
+  cars: Car[];
+  onClose: () => void;
 }
 
 const CarOverview: React.FC<CarOverviewProps> = ({ cars, onClose }) => {
-    const car = cars[0];
-    const [stocks, setStocks] = useState<Stock[]>([]);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+  const car = cars[0];
+  const [stocks, setStocks] = useState<Stock[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        if (car && car.id !== undefined) {
-            const fetchStocks = async () => {
-                setLoading(true);
-                setError(null);
-                try {
-                    const response = await CarService.getCarStocks(car.id!);
-                    if (!response.ok) {
-                        throw new Error("Failed to fetch car stocks");
-                    }
-                    const data: Stock[] = await response.json();
-                    setStocks(data);
-                } catch (err: any) {
-                    setError(err.message || 'Failed to fetch car stocks');
-                } finally {
-                    setLoading(false);
-                };
-            };
-            fetchStocks();
-        }
-    }, [car]);
-    
-    if (!car) return null;
+  useEffect(() => {
+    if (car && car.id !== undefined) {
+      const fetchStocks = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+          const response = await CarService.getCarStocks(car.id!);
+          if (!response.ok) {
+            throw new Error("Failed to fetch car stocks");
+          }
+          const data: Stock[] = await response.json();
+          setStocks(data);
+        } catch (err: any) {
+          setError(err.message || 'Failed to fetch car stocks');
+        } finally {
+          setLoading(false);
+        };
+      };
+      fetchStocks();
+    }
+  }, [car]);
 
-return (
+  if (!car) return null;
+
+  return (
     <div className="bg-comp rounded-lg shadow-md px-4 py-4 flex flex-col items-start gap-4 transition-all duration-300 hover:bg-blue-50 dark:hover:bg-blue-800/30 hover:shadow-lg relative">
       <div className="flex items-center justify-between w-full">
         <h1 className="text-lg font-medium text-text hover:text-link-text transition-colors duration-300">
@@ -70,16 +70,16 @@ return (
                 className="w-20 h-20 object-cover rounded"
               />
               <div>
-                <div className="text-lg font-medium text-gray-600 dark:text-gray-600">
+                <div className="text-lg font-medium text-text">
                   {car.name}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-600">
+                <div className="text-sm text-text">
                   ID: {car.id}
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-600">
+                <div className="text-sm text-text">
                   Weight: 1kg
                 </div>
-                <div className="text-sm text-gray-600 dark:text-gray-600">
+                <div className="text-sm text-text">
                   Stock:{' '}
                   {loading ? (
                     "Loading..."
