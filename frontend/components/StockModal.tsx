@@ -50,7 +50,7 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
         if (selectedItemId === undefined) {
             setError('Please select an item.');
             return;
-    }
+        }
 
         if (stock <= 0) {
             setError('Stock must be a positive number.');
@@ -58,7 +58,7 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
         }
 
         console.log("Submitting data:", {
-           readerId: selectedReader,
+            readerId: selectedReader,
             stock,
             type,
             itemId: selectedItemId,
@@ -66,10 +66,10 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
 
         if (selectedReader) {
             onSubmit({
-            readerId: selectedReader,
-            stock,
-            type,
-            itemId: selectedItemId,
+                readerId: selectedReader,
+                stock,
+                type,
+                itemId: selectedItemId,
             });
 
             onClose();
@@ -93,39 +93,40 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
                             Reader:
                         </label>
                         <select
+                            className='bg-comp text-text'
                             value={selectedReader}
                             onChange={(e) => {
                                 setSelectedReader(e.target.value);
                             }}
-                            >
-                            <option value="" disabled>Select a reader</option>
+                        >
+                            <option className='bg-comp text-text' value="" disabled>Select a reader</option>
                             {readers.map((reader) => (
                                 <option key={reader.id} value={reader.id}>
-                                {reader.name} ({reader.coordinates?.longitude}, {reader.coordinates?.latitude})
+                                    {reader.name} ({reader.coordinates?.longitude}, {reader.coordinates?.latitude})
                                 </option>
                             ))}
                         </select>
                     </div>
                     <div className="mb-4">
-                    <label className="block text-base font-medium text-text mb-1">
-                        Item:
-                    </label>
-                    <select
-                        className="w-full border border-dk rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-link-text text-text"
-                        value={selectedItemId ?? ''}
-                        onChange={(e) => setSelectedItemId(Number(e.target.value))}
-                    >
-                        <option value="" disabled>Select an item</option>
-                        {readers
-                        .find((r) => r.id?.toString() === selectedReader)
-                        ?.stocks?.map((stock) =>
-                            stock.item?.id !== undefined ? (
-                            <option key={stock.item.id} value={stock.item.id}>
-                                {stock.item.name}
-                            </option>
-                            ) : null
-                        )}
-                    </select>
+                        <label className="block text-base font-medium text-text mb-1">
+                            Item:
+                        </label>
+                        <select
+                            className="bg-comp w-full border border-dk rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-link-text text-text"
+                            value={selectedItemId ?? ''}
+                            onChange={(e) => setSelectedItemId(Number(e.target.value))}
+                        >
+                            <option className='bg-comp text-text' value="" disabled>Select an item</option>
+                            {readers
+                                .find((r) => r.id?.toString() === selectedReader)
+                                ?.stocks?.map((stock) =>
+                                    stock.item?.id !== undefined ? (
+                                        <option key={stock.item.id} value={stock.item.id}>
+                                            {stock.item.name}
+                                        </option>
+                                    ) : null
+                                )}
+                        </select>
                     </div>
 
 
