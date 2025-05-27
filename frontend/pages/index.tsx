@@ -23,6 +23,10 @@ const Home: React.FC = () => {
                 setError(
                     'You are not authorized to view this page. Please login first.'
                 );
+            } else if (ScanResponse.status === 500) {
+                setError(
+                    'Backend error'
+                );
             } else {
                 const result = await ScanResponse.json();
                 setError(result.ServiceException);
