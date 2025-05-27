@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+    import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/header";
 import { Car, Grid, Reader, Route } from "@/types";
@@ -13,11 +13,21 @@ import RouteHistory from "@/components/routes/RouteHistory";
 
 const Dashboard: React.FC = () => {
     const [activeComponent, setActiveComponent] = useState<string | null>(null);
+    const [selectedReaderId, setSelectedReaderId] = useState<number | null>(null);
     const [grid, setGrid] = useState<Grid | null>(null);
     const [readers, setReaders] = useState<Reader[]>([]);
     const [cars, setCars] = useState<Car[]>([]);
     const [routes, setRoutes] = useState<Route[]>([]);
     const [error, setError] = useState<string>("");
+
+    useEffect(() => {
+        console.log("Selected Reader ID:", selectedReaderId);
+    }, [selectedReaderId]);
+
+    const handleToggleComponent = (component: string) => {
+        const newComponent = activeComponent === component ? null : component;
+        setActiveComponent(newComponent);
+    };
 
     const refreshReaders = () => {
         getReaders();
@@ -117,6 +127,7 @@ const Dashboard: React.FC = () => {
                     {activeComponent === "readers" && (
                         <ReadersOverview
                             readers={readers}
+                            selectedReaderId={selectedReaderId}
                             onClose={() => setActiveComponent(null)} refreshReaders={refreshReaders} />
                     )}
 
@@ -140,7 +151,7 @@ const Dashboard: React.FC = () => {
                             }`}
                     >
                         <div className="max-w-4xl w-full">
-                            <GridComponent grid={grid} readers={readers} />
+                            <GridComponent grid={grid} readers={readers} setSelectedReaderId={setSelectedReaderId} setActiveComponent={setActiveComponent} />
                         </div>
                     </div>
                 </div>
