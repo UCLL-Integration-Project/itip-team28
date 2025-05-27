@@ -116,25 +116,27 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
         {readers.map((reader) => (
           <div
             key={reader.id}
-            className={`border rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 ${selectedReaderId === reader.id
+            className={`border rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100 ${selectedReaderId === reader.id
               ? "border-blue-500 bg-blue-100"
               : "border-gray-300 bg-white"
               }`}
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8">{shelfIcon}</div>
-                <div>
-                  <div className="text-lg font-medium text-gray-600 dark:text-gray-600">{reader.name}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-600">
-                    MAC: {reader.macAddress}
-                  </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-600">
-                    Stock: {reader?.stocks?.[reader.stocks?.length - 1]?.quantity ?? "No stock"}
-                  </div>
+            <div className="flex justify-between">
+              <div className="flex flex-col  gap-2 ">
+                <div className="flex items-center gap-2">
+                    <div className="w-8">{shelfIcon}</div>
+                    <div className="text-md font-medium text-gray-600 dark:text-gray-600">{reader.name}</div>
+                </div>
+                <div className="pt-1">
+                    <div className="text-sm text-gray-600 dark:text-gray-600">
+                        MAC: {reader.macAddress}
+                    </div>
+                    <div className="text-sm text-gray-600 dark:text-gray-600">
+                        Stock: {reader?.stocks?.[reader.stocks?.length - 1]?.quantity ?? "No stock"}
+                    </div>
                 </div>
               </div>
-              <div className="gap-2 text-sm text-text flex flex-col">
+              <div className="gap-2 ml-3 text-sm text-text flex flex-col">
                 <p className="px-2 py-1 bg-green-200 rounded-sm border-green-400 border-1 text-green-800 shadow-sm">
                   X:{reader.coordinates?.longitude}
                 </p>
@@ -155,7 +157,7 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
                   setSelectedReader(reader);
                   setIsUpdateModalOpen(true);
                 }}
-                className=" w-full mt-1 mb-1 bg-gray-300 border-1 border-gray-400 text-green py-1 px-3 rounded-sm text-xs font-light hover:bg-gray-700 dark:hover:bg-gray-200 focus:outline-none focus:ring-2  transition-colors duration-200 cursor-pointer"
+                className=" w-full bg-gray-300 border-1 border-gray-400 text-green py-1 px-3 mt-1 mb-1 rounded-sm text-xs font-light hover:bg-gray-400  focus:outline-none focus:ring-2  transition-colors duration-200 cursor-pointer"
               >
                 Update
               </button>
