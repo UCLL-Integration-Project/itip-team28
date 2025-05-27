@@ -6,15 +6,18 @@ interface StockModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSubmit: (data: {
-        macAddress: string;
+        readerId: string;
         stock: number;
         type: 'delivery' | 'pick-up';
+        itemId: number;
     }) => void;
+
 }
 
 const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) => {
     const [readers, setReaders] = useState<Reader[]>([]);
     const [selectedReader, setSelectedReader] = useState<string>('');
+    const [selectedItemId, setSelectedItemId] = useState<number | undefined>(undefined);
     const [stock, setStock] = useState<number>(0);
     const [type, setType] = useState<'delivery' | 'pick-up'>('delivery');
     const [error, setError] = useState<string>('');
@@ -44,23 +47,31 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
             return;
         }
 
+        if (selectedItemId === undefined) {
+            setError('Please select an item.');
+            return;
+        }
+
         if (stock <= 0) {
             setError('Stock must be a positive number.');
             return;
         }
 
         console.log("Submitting data:", {
-            macAddress: selectedReader,
+            readerId: selectedReader,
             stock,
             type,
+            itemId: selectedItemId,
         })
 
         if (selectedReader) {
             onSubmit({
-                macAddress: selectedReader,
+                readerId: selectedReader,
                 stock,
                 type,
+                itemId: selectedItemId,
             });
+
             onClose();
         }
     };
@@ -82,18 +93,43 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
                             Reader:
                         </label>
                         <select
-                            className="w-full border border-dk rounded-md p-2 bg-background focus:outline-none focus:ring-2 focus:ring-link-text text-text"
+                            className='bg-comp text-text'
                             value={selectedReader}
-                            onChange={(e) => setSelectedReader(e.target.value)}
+                            onChange={(e) => {
+                                setSelectedReader(e.target.value);
+                            }}
                         >
-                            <option value="" disabled>Select a reader</option>
+                            <option className='bg-comp text-text' value="" disabled>Select a reader</option>
                             {readers.map((reader) => (
-                                <option key={reader.macAddress} value={reader.macAddress}>
+                                <option key={reader.id} value={reader.id}>
                                     {reader.name} ({reader.coordinates?.longitude}, {reader.coordinates?.latitude})
                                 </option>
                             ))}
                         </select>
                     </div>
+                    <div className="mb-4">
+                        <label className="block text-base font-medium text-text mb-1">
+                            Item:
+                        </label>
+                        <select
+                            className="bg-comp w-full border border-dk rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-link-text text-text"
+                            value={selectedItemId ?? ''}
+                            onChange={(e) => setSelectedItemId(Number(e.target.value))}
+                        >
+                            <option className='bg-comp text-text' value="" disabled>Select an item</option>
+                            {readers
+                                .find((r) => r.id?.toString() === selectedReader)
+                                ?.stocks?.map((stock) =>
+                                    stock.item?.id !== undefined ? (
+                                        <option key={stock.item.id} value={stock.item.id}>
+                                            {stock.item.name}
+                                        </option>
+                                    ) : null
+                                )}
+                        </select>
+                    </div>
+
+
                     <div className="mb-4">
                         <label className="block text-base font-medium text-text mb-1">
                             Stock:
