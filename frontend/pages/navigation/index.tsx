@@ -4,16 +4,32 @@ import NavigationComponent from "@/components/navigation/NavigationComponent";
 import { ReadersOverview } from "@/components/readers/ReadersOverview";
 import CarService from "@/services/CarService";
 import ReaderService from "@/services/ReaderService";
-import { Car, Reader } from "@/types";
+import { Car, Reader, StatusMessage } from "@/types";
 import { read } from "fs";
 import { get } from "http";
 import { useEffect, useState } from "react";
+import Notification from "@/components/util/Notification";
 
 const Navigation: React.FC = () => {
     const [readers, setReaders] = useState<Array<Reader>>([]);
     const [cars, setCars] = useState<Car[]>([]);
     const [error, setError] = useState<string>("");
     const [SelectReader, setSelectReader] = useState<Reader | null>(null);
+    const [status, setStatus] = useState<'started' | 'ended' | null>(null);
+    const [notifications, setNotifications] = useState<StatusMessage[]>([]);
+
+    const handleStart = () => {
+        setStatus('started');
+    };
+
+    const pushNotification = (message: StatusMessage) => {
+        setNotifications(prev => [...prev, message]);
+
+        setTimeout(() => {
+            setNotifications(prev => prev.slice(1));
+        }, 4000);
+    };
+
 
     const refreshReaders = () => {
         getReaders();
@@ -86,9 +102,10 @@ const Navigation: React.FC = () => {
                 {!error && <CarOverview cars={cars} />}
                 <section className="bg-comp w-full max-w-5xl mx-auto bg-white p-6 rounded-lg shadow-lg mb-10">
                     {error && <div className="text-red-500 dark:text-red-400 text-lg font-medium text-center">{error}</div>}
-                    {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} refreshReaders={refreshReaders}  />}
+                    {!error && <NavigationComponent readers={readers} selectReader={handleSelectReader} refreshReaders={refreshReaders} onRouteStart={handleStart} pushNotification={pushNotification} />}
                 </section>
                 {!error && <ReadersOverview readers={readers} />}
+                <Notification messages={notifications} />
             </main>
         </>
     )

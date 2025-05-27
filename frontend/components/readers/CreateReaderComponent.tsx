@@ -7,6 +7,7 @@ type Props = {
     IsOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
+    pushNotification: (message: StatusMessage) => void;
 };
 
 const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {

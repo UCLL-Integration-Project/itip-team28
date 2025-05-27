@@ -8,6 +8,7 @@ type Props = {
     onClose: () => void;
     onSuccess: () => void;
     reader: Reader | null;
+    pushNotification: (message: StatusMessage) => void;
 };
 
 const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) => {
@@ -47,8 +48,6 @@ const UpdateReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, reader }) =
                 macAddress: reader.macAddress,
                 coordinates: reader.coordinates,
             });
-
-            console.log(reader.id);
 
             const result = await response.json();
 

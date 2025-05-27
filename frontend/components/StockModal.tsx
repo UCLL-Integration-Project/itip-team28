@@ -11,10 +11,10 @@ interface StockModalProps {
         type: 'delivery' | 'pick-up';
         itemId: number;
     }) => void;
-
+    onRouteStart: () => void;
 }
 
-const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) => {
+const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit, onRouteStart }) => {
     const [readers, setReaders] = useState<Reader[]>([]);
     const [selectedReader, setSelectedReader] = useState<string>('');
     const [selectedItemId, setSelectedItemId] = useState<number | undefined>(undefined);
@@ -57,12 +57,7 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit }) =>
             return;
         }
 
-        console.log("Submitting data:", {
-            readerId: selectedReader,
-            stock,
-            type,
-            itemId: selectedItemId,
-        })
+        onRouteStart()
 
         if (selectedReader) {
             onSubmit({

@@ -33,7 +33,6 @@ const Route: React.FC = () => {
         } else {
             const readers = await ReaderResponse.json();
             setReaders(readers);
-            console.log(readers);
         }
     };
 
