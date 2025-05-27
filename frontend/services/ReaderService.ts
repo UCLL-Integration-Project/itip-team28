@@ -35,7 +35,6 @@ const createReader = (reader: Reader) => {
 }
 
 const updateReader = (reader: Reader) => {
-    console.log(JSON.stringify(reader));
     return fetch(process.env.NEXT_PUBLIC_API_URL + "/readers", {
         method: "PUT",
         headers: {

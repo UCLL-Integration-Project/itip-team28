@@ -10,6 +10,7 @@ interface ReadersOverviewProps {
   readers: Reader[];
   onClose: () => void;
   refreshReaders: () => void;
+  pushNotification: (message: StatusMessage) => void;
   selectedReaderId?: number | null;
 }
 
@@ -17,12 +18,13 @@ const shelfIcon = (
   <img src="../images/shelves.png" alt="" className="w-8 h-8 bg-gray-300 rounded" />
 );
 
-export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, selectedReaderId }) => {
+export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, pushNotification, selectedReaderId }) => {
   const [readers, setReaders] = useState<Reader[]>(initialReaders);
   const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [statusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
+  const [status, setStatus] = useState<'started' | 'ended' | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -63,6 +65,10 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
 
   const handleStatusMessages = (statusMessage: StatusMessage) => {
     setStatusMessages([statusMessage]);
+  };
+
+  const handleStart = () => {
+    setStatus('started');
   };
 
   return (
@@ -110,11 +116,10 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
         {readers.map((reader) => (
           <div
             key={reader.id}
-            className={`border rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 ${
-            selectedReaderId === reader.id
-                ? "border-blue-500 bg-blue-100"
-                : "border-gray-300 bg-white"
-            }`}
+            className={`border rounded-lg shadow-md px-4 py-4 flex flex-col gap-3 transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-700 ${selectedReaderId === reader.id
+              ? "border-blue-500 bg-blue-100"
+              : "border-gray-300 bg-white"
+              }`}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -144,8 +149,7 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
                 readers={readers}
                 reader={reader}
                 selectReader={handleSelectReader}
-                setNewStatusMessages={handleStatusMessages} refreshReaders={refreshReaders}
-              />
+                setNewStatusMessages={handleStatusMessages} pushNotification={pushNotification} refreshReaders={refreshReaders} onRouteStart={handleStart} />
               <button
                 onClick={() => {
                   setSelectedReader(reader);
@@ -174,16 +178,14 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
       <CreateReaderComponent
         IsOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
-        onSuccess={handleReaderCreated}
-      />
+        onSuccess={handleReaderCreated} pushNotification={pushNotification} />
 
       {/* Update Reader Modal */}
       <UpdateReader
         IsOpen={isUpdateModalOpen}
         onClose={() => setIsUpdateModalOpen(false)}
         onSuccess={handleReaderUpdated}
-        reader={selectedReader}
-      />
+        reader={selectedReader} pushNotification={pushNotification} />
     </div>
   );
 };

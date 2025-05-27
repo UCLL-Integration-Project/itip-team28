@@ -1,7 +1,7 @@
-    import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "../components/header";
-import { Car, Grid, Reader, Route } from "@/types";
+import { Car, Grid, Reader, Route, StatusMessage } from "@/types";
 import GridCreate from "@/components/grid/GridCreate";
 import GridComponent from "@/components/grid/GridComponent";
 import ReaderService from "@/services/ReaderService";
@@ -10,6 +10,7 @@ import CarService from "@/services/CarService";
 import CarOverview from "@/components/cars/CarOverview";
 import RouteService from "@/services/RouteService";
 import RouteHistory from "@/components/routes/RouteHistory";
+import Notification from "@/components/util/Notification";
 
 const Dashboard: React.FC = () => {
     const [activeComponent, setActiveComponent] = useState<string | null>(null);
@@ -19,6 +20,7 @@ const Dashboard: React.FC = () => {
     const [cars, setCars] = useState<Car[]>([]);
     const [routes, setRoutes] = useState<Route[]>([]);
     const [error, setError] = useState<string>("");
+    const [notifications, setNotifications] = useState<StatusMessage[]>([]);
 
     useEffect(() => {
         console.log("Selected Reader ID:", selectedReaderId);
@@ -31,6 +33,14 @@ const Dashboard: React.FC = () => {
 
     const refreshReaders = () => {
         getReaders();
+    };
+
+    const pushNotification = (message: StatusMessage) => {
+        setNotifications(prev => [...prev, message]);
+
+        setTimeout(() => {
+            setNotifications(prev => prev.slice(1));
+        }, 4000);
     };
 
     const getReaders = async () => {
@@ -111,6 +121,7 @@ const Dashboard: React.FC = () => {
         <div className="flex flex-col min-h-screen bg-background">
             <Header />
             <div className="flex flex-1 min-h-0">
+                <Notification messages={notifications} />
                 <Sidebar onToggle={handleToggle} />
                 <div className="flex-1 flex">
 
@@ -128,7 +139,7 @@ const Dashboard: React.FC = () => {
                         <ReadersOverview
                             readers={readers}
                             selectedReaderId={selectedReaderId}
-                            onClose={() => setActiveComponent(null)} refreshReaders={refreshReaders} />
+                            onClose={() => setActiveComponent(null)} refreshReaders={refreshReaders} pushNotification={pushNotification} />
                     )}
 
                     {activeComponent === "cars" && (

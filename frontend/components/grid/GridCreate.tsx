@@ -4,10 +4,10 @@ import { Grid, GridInput } from "@/types";
 
 type GridCreateProps = {
   onGridCreated: (grid: Grid) => void;
-  onClose:() => void;
+  onClose: () => void;
 };
 
-const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated, onClose }) =>  {
+const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated, onClose }) => {
   const [width, setWidth] = useState(3);
   const [height, setHeight] = useState(4);
   const [blockSize, setBlockSize] = useState(40);
@@ -25,7 +25,7 @@ const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated, onClose }) =>  {
 
   const handleCreateGrid = async () => {
     const coordinates = generateCoordinates(width, height);
-    const payload: GridInput = { coordinates,measurement: blockSize };
+    const payload: GridInput = { coordinates, measurement: blockSize };
 
     try {
       const response = await GridService.createGrid(payload);
@@ -38,7 +38,7 @@ const GridCreate: React.FC<GridCreateProps> = ({ onGridCreated, onClose }) =>  {
     }
   };
 
-return (
+  return (
     <div className="bg-comp rounded-lg shadow-md px-4 py-4 flex flex-col items-start gap-4 transition-all duration-300 hover:bg-blue-50 dark:hover:bg-blue-900/50 hover:shadow-lg relative">
       <div className="flex items-center justify-between w-full">
         <h2 className="text-lg font-medium text-text hover:text-link-text transition-colors duration-300">
@@ -108,9 +108,8 @@ return (
 
         {message && (
           <p
-            className={`text-center text-sm font-medium ${
-              message.startsWith("✅") ? "text-green-600" : "text-red-600"
-            }`}
+            className={`text-center text-sm font-medium ${message.startsWith("✅") ? "text-green-600" : "text-red-600"
+              }`}
           >
             {message}
           </p>
