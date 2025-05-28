@@ -36,9 +36,9 @@ export type Reader = {
 export type Route = {
     id?: number;
     status?: boolean;
-    StartingPoint?: Reader;
+    startingPoint?: Reader;
     destination?: Reader;
-    CurrentPoint?: Reader;
+    currentPoint?: Reader;
     timestamp?: string;
     instructions?: string[];
 }
@@ -81,7 +81,7 @@ export type StockInput = {
     quantity: number;
 }
 
-export type Item ={
+export type Item = {
     id: number;
     name: string;
 };
