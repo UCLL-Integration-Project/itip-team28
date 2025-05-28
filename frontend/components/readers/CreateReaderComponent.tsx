@@ -20,6 +20,9 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
     const [LongitudeError, setLongitudeError] = useState("");
     const [LatitudeError, setLatitudeError] = useState("");
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
+    const [itemId, setItemId] = useState<number>(0);
+    const [quantity, setQuantity] = useState<number>(1);
+
     const router = useRouter();
 
 
@@ -64,49 +67,61 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         clearErrors();
-
-        if (!validate()) {
-            return;
-        }
-
+      
+        if (!validate()) return;
+      
         try {
-            const response = await ReaderService.createReader({
-                name,
-                macAddress: MacAddress,
-                coordinates: {
-                    longitude,
-                    latitude,
-                },
-            });
-
-            const result = await response.json();
-
-            if (response.ok) {
-                setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
-                onSuccess();
-                setTimeout(() => {
-                    router.push("/dashboard");
-                }, 1000);
-                onClose();
-
-                setName("");
-                setMacAddress("");
-                setLatitude(0);
-                setLongtitude(0);
-            } else if (response.status === 401) {
-                setStatusMessages([{ message: "Unauthorized: Please log in again", type: "error" }]);
-                setTimeout(() => {
-                    router.push("/login");
-                }, 2000);
-            } else {
-                setStatusMessages([{ message: result.ServiceException, type: "error" }]);
+          const response = await ReaderService.createReader({
+            name,
+            macAddress: MacAddress,
+            coordinates: { longitude, latitude },
+          });
+      
+          const result = await response.json();
+      
+          if (response.ok) {
+            setStatusMessages([{ message: "Reader created successfully", type: "success" }]);
+      
+            // ➕ Voeg stock toe
+            try {
+                await ReaderService.addStockToReader({
+                    readerId: result.id, // Zorg ervoor dat dit een string is
+                    itemId,
+                    quantity,
+                  });              setStatusMessages((prev) => [
+                ...prev,
+                { message: "Stock toegevoegd", type: "success" },
+              ]);
+            } catch (err) {
+              setStatusMessages((prev) => [
+                ...prev,
+                { message: "Reader gemaakt, maar stock toevoegen faalde", type: "error" },
+              ]);
             }
+      
+            onSuccess();
+            setTimeout(() => router.push("/dashboard"), 1000);
+            onClose();
+      
+            // Reset velden
+            setName("");
+            setMacAddress("");
+            setLatitude(0);
+            setLongtitude(0);
+            setItemId(0);
+            setQuantity(1);
+          } else if (response.status === 401) {
+            setStatusMessages([{ message: "Unauthorized: Please log in again", type: "error" }]);
+            setTimeout(() => router.push("/login"), 2000);
+          } else {
+            setStatusMessages([{ message: result.ServiceException, type: "error" }]);
+          }
         } catch (error: any) {
-            setStatusMessages([{ message: error.message || "Failed to create reader", type: "error" }]);
+          setStatusMessages([{ message: error.message || "Failed to create reader", type: "error" }]);
         }
-    };
+      };
+      
 
     if (!IsOpen) { return null; }
 
@@ -216,6 +231,32 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                             <p className="mt-1 text-xs sm:text-sm text-red-600">{LatitudeError}</p>
                         )}
                     </div>
+                    <div>
+                        <label htmlFor="itemId" className="block text-xs sm:text-sm font-medium text-text">
+                            Item ID
+                        </label>
+                        <input
+                            type="number"
+                            id="itemId"
+                            value={itemId}
+                            onChange={(e) => setItemId(parseInt(e.target.value))}
+                            className="mt-1 w-full p-2 sm:p-3 border border-dk rounded-md text-base bg-background"
+                        />
+                        </div>
+
+                        <div>
+                        <label htmlFor="quantity" className="block text-xs sm:text-sm font-medium text-text">
+                            Quantity
+                        </label>
+                        <input
+                            type="number"
+                            id="quantity"
+                            value={quantity}
+                            onChange={(e) => setQuantity(parseInt(e.target.value))}
+                            className="mt-1 w-full p-2 sm:p-3 border border-dk rounded-md text-base bg-background"
+                        />
+                    </div>
+
 
                     <div className="flex justify-end space-x-2">
                         <button

@@ -62,31 +62,31 @@ const getReadersStock = (readerId: string) => {
     });
 };
 
-// const addStockToReader = async ({
-//   readerId,
-//   itemId,
-//   quantity,
-// }: {
-//   readerId: string;
-//   itemId: number;
-//   quantity: number;
-// }): Promise<any> => {
-//   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/readers/${readerId}/stocks`, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${getToken()}`,
-//     },
-//     body: JSON.stringify({ itemId, quantity }),
-//   });
+ const addStockToReader = async ({
+   readerId,
+   itemId,
+   quantity,
+ }: {
+   readerId: string;
+   itemId: number;
+   quantity: number;
+ }): Promise<any> => {
+   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/readers/${readerId}/stocks`, {
+     method: 'POST',
+     headers: {
+       'Content-Type': 'application/json',
+       'Authorization': `Bearer ${getToken()}`,
+     },
+     body: JSON.stringify({ itemId, quantity }),
+   });
 
-//   if (!res.ok) {
-//     const errorText = await res.text();
-//     throw new Error(`Failed to update stock: ${errorText}`);
-//   }
+   if (!res.ok) {
+     const errorText = await res.text();
+     throw new Error(`Failed to update stock: ${errorText}`);
+   }
 
-//   return res.json();
-// };
+   return res.json();
+ };
 
 
 const ReaderService = {
@@ -94,6 +94,6 @@ const ReaderService = {
     createReader,
     updateReader,
     getReadersStock,
-    // addStockToReader
+    addStockToReader
 };
 export default ReaderService;
