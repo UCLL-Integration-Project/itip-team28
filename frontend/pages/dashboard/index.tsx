@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/header";
+import Sidebar from "../../components/sidebar/Sidebar";
+import Header from "../../components/header";
 import { Car, Grid, Reader, Route, StatusMessage } from "@/types";
 import GridCreate from "@/components/grid/GridCreate";
 import GridComponent from "@/components/grid/GridComponent";
@@ -21,6 +21,7 @@ const Dashboard: React.FC = () => {
     const [routes, setRoutes] = useState<Route[]>([]);
     const [error, setError] = useState<string>("");
     const [notifications, setNotifications] = useState<StatusMessage[]>([]);
+    const [startMoving, setStartMoving] = useState(false);
 
     useEffect(() => {
         console.log("Selected Reader ID:", selectedReaderId);
@@ -137,6 +138,7 @@ const Dashboard: React.FC = () => {
 
                     {activeComponent === "readers" && (
                         <ReadersOverview
+                            setStartMoving={setStartMoving}
                             readers={readers}
                             selectedReaderId={selectedReaderId}
                             onClose={() => setActiveComponent(null)} refreshReaders={refreshReaders} pushNotification={pushNotification} />
@@ -162,7 +164,7 @@ const Dashboard: React.FC = () => {
                             }`}
                     >
                         <div className="max-w-4xl w-full">
-                            <GridComponent grid={grid} readers={readers} setSelectedReaderId={setSelectedReaderId} setActiveComponent={setActiveComponent} />
+                            <GridComponent grid={grid} readers={readers} setSelectedReaderId={setSelectedReaderId} setActiveComponent={setActiveComponent} startMoving={startMoving} setStartMoving={setStartMoving} />
                         </div>
                     </div>
                 </div>
