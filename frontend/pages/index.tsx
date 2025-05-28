@@ -40,6 +40,7 @@ const Home: React.FC = () => {
                 try {
                     const scans = JSON.parse(text);
                     setScans(scans);
+                    console.log(scans);
                 } catch (e) {
                     console.error("Failed to parse JSON", e);
                     setError("Received invalid JSON data from server");

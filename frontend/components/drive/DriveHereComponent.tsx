@@ -13,7 +13,7 @@ type Props = {
     setStartMoving: (val: boolean) => void;
 }
 
-const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, setNewStatusMessages, refreshReaders, onRouteStart, pushNotification,setStartMoving}) => {
+const DriveHereComponent: React.FC<Props> = ({ reader, selectReader, setNewStatusMessages, refreshReaders, onRouteStart, pushNotification, setStartMoving }) => {
     const [isStockModalOpen, setIsStockModalOpen] = useState(false);
     const [StatusMessages, setStatusMessages] = useState<StatusMessage[]>([]);
 
@@ -25,7 +25,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
                 setStatusMessages([{ message: "Route created successfully", type: "success" }]);
                 setNewStatusMessages?.({ message: "Route created successfully", type: "success" });
                 selectReader(destination);
-               
+
 
             } catch (err) {
                 setStatusMessages([{ message: "Failed to create route", type: "error" }]);
@@ -38,6 +38,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
         <>
             {isStockModalOpen && (
                 <StockModal
+                    reader={reader}
                     isOpen={isStockModalOpen}
                     onClose={() => setIsStockModalOpen(false)}
                     onRouteStart={onRouteStart}
