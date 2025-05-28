@@ -3,6 +3,7 @@ import ReaderService from '@/services/ReaderService';
 import { Reader } from '@/types';
 
 interface StockModalProps {
+    reader: Reader,
     isOpen: boolean;
     onClose: () => void;
     onSubmit: (data: {
@@ -14,9 +15,8 @@ interface StockModalProps {
     onRouteStart: () => void;
 }
 
-const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit, onRouteStart }) => {
+const StockModal: React.FC<StockModalProps> = ({ reader, isOpen, onClose, onSubmit, onRouteStart }) => {
     const [readers, setReaders] = useState<Reader[]>([]);
-    const [selectedReader, setSelectedReader] = useState<string>('');
     const [selectedItemId, setSelectedItemId] = useState<number | undefined>(undefined);
     const [stock, setStock] = useState<number>(0);
     const [type, setType] = useState<'delivery' | 'pick-up'>('delivery');
@@ -42,11 +42,6 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit, onRo
         e.preventDefault();
         setError('');
 
-        if (!selectedReader) {
-            setError('Please select a reader.');
-            return;
-        }
-
         if (selectedItemId === undefined) {
             setError('Please select an item.');
             return;
@@ -59,9 +54,9 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit, onRo
 
         onRouteStart()
 
-        if (selectedReader) {
+        if (reader) {
             onSubmit({
-                readerId: selectedReader,
+                readerId: reader.id?.toString() ? reader.id?.toString() : '0',
                 stock,
                 type,
                 itemId: selectedItemId,
@@ -85,22 +80,8 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit, onRo
                     )}
                     <div className="mb-4">
                         <label className="block text-base font-medium text-text mb-1">
-                            Reader:
+                            Reader: {reader.name}
                         </label>
-                        <select
-                            className='bg-comp w-full border border-dk rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-link-text text-text'
-                            value={selectedReader}
-                            onChange={(e) => {
-                                setSelectedReader(e.target.value);
-                            }}
-                        >
-                            <option className='bg-comp text-text' value="" disabled>Select a reader</option>
-                            {readers.map((reader) => (
-                                <option key={reader.id} value={reader.id}>
-                                    {reader.name} ({reader.coordinates?.longitude}, {reader.coordinates?.latitude})
-                                </option>
-                            ))}
-                        </select>
                     </div>
                     <div className="mb-4">
                         <label className="block text-base font-medium text-text mb-1">
@@ -112,15 +93,13 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit, onRo
                             onChange={(e) => setSelectedItemId(Number(e.target.value))}
                         >
                             <option className='bg-comp text-text' value="" disabled>Select an item</option>
-                            {readers
-                                .find((r) => r.id?.toString() === selectedReader)
-                                ?.stocks?.map((stock) =>
-                                    stock.item?.id !== undefined ? (
-                                        <option key={stock.item.id} value={stock.item.id}>
-                                            {stock.item.name}
-                                        </option>
-                                    ) : null
-                                )}
+                            {reader.stocks?.map((stock) =>
+                                stock.item?.id !== undefined ? (
+                                    <option key={stock.item.id} value={stock.item.id}>
+                                        {stock.item.name}
+                                    </option>
+                                ) : null
+                            )}
                         </select>
                     </div>
 

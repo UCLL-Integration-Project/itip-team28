@@ -19,7 +19,7 @@ const shelfIcon = (
   <img src="../images/shelves.png" alt="" className="w-8 h-8 bg-gray-300 rounded" />
 );
 
-export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, pushNotification, selectedReaderId,setStartMoving }) => {
+export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initialReaders, onClose, refreshReaders, pushNotification, selectedReaderId, setStartMoving }) => {
   const [readers, setReaders] = useState<Reader[]>(initialReaders);
   const [selectedReader, setSelectedReader] = useState<Reader | null>(null);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -125,16 +125,16 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
             <div className="flex justify-between">
               <div className="flex flex-col  gap-2 ">
                 <div className="flex items-center gap-2">
-                    <div className="w-8">{shelfIcon}</div>
-                    <div className="text-md font-medium text-gray-600 dark:text-gray-600">{reader.name}</div>
+                  <div className="w-8">{shelfIcon}</div>
+                  <div className="text-md font-medium text-gray-600 dark:text-gray-600">{reader.name}</div>
                 </div>
                 <div className="pt-1">
-                    <div className="text-sm text-gray-600 dark:text-gray-600">
-                        MAC: {reader.macAddress}
-                    </div>
-                    <div className="text-sm text-gray-600 dark:text-gray-600">
-                        Stock: {reader?.stocks?.[reader.stocks?.length - 1]?.quantity ?? "No stock"}
-                    </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-600">
+                    MAC: {reader.macAddress}
+                  </div>
+                  <div className="text-sm text-gray-600 dark:text-gray-600">
+                    Stock: {reader?.stocks?.[reader.stocks?.length - 1]?.quantity ?? "No stock"}
+                  </div>
                 </div>
               </div>
               <div className="gap-2 ml-3 text-sm text-text flex flex-col">
@@ -150,7 +150,6 @@ export const ReadersOverview: React.FC<ReadersOverviewProps> = ({ readers: initi
             <div className="flex items-center justify-between gap-2 border-t border-gray-300 dark:border-gray-600 pt-2 mt-2"    >
               <DriveHereComponent
                 setStartMoving={setStartMoving}
-                readers={readers}
                 reader={reader}
                 selectReader={handleSelectReader}
                 setNewStatusMessages={handleStatusMessages} pushNotification={pushNotification} refreshReaders={refreshReaders} onRouteStart={handleStart} />
