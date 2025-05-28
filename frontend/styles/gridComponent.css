@@ -6,7 +6,7 @@
 }
 
 .grid-title {
-  font-size: 1.25rem;
+  font-size: 2.25rem;
   font-weight: bold;
   color: var(--color-text);
 }
@@ -21,7 +21,6 @@
 .grid-label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
   color: var(--color-text);
 }
 
@@ -40,7 +39,9 @@
   margin: 0 auto;
   box-sizing: border-box;
   overflow: auto;
-   
+  gap: 5px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 
@@ -48,12 +49,14 @@
   display: flex;
   width: 100%;
   flex-wrap: nowrap;
+  gap: 5px;
 }
 
 .grid-cell {
   flex: 1 1 auto;
   aspect-ratio: 1 / 1;   
-  border: 1px solid #ccc;
+  border: .5px dashed #b8b8b8;;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,12 +65,22 @@
   min-width: 20px;
   max-width: 60px;
   background-color: #ffffff;
+  padding: 1.75rem 1rem;
+  color: rgba(98, 98, 98, 0.7);
+}
+
+.grid-cell:hover {
+  background-color: #e0e0e0; /* Light gray on hover */
 }
 
 html.dark .grid-cell {
   border: 1px solid #666; 
   color: #D1D5DB; 
   background-color: #293548; 
+}
+
+html.dark .grid-cell:hover {
+  background-color: #374151; /* Darker gray on hover in dark mode */
 }
 
 .grid-cell.empty-cell {
@@ -79,17 +92,34 @@ html.dark .grid-cell.empty-cell {
 }
 
 .grid-cell.car {
-  background-color: #293548;
+  background-color: #ffe588;
+}
+
+.grid-cell.car:hover {
+  background-color: #e6d36c; /* Slightly darker on hover */
 }
 
 html.dark .grid-cell.car {
-  background-color: #9394b9; 
+  background-color: #957500; 
+}
+
+html.dark .grid-cell.car:hover {
+  /* Darker yellow for better contrast in dark mode */
+  background-color: #7d6300;
 }
 
 .grid-cell.stop {
-  background-color: #4caf50; /* Green for stops */
+  background-color: #97e1f6; /* Green for stops */
+}
+
+.grid-cell.stop:hover {
+  background-color: #7dcce0; /* Slightly darker on hover */
 }
 
 html.dark .grid-cell.stop {
-  background-color: #388e3c; /* Darker green for better contrast in dark mode */
+  background-color: #2d6c7e; /* Darker green for better contrast in dark mode */
+}
+
+html.dark .grid-cell.stop:hover {
+  background-color: #255a66; /* Darker green on hover */
 }

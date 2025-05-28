@@ -150,7 +150,7 @@ const renderGrid = () => {
 
   return (
     <div className="grid-container">
-      <h1 className="grid-title">Adjustable Grid Block Size</h1>
+      <h1 className="grid-title">Adjustable Grid</h1>
 
       <div className="grid-controls">
         <label className="grid-label">

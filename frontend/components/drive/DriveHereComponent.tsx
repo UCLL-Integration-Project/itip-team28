@@ -69,7 +69,7 @@ const DriveHereComponent: React.FC<Props> = ({ readers, reader, selectReader, se
             )}
             <button
                 onClick={() => handleDrive(reader)}
-                className="w-full bg-gray-300 border-1 border-gray-400 text-green py-1 px-3 mt-1 mb-1 rounded-sm text-xs font-light hover:bg-gray-700 dark:hover:bg-gray-200 focus:outline-none focus:ring-2  transition-colors duration-200 cursor-pointer"
+                className="w-full bg-gray-300 border-1 border-gray-400 text-green py-1 px-3 mt-1 mb-1 rounded-sm text-xs font-light hover:bg-gray-400  focus:outline-none focus:ring-2  transition-colors duration-200 cursor-pointer"
             >
                 Drive here
             </button>

@@ -88,7 +88,7 @@ const StockModal: React.FC<StockModalProps> = ({ isOpen, onClose, onSubmit, onRo
                             Reader:
                         </label>
                         <select
-                            className='bg-comp text-text'
+                            className='bg-comp w-full border border-dk rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-link-text text-text'
                             value={selectedReader}
                             onChange={(e) => {
                                 setSelectedReader(e.target.value);
