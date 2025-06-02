@@ -42,14 +42,15 @@ const DriveHereComponent: React.FC<Props> = ({ reader, selectReader, setNewStatu
                     isOpen={isStockModalOpen}
                     onClose={() => setIsStockModalOpen(false)}
                     onRouteStart={onRouteStart}
-                    onSubmit={async ({ readerId, itemId, stock, type }) => {
+                    onSubmit={async ({ readerId, itemId, stock, type }) => 
+                        {setStartMoving(true);
                         try {
                             const direction = type === 'delivery' ? 'DELIVERY' : 'PICKUP';
                             console.log(pushNotification);
 
                             const requestId = await StockService.requestStockTransfer(1, Number(readerId), itemId, stock, direction);
                             pushNotification?.({ message: 'Stock transfer request complete.', type: 'success' });
-                            setStartMoving(true);
+
 
                             await new Promise(resolve => setTimeout(resolve, 1000));
                             await StockService.completeStockTransfer(requestId);
