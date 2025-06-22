@@ -32,8 +32,23 @@ const Dashboard: React.FC = () => {
         setActiveComponent(newComponent);
     };
 
-    const refreshReaders = () => {
-        getReaders();
+    const refreshReaders = async () => {
+        setError("");
+        try {
+        const response = await ReaderService.getReaders();
+        if (!response.ok) {
+            if (response.status === 401) {
+            setError("You are not authorized to view this page. Please login first.");
+            } else {
+            setError(response.statusText);
+            }
+        } else {
+            const readersData = await response.json();
+            setReaders(readersData);
+        }
+        } catch (err: any) {
+        setError(err.message || "Error fetching readers");
+        }
     };
 
     const pushNotification = (message: StatusMessage) => {
@@ -41,7 +56,7 @@ const Dashboard: React.FC = () => {
 
         setTimeout(() => {
             setNotifications(prev => prev.slice(1));
-        }, 4000);
+        }, 3000);
     };
 
     const getReaders = async () => {

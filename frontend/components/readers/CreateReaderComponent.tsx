@@ -1,16 +1,17 @@
 import ReaderService from "@/services/ReaderService";
 import { Coordinates, Reader, StatusMessage } from "@/types";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
     IsOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
     pushNotification: (message: StatusMessage) => void;
+    refreshReaders: () => Promise<void>;
 };
 
-const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
+const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess, pushNotification, refreshReaders}) => {
     const [name, setName] = useState("");
     const [MacAddress, setMacAddress] = useState("");
     const [longitude, setLongtitude] = useState<number>(0);
@@ -24,7 +25,6 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
     const [quantity, setQuantity] = useState<number>(1);
 
     const router = useRouter();
-
 
     const clearErrors = () => {
         setNameError("");
@@ -101,6 +101,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                 }
 
                 onSuccess();
+                await refreshReaders();
                 setTimeout(() => router.push("/dashboard"), 1000);
                 onClose();
 
@@ -111,6 +112,7 @@ const createReader: React.FC<Props> = ({ IsOpen, onClose, onSuccess }) => {
                 setLongtitude(0);
                 setItemId(0);
                 setQuantity(1);
+                clearErrors();
             } else if (response.status === 401) {
                 setStatusMessages([{ message: "Unauthorized: Please log in again", type: "error" }]);
                 setTimeout(() => router.push("/login"), 2000);

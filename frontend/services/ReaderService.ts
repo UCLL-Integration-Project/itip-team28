@@ -1,5 +1,4 @@
 import { Reader, StockInput } from "@/types";
-import { get } from "http";
 
 const getToken = (): string => {
     const loggedInUserString = sessionStorage.getItem('LoggedInUser');
@@ -43,6 +42,19 @@ const updateReader = (reader: Reader) => {
         },
         body: JSON.stringify(reader),
 
+    }).catch((error) => {
+        console.error("Error:", error);
+        throw error;
+    });
+};
+
+const deleteReader = (readerId: number) => {
+    return fetch(`${process.env.NEXT_PUBLIC_API_URL}/readers/${readerId}`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
+        },
     }).catch((error) => {
         console.error("Error:", error);
         throw error;
@@ -93,6 +105,7 @@ const ReaderService = {
     getReaders,
     createReader,
     updateReader,
+    deleteReader,
     getReadersStock,
     addStockToReader
 };

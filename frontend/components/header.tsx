@@ -65,6 +65,13 @@ const Header: React.FC = () => {
                             </Link>
                         </li>
                     )}
+                    {LoggedInUser && (
+                        <li>
+                            <Link href="/login/profile" className="hover:text-indigo-400 transition-colors duration-200">
+                                Profile
+                            </Link>
+                        </li>
+                    )}
                     <li>
                         {!LoggedInUser && (<Link href="/login" className="hover:text-indigo-400 transition-colors duration-200">
                             Login

@@ -164,7 +164,7 @@ const RegisterForm: React.FC = () => {
                 <div>
                     <button
                         type="submit"
-                        className="text-text w-full bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition"
+                        className="bg-button text-white py-2 px-4 rounded-md hover:bg-indigo-700 dark:hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-link-text transition-colors duration-200"
                     >
                         Register
                     </button>
